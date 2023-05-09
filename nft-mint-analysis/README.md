@@ -10,16 +10,11 @@ One way to understand the capacity of our network would be to take a real-use ca
 
 ## 🕵️ Analysis
 
-Minting an NFT involves recording unique digital content onto a blockchain network, which comes at a cost. Users need to pay fees to compensate the network's validators or miners for verifying and processing the transaction. The cost of minting an NFT depends on several factors, including:
+Minting an NFT involves recording unique digital content onto a blockchain network, which comes at a cost. Users need to pay fees to compensate the network's validators or miners for verifying and processing the transaction. The total cost of a transaction can be calculated by multiplying the gas price in Gwei by the gas units used by the transaction where the gas price depends on several factors, including:
 
-1. The blockchain network being used  
-  Different blockchain networks have varying fees for minting NFTs. For example, Ethereum, one of the most popular blockchain networks for NFTs, has a fee referred to as "gas" that is based on the network's congestion and the complexity of the transaction. While Solana's fees are fixed and very low, typically less than a penny per transaction, thanks to its unique architecture, which allows it to process transactions in parallel and in a highly efficient manner.
-2. The size and complexity of the digital content  
-  The larger and more complex the digital content, the more resources it will require to add it to the blockchain network, resulting in a higher fee.
-3. The current market conditions  
-  The demand for minting NFTs can fluctuate depending on the current market conditions. During times of high demand, the fees may increase due to increased network congestion.
-
-The total cost of a transaction can be calculated by multiplying the gas price in Gwei by the gas units used by the transaction. During times of high demand, the fees may increase due to increased network congestion.
+1. **The blockchain network being used**: different blockchain networks have varying fees for minting NFTs. For example, Ethereum, one of the most popular blockchain networks for NFTs, has a fee referred to as "[gas](https://ethereum.org/en/developers/docs/gas/#what-is-gas)" that is based on the network's congestion and the complexity of the transaction. While Solana's fees are fixed and very low, typically less than a penny per transaction, thanks to its unique architecture, which allows it to process transactions in parallel and in a highly efficient manner.
+2. **The size and complexity of the digital content**: the larger and more complex the digital content, the more resources it will require to add it to the blockchain network, resulting in a higher fee.
+3. **The current market conditions**: during times of high demand, the fees may increase due to increased network congestion.
 
 ### What's the gas cost of minting an NFT?
 
@@ -27,7 +22,7 @@ The gas cost of minting an NFT on Ethereum or any other EVM-compatible network i
 
 A simple mint function that adds a new token to a contract and updates the contract's storage may require a gas cost of around [30,000 to 100,000](#annex) gas units, while a more complex mint function that involves expensive calculations may require significantly more gas units.
 
-The gas price is denominated in Gwei, which is a sub-unit of Ethereum's native currency, Ether (ETH). One Gwei is equal to 0.000000001 ETH, so the cost of gas in ETH can be calculated by multiplying the gas price in Gwei by the gas units used by the transaction. For example, if the gas price is 50 Gwei and the transaction uses 100,000 gas units, the cost of the transaction would be 0.005 ETH (`50 Gwei * 100,000 gas units * 0.000000001 ETH/Gwei = 0.005 ETH`).
+For example, if the gas price is 50 Gwei (1 Gwei = 0.000000001 ETH) and the transaction uses 100,000 gas units, the cost of the transaction would be 0.005 ETH (`50 Gwei * 100,000 gas units * 0.000000001 ETH/Gwei = 0.005 ETH`).
 
 ## Simulation of gas mint prices on different blockchain networks
 
