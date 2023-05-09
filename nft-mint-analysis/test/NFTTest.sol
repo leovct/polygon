@@ -20,12 +20,6 @@ contract NFTTest is DSTestPlus {
   OpenZeppelinNFT openZeppelinNFTContract;
   SolmateNFT solmateNFTContract;
 
-  function setUp() public {
-    openZeppelinNFTContract = new OpenZeppelinNFT(name, symbol, uri);
-    solmateNFTContract = new SolmateNFT(name, symbol, uri);
-    console2.log('NFT contracts deployed');
-  }
-
   function openZeppelinMint(uint256 _id) public {
     startMeasuringGas('OpenZeppelinNFT.mintTo()');
     checkpointGasLeft = gasleft();
@@ -36,6 +30,9 @@ contract NFTTest is DSTestPlus {
   }
 
   function testOpenZeppelinMint() public {
+    openZeppelinNFTContract = new OpenZeppelinNFT(name, symbol, uri);
+    console2.log('OpenZeppelinNFT contract deployed');
+    
     for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {
       openZeppelinMint(i);
     }
@@ -50,6 +47,9 @@ contract NFTTest is DSTestPlus {
   }
 
   function testSolmateMint() public {
+    solmateNFTContract = new SolmateNFT(name, symbol, uri);
+    console2.log('SolmateNFT contract deployed');
+
     for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {
       solmateMint(i);
     }
