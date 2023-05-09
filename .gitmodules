@@ -1,3 +1,6 @@
 [submodule "nft-mint-analysis/lib/forge-std"]
 	path = nft-mint-analysis/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "nft-mint-analysis/lib/solmate"]
+	path = nft-mint-analysis/lib/solmate
+	url = https://github.com/transmissions11/solmate
