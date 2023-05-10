@@ -1,4 +1,4 @@
-# ⛽️ NFT Gas Analysis
+# ⛽️ NFT Mint Analysis
 
 ## 📌 Introduction
 
