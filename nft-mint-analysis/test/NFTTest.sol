@@ -32,7 +32,7 @@ contract NFTTest is DSTestPlus {
   function testOpenZeppelinMint() public {
     openZeppelinNFTContract = new OpenZeppelinNFT(name, symbol, uri);
     console2.log('OpenZeppelinNFT contract deployed');
-    
+
     for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {
       openZeppelinMint(i);
     }
