@@ -1,3 +1,1 @@
-# 🕵️ Cool stuff @Polygon
-
 More to come...
