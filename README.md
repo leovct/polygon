@@ -1,5 +1,5 @@
-# 🕵️ Random work for Polygon Labs
+# Research work
 
 - [⛽️ NFT Mint Analysis](nft-mint-analysis/README.md)  
-  Analyze the cost of minting NFTs on different blockchain networks from the perspective of a gaming company wanting to migrate to blockchain technology. The goal is to understand if it's feasible and what chain is the most suitable option for the company.
-- More to come...
+  An approach to comprehending the capacity of our network through the example of a gaming company that performs a certain quantity of NFT mints per day, while adhering to a budget. By examining the expenses associated with minting on various blockchain networks, we could establish the feasibility of the project and select the most suitable alternative for the company.
+- ...
