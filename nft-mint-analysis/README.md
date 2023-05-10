@@ -97,7 +97,7 @@ Returning to our use case of a gamping company like [Axie Infinity](https://axie
 
 By utilising the **Mint Cost Calculator** provided with the spreadsheet, it becomes straightforward to compute the current cost of minting an NFT on each blockchain network. Let's imagine that these gaming companies target thousands or ten of thousands mints per day. Which chain would be the most suitable for such companies?
 
-![cost-minting-nft-by-blockain-networks](doc/cost-minting-nft-by-blockain-networks.png)
+![cost-minting-nft-by-blockchain-networks](doc/cost-minting-nft-by-blockchain-networks.png)
 
 See the **Gaming Company Use Case** page of the spreadsheet.
 
