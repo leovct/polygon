@@ -25,7 +25,7 @@ Minting an NFT involves recording unique digital content onto a blockchain netwo
 
 Taking into account all of these parameters, this yields the following relationship:
 
-$cost\_minting\_nft\_dollars = mint\_fn\_gas\_unit\_cost \times gas\_price\_cost\_gwei \times 10^{-9} \times token\_price\_dollars$ where $10^{-9}$ represents the conversion of Gwei into ETH.
+`cost_minting_nft_dollars = cost_mint_fn_gas_unit * gas_price_gwei * 10^-9 * token_price_dollars` where `10^-9` represents the conversion of Gwei into ETH.
 
 ## How many gas units does it cost to mint an NFT?
 
