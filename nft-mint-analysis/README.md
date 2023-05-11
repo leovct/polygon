@@ -73,7 +73,7 @@ We'd like to determine how much it costs to mint an NFT on different networks su
 
 See the different [simulations](https://docs.google.com/spreadsheets/d/1_9Q4mjAuSerGAkaC6Skc4FWgRqJMzQMO7kpNnJLWz7o/edit?usp=sharing) on Ethereum, Polygon PoS, Polygon zkEVM, etc.
 
-![cost-minting-nft-on-polygon](doc/cost-minting-nft-polygon.png)
+![fig-1-cost-minting-nft-polygon](doc/fig-1-cost-minting-nft-polygon.png)
 
 See the **NFT Mint Analysis** page of the spreadsheet.
 
@@ -97,7 +97,7 @@ Returning to our use case of a gamping company like [Axie Infinity](https://axie
 
 By utilising the **Mint Cost Calculator** provided with the spreadsheet, it becomes straightforward to compute the current cost of minting an NFT on each blockchain network. Let's imagine that these gaming companies target thousands or ten of thousands mints per day. Which chain would be the most suitable for such companies?
 
-![cost-minting-nft-by-blockchain-networks](doc/cost-minting-nft-by-blockchain-networks.png)
+![fig-2-cost-minting-nft-by-blockchain-networks.png](doc/fig-2-cost-minting-nft-by-blockchain-networks.png)
 
 See the **Gaming Company Use Case** page of the spreadsheet.
 
