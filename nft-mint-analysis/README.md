@@ -95,6 +95,10 @@ Let's take a quick example if the gas price is 100 Gwei and the price of 1 ETH i
 
 Returning to our use case of a gaming company like [Axie Infinity](https://axieinfinity.com/) or [Gods Unchained](https://godsunchained.com/), the cost of minting NFTs plays a critical role in the sustainability of the game. Those games are based on different mechanisms such as minting, breeding, collecting, trading, etc. If the cost of minting becomes too high, players may abandon the game, leading to reduced profitability and the possible discontinuation of the game. This underscores the importance of selecting the appropriate blockchain network for the game. Moreover, some networks such as Polygon Pos produce a greater number of blocks per minute, which is more suitable for real-time games but let's not get into that.
 
+Here's a [comparison](https://dune.com/leovct/nft-mint-analysis) of the average minting cost of 10k NFTs between different EVM blockchains over the last 3 months using [Dune Analytic](http://dune.com/home)'s databases.
+
+![average-cost-minting-nfts-over-last-3-months](doc/average-cost-minting-nfts-over-last-3-months.png)
+
 By utilizing the **Mint Cost Calculator** provided with the spreadsheet, it becomes straightforward to compute the current cost of minting an NFT on each blockchain network. Let's imagine that these gaming companies target thousands or ten of thousands mints per day. Which chain would be the most suitable for such companies?
 
 ![fig-2-cost-minting-nft-by-blockchain-networks.png](doc/fig-2-cost-minting-nft-by-blockchain-networks.png)
