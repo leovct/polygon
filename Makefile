@@ -12,5 +12,12 @@ install: ## Install npm dependencies.
 	npm install
 
 .PHONY: lint
-lint: ## Lint code.
+lint: prettier links ## Run linters.
+
+.PHONY: prettier
+prettier: ## Lint code.
 	npx prettier --write .
+
+.PHONY: links
+links: ## Check for broken links. Note: dune links have been deactivated because they return a 403 status.
+	npx linkinator "README.md" "*/README.md" --skip "https://dune.com"
