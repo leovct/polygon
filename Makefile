@@ -4,14 +4,13 @@
 help: ## Display this help.
 	@awk 'BEGIN {FS = ":.*##"; printf "Usage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-##@ Build
 
-.PHONY: build
-build: ## Build the contracts
-	forge build
+##@ Lint
 
-##@ Test
+.PHONY: install
+install: ## Install npm dependencies.
+	npm install
 
-.PHONY: test
-test: ## Run tests.
-	forge test -vvv
+.PHONY: lint
+lint: ## Lint code.
+	npx prettier --write .
