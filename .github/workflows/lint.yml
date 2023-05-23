@@ -29,5 +29,9 @@ jobs:
         id: install
 
       - name: Lint code
-        run: npx prettier --write .
+        run: make prettier
         id: lint
+      
+      - name: Check for broken links
+        run: make links
+        id: links
