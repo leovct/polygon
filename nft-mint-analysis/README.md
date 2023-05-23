@@ -1,4 +1,4 @@
-# ⛽️ NFT Mint Analysis
+# 🖼️ NFT Mint Analysis
 
 ## Table of contents
 
@@ -15,7 +15,7 @@ Capacity is a crucial factor in determining the scalability of a blockchain, whi
 
 An approach to comprehending the capacity of our network would involve utilizing a practical scenario, such as a gaming firm that performs a certain quantity of NFT mints per day, while adhering to a budget. By examining the expenses associated with minting on various blockchain networks, we could establish the feasibility of the project and select the most suitable alternative for the company.
 
-### How to compute the mint cost of an NFT on an EVM-compatible chain?
+## How to compute the mint cost of an NFT on an EVM-compatible chain?
 
 Minting an NFT involves recording unique digital content onto a blockchain network, which comes at a cost. Users need to pay fees to compensate the network's validators or miners for verifying and processing the transaction. The total cost of a transaction can be calculated by multiplying the gas units used by the transaction by the price of gas in gwei, converted to dollars, where the gas price depends on several factors, including:
 
@@ -27,7 +27,7 @@ Taking into account all of these parameters, this yields the following relations
 
 `cost_minting_nft_dollars = cost_mint_fn_gas_unit * gas_price_gwei * 10^-9 * token_price_dollars` where `10^-9` represents the conversion of Gwei into ETH.
 
-## How many gas units does it cost to mint an NFT?
+### How many gas units does it cost to mint an NFT?
 
 The gas cost of minting an NFT on Ethereum or any other EVM-compatible network is measured in "gas units", which represent the amount of computational work required to execute a transaction. Each operation on the EVM has a fixed gas cost associated with it, and the total gas cost of a transaction is the sum of the gas costs of all the operations that make up the transaction.
 
