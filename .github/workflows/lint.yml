@@ -28,6 +28,6 @@ jobs:
         run: npm ci
         id: install
 
-      - name: Run lint on markdown files
-        run: npx prettier --write '*.md' '**/*.md'
-        id: readme-lint
+      - name: Lint code
+        run: npx prettier --write .
+        id: lint
