@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.19;
 
-import "@erc721a/ERC721A.sol";
+import {ERC721 as Solmate_ERC721} from '@solmate/tokens/ERC721.sol';
 import '@openzeppelin/access/Ownable.sol';
 import '@openzeppelin/utils/Strings.sol';
 
-error ERC721A_MintPriceNotPaid();
-error ERC721A_MaxSupply();
-error ERC721A_NonExistentTokenURI();
-error ERC721A_WithdrawTransfer();
+error SolmateMintPriceNotPaid();
+error SolmateMaxSupply();
+error SolmateNonExistentTokenURI();
+error SolmateWithdrawTransfer();
 
-contract ERC721ANFT is ERC721A, Ownable {
+contract Solmate_NFT is Solmate_ERC721, Ownable {
   using Strings for uint256;
 
   uint256 public constant TOTAL_SUPPLY = 10_000;
@@ -23,19 +23,19 @@ contract ERC721ANFT is ERC721A, Ownable {
     string memory _name,
     string memory _symbol,
     string memory _baseURI
-  ) ERC721A(_name, _symbol) {
+  ) Solmate_ERC721(_name, _symbol) {
     baseURI = _baseURI;
   }
 
   function mintTo(address recipient) public payable returns (uint256) {
     if (msg.value != MINT_PRICE) {
-      revert ERC721A_MintPriceNotPaid();
+      revert SolmateMintPriceNotPaid();
     }
     uint256 newTokenId = ++currentTokenId;
     if (newTokenId > TOTAL_SUPPLY) {
-      revert ERC721A_MaxSupply();
+      revert SolmateMaxSupply();
     }
-    _mint(recipient, 1);
+    _safeMint(recipient, newTokenId);
     return newTokenId;
   }
 
@@ -43,7 +43,7 @@ contract ERC721ANFT is ERC721A, Ownable {
     uint256 tokenId
   ) public view virtual override returns (string memory) {
     if (ownerOf(tokenId) == address(0)) {
-      revert ERC721A_NonExistentTokenURI();
+      revert SolmateNonExistentTokenURI();
     }
     return
       bytes(baseURI).length > 0
@@ -55,7 +55,7 @@ contract ERC721ANFT is ERC721A, Ownable {
     uint256 balance = address(this).balance;
     (bool transferTx, ) = payee.call{value: balance}('');
     if (!transferTx) {
-      revert ERC721A_WithdrawTransfer();
+      revert SolmateWithdrawTransfer();
     }
   }
 }
