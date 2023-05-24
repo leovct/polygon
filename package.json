@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "linkinator": "^4.1.2",
+    "markdown-table-formatter": "^1.4.0",
     "prettier": "^2.8.8",
     "prettier-plugin-solidity": "^1.1.3"
   }

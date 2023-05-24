@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.19;
 
-import {ERC721 as OpenZeppelin_ERC721} from '@openzeppelin/token/ERC721/ERC721.sol';
+import {ERC721 as Solmate_ERC721} from '@solmate/tokens/ERC721.sol';
 import '@openzeppelin/access/Ownable.sol';
 import '@openzeppelin/utils/Strings.sol';
 
-error MintPriceNotPaid();
-error MaxSupply();
-error NonExistentTokenURI();
-error WithdrawTransfer();
+error SolmateMintPriceNotPaid();
+error SolmateMaxSupply();
+error SolmateNonExistentTokenURI();
+error SolmateWithdrawTransfer();
 
-contract OpenZeppelinNFT is OpenZeppelin_ERC721, Ownable {
+contract Solmate_NFT is Solmate_ERC721, Ownable {
   using Strings for uint256;
 
   uint256 public constant TOTAL_SUPPLY = 10_000;
@@ -23,17 +23,17 @@ contract OpenZeppelinNFT is OpenZeppelin_ERC721, Ownable {
     string memory _name,
     string memory _symbol,
     string memory _baseURI
-  ) OpenZeppelin_ERC721(_name, _symbol) {
+  ) Solmate_ERC721(_name, _symbol) {
     baseURI = _baseURI;
   }
 
   function mintTo(address recipient) public payable returns (uint256) {
     if (msg.value != MINT_PRICE) {
-      revert MintPriceNotPaid();
+      revert SolmateMintPriceNotPaid();
     }
     uint256 newTokenId = ++currentTokenId;
     if (newTokenId > TOTAL_SUPPLY) {
-      revert MaxSupply();
+      revert SolmateMaxSupply();
     }
     _safeMint(recipient, newTokenId);
     return newTokenId;
@@ -43,7 +43,7 @@ contract OpenZeppelinNFT is OpenZeppelin_ERC721, Ownable {
     uint256 tokenId
   ) public view virtual override returns (string memory) {
     if (ownerOf(tokenId) == address(0)) {
-      revert NonExistentTokenURI();
+      revert SolmateNonExistentTokenURI();
     }
     return
       bytes(baseURI).length > 0
@@ -55,7 +55,7 @@ contract OpenZeppelinNFT is OpenZeppelin_ERC721, Ownable {
     uint256 balance = address(this).balance;
     (bool transferTx, ) = payee.call{value: balance}('');
     if (!transferTx) {
-      revert WithdrawTransfer();
+      revert SolmateWithdrawTransfer();
     }
   }
 }

@@ -31,41 +31,24 @@ Taking into account all of these parameters, this yields the following relations
 
 The gas cost of minting an NFT on Ethereum or any other EVM-compatible network is measured in "gas units", which represent the amount of computational work required to execute a transaction. Each operation on the EVM has a fixed gas cost associated with it, and the total gas cost of a transaction is the sum of the gas costs of all the operations that make up the transaction.
 
-A simple mint function that adds a new token to a contract and updates the contract's storage may require a gas cost of around [30,000 to 100,000](#annex) gas units, while a more complex mint function that involves expensive calculations may require significantly more gas units.
+A simple mint function that adds a new token to a contract and updates the contract's storage may require a gas cost of around [32,000 to 176,000](#annex) gas units, while a more complex mint function that involves expensive calculations may require significantly more gas units. We took 33,000 gas units as base.
 
-As an example, let's consider two basic NFT smart contracts - one implemented using [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol)'s ERC721 standard and the other using [Solmate](https://github.com/transmissions11/solmate/blob/main/src/tokens/ERC721.sol), a gas-optimized version. These contracts involve adding a new token and updating the contract storage, which cost between 30,000 and 100,000 gas units. By the way, we can see that only the first mint is expensive, the following ones are 3 times cheaper. Indeed, when a smart contract is deployed for the first time, it requires more gas to be executed, as it involves more computation to set up the necessary data structures and initialize the contract's state.
+As an example, let's consider four basic NFT smart contracts, implemented using the most popular ERC721 standards such as OpenZeppelin's [ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol) standard, OpenZeppelin [ERC721Enumerable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721Enumerable.sol), an extension to the ERC721 implementation with helper function and mappings, [ERC721A](https://github.com/chiru-labs/ERC721A/blob/main/contracts/ERC721A.sol) and [Solmate](https://github.com/transmissions11/solmate/blob/main/src/tokens/ERC721.sol), two gas-optimized versions of the ERC721 standard. These contracts involve adding a new token and updating the contract storage, which cost between 32,000 and 176,000 gas units.
 
-```sh
-$ make test
-forge test -vvv
-[⠆] Compiling...
-No files changed, compilation skipped
+Here is the gas cost of minting an NFT depending on the different contracts. To reproduce the numbers, you can use `make test` which will run forge tests under the hood.
 
-Running 2 tests for test/NFTTest.sol:NFTTest
-[PASS] testOpenZeppelinMint() (gas: 1869743)
-Logs:
-  OpenZeppelinNFT contract deployed
-  OpenZeppelinNFT.mintTo() Gas: 103964
-  OpenZeppelinNFT: New NFT minted (id=1)
-  OpenZeppelinNFT.mintTo() Gas: 33264
-  OpenZeppelinNFT: New NFT minted (id=2)
-  ...
-  OpenZeppelinNFT.mintTo() Gas: 33264
-  OpenZeppelinNFT: New NFT minted (id=10)
+| Contract                                                                 | Gas used for the 1st mint | Gas used for all the other mints | Difference (\*)       |
+|--------------------------------------------------------------------------|---------------------------|----------------------------------|-----------------------|
+| [ERC721A](src/ERC721A_NFT.sol)                                           | 101,324 gwei              | 32,724 gwei                      |                       |
+| [Solmate](src/Solmate_NFT.sol)                                           | 81,520 gwei               | 32,820 gwei                      | +96 gwei (~ +$0.017)  |
+| [OpenZeppelinERC721](src/OpenZeppelinERC721_NFT.sol)                     | 103,965 gwei              | 33,265 gwei                      | +541 gwei (~ +$0.97)  |
+| [OpenZeppelinERC721Enumerable](src/OpenZeppelinERC721Enumerable_NFT.sol) | 175,583 gwei              | 122,783 gwei                     | +90,059 gwei (~ +$16) |
 
-[PASS] testSolmateMint() (gas: 1668009)
-Logs:
-  SolmateNFT contract deployed
-  SolmateNFT.mintTo() Gas: 81508
-  SolmateNFT: New NFT minted (id=1)
-  SolmateNFT.mintTo() Gas: 32808
-  SolmateNFT: New NFT minted (id=2)
-  ...
-  SolmateNFT.mintTo() Gas: 32808
-  SolmateNFT: New NFT minted (id=10)
+(\*): To calculate the cost difference in dollars, we took a gas price of 90 gwei and the price of ether around $2,000.
 
-Test result: ok. 2 passed; 0 failed; finished in 1.09ms
-```
+First, we can see that the first mint is the most expensive one, the following ones are 3 times cheaper. Indeed, when a smart contract is deployed for the first time, it requires more gas to be executed, as it involves more computation to set up the necessary data structures and initialize the contract's state.
+
+Second, we can clearly say that `OpenZeppelinERC721Enumerable` is not a good competitor. Indeed, its implementation is wasteful, it eats up a lot of gas and wastes storage. Most NFT projects inherit the two contracts of OpenZeppelin [ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol) and [ERC721Enumerable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721Enumerable.sol) by lazyness or because they simply copy/paste code from other projects but `ERC721Enumerable` is not necessary at all. Most of the time, the only function needed from `ERC721Enumerable` is `totalSupply` which can simply be implemented using a counter to track token ids which would reduce minting costs by around 70%. This contract is mentioned because it is used [here](https://gradefi.com/nftcost) to compute the cost of minting an NFT on various blockchains even though it is not representative of the real cost of minting an NFT.
 
 ### How many dollars does it cost to mint an NFT?
 
