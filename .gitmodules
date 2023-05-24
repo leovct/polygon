@@ -9,3 +9,6 @@
 [submodule "nft-mint-analysis/lib/solmate"]
 	path = nft-mint-analysis/lib/solmate
 	url = https://github.com/transmissions11/solmate
+[submodule "nft-mint-analysis/lib/ERC721A"]
+	path = nft-mint-analysis/lib/ERC721A
+	url = https://github.com/chiru-labs/ERC721A
