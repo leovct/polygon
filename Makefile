@@ -17,6 +17,7 @@ lint: prettier links ## Run linters.
 .PHONY: prettier
 prettier: ## Lint code.
 	npx prettier --write .
+	npx markdown-table-formatter README.md */README.md
 
 .PHONY: links
 links: ## Check for broken links. Note: dune links have been deactivated because they return a 403 status.
