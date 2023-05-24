@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.19;
 
-import '../src/OpenZeppelinNFT.sol';
+import '../src/OpenZeppelinERC721NFT.sol';
 import '../src/SolmateNFT.sol';
 import '@openzeppelin/utils/Strings.sol';
 import '@solmate/test/utils/DSTestPlus.sol';
@@ -17,7 +17,7 @@ contract NFTTest is DSTestPlus {
   uint256 constant NB_NFT_PER_BATCH = 10;
 
   uint256 checkpointGasLeft;
-  OpenZeppelinNFT openZeppelinNFTContract;
+  OpenZeppelinERC721NFT openZeppelinNFTContract;
   SolmateNFT solmateNFTContract;
 
   function openZeppelinMint(uint256 _id) public {
@@ -30,7 +30,7 @@ contract NFTTest is DSTestPlus {
   }
 
   function testOpenZeppelinMint() public {
-    openZeppelinNFTContract = new OpenZeppelinNFT(name, symbol, uri);
+    openZeppelinNFTContract = new OpenZeppelinERC721NFT(name, symbol, uri);
     console2.log('OpenZeppelinNFT contract deployed');
 
     for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {

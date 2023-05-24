@@ -10,7 +10,7 @@ error MaxSupply();
 error NonExistentTokenURI();
 error WithdrawTransfer();
 
-contract OpenZeppelinNFT is OpenZeppelin_ERC721, Ownable {
+contract OpenZeppelinERC721NFT is OpenZeppelin_ERC721, Ownable {
   using Strings for uint256;
 
   uint256 public constant TOTAL_SUPPLY = 10_000;
