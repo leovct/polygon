@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.19;
 
-import "@erc721a/ERC721A.sol";
+import '@erc721a/ERC721A.sol';
 import '@openzeppelin/access/Ownable.sol';
 import '@openzeppelin/utils/Strings.sol';
 

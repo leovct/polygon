@@ -26,7 +26,11 @@ contract NFTTest is DSTestPlus {
 
   // OpenZeppelinERC721
   function testOpenZeppelinERC721Mint() public {
-    openZeppelinERC721NFTContract = new OpenZeppelinERC721_NFT(name, symbol, uri);
+    openZeppelinERC721NFTContract = new OpenZeppelinERC721_NFT(
+      name,
+      symbol,
+      uri
+    );
     console2.log('Contract deployed');
 
     for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {
@@ -37,7 +41,9 @@ contract NFTTest is DSTestPlus {
   function _openZeppelinERC721Mint(uint256 _id) internal {
     startMeasuringGas('mintTo()');
     checkpointGasLeft = gasleft();
-    uint256 id = openZeppelinERC721NFTContract.mintTo{value: MINT_PRICE}(address(1));
+    uint256 id = openZeppelinERC721NFTContract.mintTo{value: MINT_PRICE}(
+      address(1)
+    );
     stopMeasuringGas();
     assert(id == _id);
     console2.log('New NFT minted (id=%d)', id);
@@ -45,7 +51,11 @@ contract NFTTest is DSTestPlus {
 
   // OpenZeppelinERC721Enumerable
   function testOpenZeppelinERC721EnumerableMint() public {
-    openZeppelinERC721EnumerableNFTContract = new OpenZeppelinERC721Enumerable_NFT(name, symbol, uri);
+    openZeppelinERC721EnumerableNFTContract = new OpenZeppelinERC721Enumerable_NFT(
+      name,
+      symbol,
+      uri
+    );
     console2.log('Contract deployed');
 
     for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {
@@ -56,7 +66,9 @@ contract NFTTest is DSTestPlus {
   function _openZeppelinERC721EnumerableMint(uint256 _id) internal {
     startMeasuringGas('mintTo()');
     checkpointGasLeft = gasleft();
-    uint256 id = openZeppelinERC721EnumerableNFTContract.mintTo{value: MINT_PRICE}(address(1));
+    uint256 id = openZeppelinERC721EnumerableNFTContract.mintTo{
+      value: MINT_PRICE
+    }(address(1));
     stopMeasuringGas();
     assert(id == _id);
     console2.log('New NFT minted (id=%d)', id);
@@ -71,7 +83,7 @@ contract NFTTest is DSTestPlus {
       _solmateMint(i);
     }
   }
-  
+
   function _solmateMint(uint256 _id) internal {
     startMeasuringGas('mintTo()');
     uint256 id = solmateNFTContract.mintTo{value: MINT_PRICE}(address(1));
@@ -89,7 +101,7 @@ contract NFTTest is DSTestPlus {
       _erc721aMint(i);
     }
   }
-  
+
   function _erc721aMint(uint256 _id) internal {
     startMeasuringGas('mintTo()');
     uint256 id = erc721aNFTContract.mintTo{value: MINT_PRICE}(address(1));
