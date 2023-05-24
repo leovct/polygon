@@ -6,6 +6,7 @@ remappings = [
   '@forge-std/=lib/forge-std/src',
   '@openzeppelin/=lib/openzeppelin-contracts/contracts',
   '@solmate/=lib/solmate/src',
+  '@erc721a/=lib/erc721a/contracts'
 ]
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
