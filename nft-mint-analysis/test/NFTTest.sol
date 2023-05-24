@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 
 import '../src/OpenZeppelinERC721_NFT.sol';
+import '../SRC/OpenZeppelinERC721Enumerable_NFT.sol';
 import '../src/Solmate_NFT.sol';
 import '../src/ERC721A_NFT.sol';
 import '@openzeppelin/utils/Strings.sol';
@@ -18,13 +19,14 @@ contract NFTTest is DSTestPlus {
   uint256 constant NB_NFT_PER_BATCH = 10;
 
   uint256 checkpointGasLeft;
-  OpenZeppelinERC721_NFT OpenZeppelinERC721NFTContract;
+  OpenZeppelinERC721_NFT openZeppelinERC721NFTContract;
+  OpenZeppelinERC721Enumerable_NFT openZeppelinERC721EnumerableNFTContract;
   Solmate_NFT solmateNFTContract;
   ERC721A_NFT erc721aNFTContract;
 
   // OpenZeppelinERC721
   function testOpenZeppelinERC721Mint() public {
-    OpenZeppelinERC721NFTContract = new OpenZeppelinERC721_NFT(name, symbol, uri);
+    openZeppelinERC721NFTContract = new OpenZeppelinERC721_NFT(name, symbol, uri);
     console2.log('Contract deployed');
 
     for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {
@@ -35,7 +37,26 @@ contract NFTTest is DSTestPlus {
   function _openZeppelinERC721Mint(uint256 _id) internal {
     startMeasuringGas('mintTo()');
     checkpointGasLeft = gasleft();
-    uint256 id = OpenZeppelinERC721NFTContract.mintTo{value: MINT_PRICE}(address(1));
+    uint256 id = openZeppelinERC721NFTContract.mintTo{value: MINT_PRICE}(address(1));
+    stopMeasuringGas();
+    assert(id == _id);
+    console2.log('New NFT minted (id=%d)', id);
+  }
+
+  // OpenZeppelinERC721Enumerable
+  function testOpenZeppelinERC721EnumerableMint() public {
+    openZeppelinERC721EnumerableNFTContract = new OpenZeppelinERC721Enumerable_NFT(name, symbol, uri);
+    console2.log('Contract deployed');
+
+    for (uint256 i = 1; i <= NB_NFT_PER_BATCH; i++) {
+      _openZeppelinERC721EnumerableMint(i);
+    }
+  }
+
+  function _openZeppelinERC721EnumerableMint(uint256 _id) internal {
+    startMeasuringGas('mintTo()');
+    checkpointGasLeft = gasleft();
+    uint256 id = openZeppelinERC721EnumerableNFTContract.mintTo{value: MINT_PRICE}(address(1));
     stopMeasuringGas();
     assert(id == _id);
     console2.log('New NFT minted (id=%d)', id);
