@@ -5,10 +5,10 @@ import {ERC721 as OpenZeppelin_ERC721} from '@openzeppelin/token/ERC721/ERC721.s
 import '@openzeppelin/access/Ownable.sol';
 import '@openzeppelin/utils/Strings.sol';
 
-error MintPriceNotPaid();
-error MaxSupply();
-error NonExistentTokenURI();
-error WithdrawTransfer();
+error OpenZeppelinERC721_MintPriceNotPaid();
+error OpenZeppelinERC721_MaxSupply();
+error OpenZeppelinERC721_NonExistentTokenURI();
+error OpenZeppelinERC721_WithdrawTransfer();
 
 contract OpenZeppelinERC721NFT is OpenZeppelin_ERC721, Ownable {
   using Strings for uint256;
@@ -29,11 +29,11 @@ contract OpenZeppelinERC721NFT is OpenZeppelin_ERC721, Ownable {
 
   function mintTo(address recipient) public payable returns (uint256) {
     if (msg.value != MINT_PRICE) {
-      revert MintPriceNotPaid();
+      revert OpenZeppelinERC721_MintPriceNotPaid();
     }
     uint256 newTokenId = ++currentTokenId;
     if (newTokenId > TOTAL_SUPPLY) {
-      revert MaxSupply();
+      revert OpenZeppelinERC721_MaxSupply();
     }
     _safeMint(recipient, newTokenId);
     return newTokenId;
@@ -43,7 +43,7 @@ contract OpenZeppelinERC721NFT is OpenZeppelin_ERC721, Ownable {
     uint256 tokenId
   ) public view virtual override returns (string memory) {
     if (ownerOf(tokenId) == address(0)) {
-      revert NonExistentTokenURI();
+      revert OpenZeppelinERC721_NonExistentTokenURI();
     }
     return
       bytes(baseURI).length > 0
@@ -55,7 +55,7 @@ contract OpenZeppelinERC721NFT is OpenZeppelin_ERC721, Ownable {
     uint256 balance = address(this).balance;
     (bool transferTx, ) = payee.call{value: balance}('');
     if (!transferTx) {
-      revert WithdrawTransfer();
+      revert OpenZeppelinERC721_WithdrawTransfer();
     }
   }
 }
