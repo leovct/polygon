@@ -14,7 +14,7 @@ TODO + also talk about EIP-1559
 
 We started our analysis using tools such as [PolygonScan](https://polygonscan.com/), [Tenderly](https://dashboard.tenderly.co/) and [Arkham Intelligence](https://platform.arkhamintelligence.com/). The findings indicated that the smart contract in question was involved in arbitrage activities. It would acquire assets from decentralized exchanges (DEXes) at lower prices and then sell them on other exchanges at higher prices, bringing both exchange prices back to equilibrium while earning a profit. The primary functions invoked in this contract were `arbV3Iterative3`, `uniswapV3SwapCallback`, `jetswapCall`, `waultSwapCall`, etc., leaving no room for ambiguity regarding the contract's purpose.
 
-Here, you can see all the interactions between the arbitrage smart contract and various DeFi protocols, including [Uniswap](https://uniswap.org/), [QuickSwap](https://quickswap.exchange/) and [SushiSwap](https://www.sushi.com/).
+Here, you can see all the interactions between the arbitrage smart contract and various DeFi protocols, including [Uniswap](https://uniswap.org/) and [SushiSwap](https://www.sushi.com/).
 
 ![fig-1-interactions-between-the-arbitrage-sc-and-defi-protocols](doc/fig-1-interactions-between-the-arbitrage-sc-and-defi-protocols.png)
 
