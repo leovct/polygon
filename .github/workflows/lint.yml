@@ -7,7 +7,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
+  lint:
     strategy:
       fail-fast: true
       matrix:
@@ -31,7 +31,28 @@ jobs:
       - name: Lint code
         run: make prettier
         id: lint
+  
+  broken-links:
+    strategy:
+      fail-fast: true
+      matrix:
+        version: [18]
+    
+    name: Broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.version }}
+
+      - name: Install npm dependencies
+        run: npm ci
+        id: install
+      
       - name: Check for broken links
         run: make links
         id: links
