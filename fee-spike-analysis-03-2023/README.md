@@ -47,3 +47,7 @@ Some potential solutions would be to quantify the impact of MEV on Polygon, like
 ![fig-5-pbs-illustrated](doc/fig-5-pbs-illustrated.jpg)
 
 Credits to [Dom Steil](https://domsteil.substack.com/p/proposer-builder-separation-pbs) for the illustration of the PBS concept.
+
+## Conclusion
+
+TODO
