@@ -1,16 +1,23 @@
 # 📈 Fee Spikes on Polygon around March 21/22 of 2023
 
+## Table of contents
+
+- [Introduction](#introduction)
+- [Gas fee spikes analysis](#gas-fee-spikes-analysis)
+- [A suspicious smart contract](#a-suspicious-smart-contract)
+- [Conclusion](#conclusion)
+
 ## Introduction
 
 We received some inquiries about user transactions going up to 4+ Matic in fees when the median average fees should have been around 0.05 MATIC in the middle of March 2023. We decided to investigate to identify the root cause of the fee spikes and find a way to solve the issue in order to ensure that Polygon remains cheap and usable. The investigation targeted a 40-hour period between 2023-03-21 00:00:00 and 2023-03-22 17:45:50.
 
 The Polygon team identified that only a very small percentage (< 0.03%) of transactions were priced above 4 Matic in fees. Indeed, most of the other transactions were priced correctly. By filtering down, removing successful transactions and only looking at transactions that were priced at 1 Matic or more, we could see that there were around 1,340 failed transactions and 98% of these transactions came from the same [smart contract](https://polygonscan.com/address/0x458df878cae2174a294b907df6d4235fa59eaa44). This contract was overpaying for gas, running exhaustion and utilizing a lot of space in blocks. Suspicious right? Let's dive in...
 
-## Gas fee spikes
+## Gas fee spikes analysis
 
 TODO + also talk about EIP-1559
 
-## Suspicious smart contract
+## A suspicious smart contract
 
 We started our analysis using tools such as [PolygonScan](https://polygonscan.com/), [Tenderly](https://dashboard.tenderly.co/) and [Arkham Intelligence](https://platform.arkhamintelligence.com/). The findings indicated that the smart contract in question was involved in arbitrage activities. It would acquire assets from decentralized exchanges (DEXes) at lower prices and then sell them on other exchanges at higher prices, bringing both exchange prices back to equilibrium while earning a profit. The primary functions invoked in this contract were `arbV3Iterative3`, `uniswapV3SwapCallback`, `jetswapCall`, `waultSwapCall`, etc., leaving no room for ambiguity regarding the contract's purpose.
 
