@@ -85,18 +85,18 @@ The formula to compute the next base fee is a geometrical sequence with:
 - `t` as the target amount of gas for a block divided by the elasticity multiplier coefficient (set to 2 on both [Ethereum](https://eips.ethereum.org/EIPS/eip-1559) and [Polygon PoS](https://github.com/maticnetwork/bor/blob/develop/params/protocol_params.go#LL125C3-L125C3)),
 - `d` as the base fee change denominator (set to 8 on [Ethereum](https://eips.ethereum.org/EIPS/eip-1559) and 16 on [Polygon PoS](https://github.com/maticnetwork/bor/blob/develop/params/protocol_params.go#L123) after the Delhi hard fork - this is the only difference between the computation of EIP-1559 on Ethereum and Polygon PoS).
 
-![base-fee-formula](doc/fig-11-base-fee-formula.png)
-Fig 11. Base fee formula
+![base-fee-formula](doc/fig-10-base-fee-formula.png)
+Fig 10. Base fee formula
 
 Assuming that blocks are fully utilized on Polygon PoS (`t_n=u_n/2`), we get `b_n+1=(17/16)*b_n`. This means that base fees swing between ±6.25%, illustrated by the diagram below, half as much in terms of percentage variation compared to fees on Ethereum.
 
-![change-in-base-fee](doc/fig-12-change-in-base-fee.png)
-Fig 12. Change in base fee
+![change-in-base-fee](doc/fig-11-change-in-base-fee.png)
+Fig 11. Change in base fee
 
 The Polygon team uncovered that in a ~20-block period, the base fee jumped from 439 Gwei to 1,601 Gwei. This is something we can see in the first red incline of the third figure. Given that each block on Polygon PoS can increase the base by 6.25%. When blocks are fully utilized, like what this smart contract was doing, the base fee could increase by roughly 500% in about 1 minute.
 
-![base-fee-growth-rates-when-blocks-are-fully-utilized](doc/fig-10-base-fee-growth-rates-when-blocks-are-fully-utilized.png)
-Fig 10. Base fee growth rate when blocks are fully utilized
+![base-fee-growth-rates-when-blocks-are-fully-utilized](doc/fig-12-base-fee-growth-rates-when-blocks-are-fully-utilized.png)
+Fig 12. Base fee growth rate when blocks are fully utilized
 
 A solution could be to try to prevent the base fee from increasing and decreasing too rapidly. Since Polygon produces blocks around 6 times faster than Ethereum (around 12s for Ethereum block time and 2s for Polygon PoS), we may want to decrease the `ElasticityMultiplier` or increase the `BaseFeeChangeDenominator` to dampen these swings.
 
