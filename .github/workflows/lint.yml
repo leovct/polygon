@@ -31,13 +31,13 @@ jobs:
       - name: Lint code
         run: make prettier
         id: lint
-  
+
   broken-links:
     strategy:
       fail-fast: true
       matrix:
         version: [18]
-    
+
     name: Broken links
     runs-on: ubuntu-latest
     steps:
@@ -52,7 +52,7 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
         id: install
-      
+
       - name: Check for broken links
         run: make links
         id: links
