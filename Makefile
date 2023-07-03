@@ -21,4 +21,4 @@ prettier: ## Lint code.
 
 .PHONY: links
 links: ## Check for broken links. Note: dune links have been deactivated because they return a 403 status.
-	npx linkinator "README.md" "*/README.md" --skip "https://dune.com"
+	npx linkinator "README.md" "*/README.md" --skip "https://dune.com" --skip "https://etherscan.io"
