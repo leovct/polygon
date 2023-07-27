@@ -1,4 +1,4 @@
-# 🐳 Docker Setup for Polygon PoS
+# 🐳 VM Setup Playbook for Docker PoS
 
 ## Table of contents
 
@@ -8,11 +8,7 @@
 
 ## Introduction
 
-In order to build and push new images for the Polygon PoS docker setup, you need an Ubuntu distribution.
-
-That's not very convenient since I'm working on macOS.
-
-Here are some commands to set up an Ubuntu VM ready for building these images.
+In order to build and push new images for the Polygon PoS docker setup, you need an Ubuntu distribution. That's not very convenient since I'm working on macOS. Here are some commands to set up an Ubuntu VM ready for building these images.
 
 The code for building the images and running the setup is located [here](https://github.com/maticnetwork/polygon-devnets/tree/dc43ac13f6fefa8fdaa82574df98727c4ff4b429/docker/pos).
 
