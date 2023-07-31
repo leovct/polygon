@@ -9,3 +9,5 @@
 ## Operations
 
 - [🐳 VM Setup Playbook for Docker PoS](docker-pos/VM.md): A simple playbook to set up an Ubuntu 22.04 VM with all the dependencies needed to build the docker images with instrumentation and to run the entire system.
+
+- [🤖 Zero Prover VM Setup](zero-prover/VM.md): Same thing as the VM setup playbook for Docker PoS but for [zero provers](https://github.com/mir-protocol/zero-provers).
