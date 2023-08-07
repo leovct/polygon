@@ -68,8 +68,8 @@ $ echo "Clone the repository" \
   && echo "Remove the hardcoded edge devnet address" \
   && sed -i 's|http://34.111.47.249:10000|http://127.0.0.1:8546|g' leader/src/external_query/mocks/contract_mock.rs \
   && echo "Build binaries" \
-  && RUSTFLAGS=-Ctarget-cpu=native cargo build --bin zero_prover_leader --release -F extern-query-mock \
-  && RUSTFLAGS=-Ctarget-cpu=native cargo build --bin zero_prover_worker --release \
+  && cargo build --bin zero_prover_leader --release -F extern-query-mock \
+  && cargo build --bin zero_prover_worker --release \
   && sudo mv ./target/release/zero_prover_leader /usr/local/bin \
   && sudo mv ./target/release/zero_prover_worker /usr/local/bin \
   && echo "Create the prover secret key" \
@@ -87,7 +87,6 @@ $ RUST_LOG="debug" dumb-init -- zero_prover_leader \
     --full-node-endpoint http://127.0.0.1:8546 \
     --proof-complete-endpoint http://127.0.0.1:8080/save \
     --commit-height-delta-before-generating-proofs 0 \
-    -i 127.0.0.1 \
     -p 9001
 ```
 
@@ -96,7 +95,6 @@ $ RUST_LOG="debug" dumb-init -- zero_prover_leader \
 ```sh
 RUST_LOG="debug" dumb-init -- zero_prover_worker http://127.0.0.1:9001 \
     --leader-notif-min-delay 1sec \
-    -i 127.0.0.1 \
     -p 9002 \
     -a http://127.0.0.1:9002
 ```
