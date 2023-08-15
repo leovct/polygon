@@ -61,57 +61,54 @@ ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
 🚨 Note: This step will remove the hardcoded edge devnet address and use the local mock endpoint instead!
 
 ```sh
-$ echo "Clone the repository" \
+$ echo "Clone the zero-provers repository" \
   && git clone git@github.com:mir-protocol/zero-provers.git \
   && cd zero-provers \
   && git checkout trace_parsing_in_prog_fixes \
   && echo "Remove the hardcoded edge devnet address" \
   && sed -i 's|http://34.111.47.249:10000|http://127.0.0.1:8546|g' leader/src/external_query/mocks/contract_mock.rs \
   && echo "Build binaries" \
-  && RUSTFLAGS=-Ctarget-cpu=native cargo build --bin zero_prover_leader --release -F extern-query-mock \
-  && RUSTFLAGS=-Ctarget-cpu=native cargo build --bin zero_prover_worker --release \
+  && cargo build --bin zero_prover_leader --release -F extern-query-mock \
+  && cargo build --bin zero_prover_worker --release \
   && sudo mv ./target/release/zero_prover_leader /usr/local/bin \
   && sudo mv ./target/release/zero_prover_worker /usr/local/bin \
   && echo "Create the prover secret key" \
   && touch prover.key \
-  && echo \"3a8f45d67197b22e6d334ce7086a14b50c6d42b2da4b2f8a8115167d5ed5b693\" > prover.key
+  && echo \"3a8f45d67197b22e6d334ce7086a14b50c6d42b2da4b2f8a8115167d5ed5b693\" > prover.key \
+  && echo "Clone the mock server repository" \
+  && cd \
+  && git clone git@github.com:leovct/edge-grpc-mock-server.git \
+  && cd edge-grpc-mock-server \
+  && go build -o mock-server main.go \
+  && sudo mv ./mock /usr/local/bin
 ```
 
-6. Start the leader
+6. Start the mock server
 
 ```sh
-$ RUST_LOG="debug" dumb-init -- zero_prover_leader \
-    --secret-key-path prover.key \
-    --contract-address 0x0000000000000000000000000000000000000000 \
-    --rpc-url http://change_me.com \
-    --full-node-endpoint http://127.0.0.1:8546 \
-    --proof-complete-endpoint http://127.0.0.1:8080/save \
-    --commit-height-delta-before-generating-proofs 0 \
-    -i 127.0.0.1 \
-    -p 9001
+mock-server
 ```
 
 7. Start the worker
 
 ```sh
 RUST_LOG="debug" dumb-init -- zero_prover_worker http://127.0.0.1:9001 \
-    --leader-notif-min-delay 1sec \
-    -i 127.0.0.1 \
-    -p 9002 \
-    -a http://127.0.0.1:9002
+  --leader-notif-min-delay 1sec \
+  -p 9002 \
+  -a http://127.0.0.1:9002
 ```
 
-8. Start the edge mock REST endpoint
-
-Note: This will also start the "save" endpoint which saves proofs to disk.
+8. Start the leader
 
 ```sh
-$ cd \
-  && git clone git@github.com:mir-protocol/zero-provers.git zero-provers-tmp \
-  && cd zero-provers-tmp \
-  && git checkout leovct/feat-integration-test-workflow \
-  && cd .github/workflows/server \
-  && go run main.go
+RUST_LOG="debug" dumb-init -- zero_prover_leader \
+  --secret-key-path prover.key \
+  --contract-address 0x0000000000000000000000000000000000000000 \
+  --rpc-url http://change_me.com \
+  --full-node-endpoint http://127.0.0.1:8546 \
+  --proof-complete-endpoint http://127.0.0.1:8080/save \
+  --commit-height-delta-before-generating-proofs 0 \
+  -p 9001
 ```
 
 ## Debug
