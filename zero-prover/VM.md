@@ -4,7 +4,6 @@
 
 - [Introduction](#introduction)
 - [Setup](#setup)
-- [Debug](#debug)
 
 ## Introduction
 
@@ -16,7 +15,7 @@ Most of the code is located in this [repository](https://github.com/mir-protocol
 
 ## Setup
 
-1. Start an Ubuntu 22.04 VM. Make sure to have at least 32GB of memory (even more is better!) and 100GB of storage.
+1. Start an Ubuntu 22.04 VM (x86). Make sure to have at least 32GB of memory (even more is better!) and 100GB of storage. For example, you can use `c5.4xlarge` on AWS.
 
 2. Connect to the VM
 
@@ -38,10 +37,6 @@ $ echo "Set up to run the zero prover setup" \
   && echo "Install go" \
   && sudo snap install go --classic \
   && go version \
-  && echo "Install dumb-init" \
-  && sudo wget -O /dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 \
-  && sudo chmod +x /dumb-init \
-  && sudo mv /dumb-init /usr/local/bin \
   && echo "Install grpcurl" \
   && wget https://github.com/fullstorydev/grpcurl/releases/download/v1.7.0/grpcurl_1.7.0_linux_x86_64.tar.gz \
   && tar -xvf grpcurl_1.7.0_linux_x86_64.tar.gz \
@@ -58,15 +53,12 @@ ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
 
 5. Build the binaries
 
-🚨 Note: This step will remove the hardcoded edge devnet address and use the local mock endpoint instead!
+🚨 Note: You may need to switch to a custom branch!
 
 ```sh
 $ echo "Clone the zero-provers repository" \
   && git clone git@github.com:mir-protocol/zero-provers.git \
   && cd zero-provers \
-  && git checkout trace_parsing_in_prog_fixes \
-  && echo "Remove the hardcoded edge devnet address" \
-  && sed -i 's|http://34.111.47.249:10000|http://127.0.0.1:8546|g' leader/src/external_query/mocks/contract_mock.rs \
   && echo "Build binaries" \
   && cargo build --bin zero_prover_leader --release -F extern-query-mock \
   && cargo build --bin zero_prover_worker --release \
@@ -92,8 +84,9 @@ mock-server
 7. Start the worker
 
 ```sh
-RUST_LOG="debug" dumb-init -- zero_prover_worker http://127.0.0.1:9001 \
+RUST_LOG="debug" zero_prover_worker http://127.0.0.1:9001 \
   --leader-notif-min-delay 1sec \
+  -i 127.0.0.1 \
   -p 9002 \
   -a http://127.0.0.1:9002
 ```
@@ -101,52 +94,13 @@ RUST_LOG="debug" dumb-init -- zero_prover_worker http://127.0.0.1:9001 \
 8. Start the leader
 
 ```sh
-RUST_LOG="debug" dumb-init -- zero_prover_leader \
+RUST_LOG="debug" zero_prover_leader \
   --secret-key-path prover.key \
   --contract-address 0x0000000000000000000000000000000000000000 \
   --rpc-url http://change_me.com \
   --full-node-endpoint http://127.0.0.1:8546 \
   --proof-complete-endpoint http://127.0.0.1:8080/save \
   --commit-height-delta-before-generating-proofs 0 \
-  -p 9001
-```
-
-## Debug
-
-1. Make sure to use the correct nightly build
-
-🚨 Note: This will need a full rebuild of the binaries (and don't forget to move them to `/usr/local/bin`)!
-
-```sh
-rustup install nightly-2023-03-07 && rustup default nightly-2023-03-07
-```
-
-2. Make sure there is no override in `leader/src/external_query/mocks/contract_mock.rs`
-
-```sh
-sed -i 's|http://127.0.0.1:8546|http://34.111.47.249:10000|g' leader/src/external_query/mocks/contract_mock.rs
-```
-
-3. Start the leader without `dumb-init` and using the edge devnet endpoint
-
-```sh
-RUST_LOG="info" zero_prover_leader \
-  --secret-key-path prover.key \
-  --contract-address 0x0000000000000000000000000000000000000000 \
-  --rpc-url http://change_me.com \
-  --full-node-endpoint http://34.111.47.249:10000 \
-  --proof-complete-endpoint http://127.0.0.1:8080/save \
-  --commit-height-delta-before-generating-proofs 0 \
   -i 127.0.0.1 \
   -p 9001
-```
-
-4. Start the worker without `dumb-init`
-
-```sh
-RUST_LOG="info" zero_prover_worker http://127.0.0.1:9001 \
-  --leader-notif-min-delay 1sec \
-  -i 127.0.0.1 \
-  -p 9002 \
-  -a http://127.0.0.1:9002
 ```
