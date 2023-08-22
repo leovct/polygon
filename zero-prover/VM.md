@@ -71,8 +71,8 @@ $ echo "Clone the zero-provers repository" \
   && cd \
   && git clone git@github.com:leovct/edge-grpc-mock-server.git \
   && cd edge-grpc-mock-server \
-  && go build -o mock-server main.go \
-  && sudo mv ./mock /usr/local/bin
+  && go build -o edge-grpc-mock-server main.go \
+  && sudo mv ./edge-grpc-mock-server /usr/local/bin
 ```
 
 6. Start the mock server
