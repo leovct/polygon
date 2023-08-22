@@ -64,6 +64,7 @@ $ echo "Clone the zero-provers repository" \
   && cargo build --bin zero_prover_worker --release \
   && sudo mv ./target/release/zero_prover_leader /usr/local/bin \
   && sudo mv ./target/release/zero_prover_worker /usr/local/bin \
+  && cd .. \
   && echo "Create the prover secret key" \
   && touch prover.key \
   && echo \"3a8f45d67197b22e6d334ce7086a14b50c6d42b2da4b2f8a8115167d5ed5b693\" > prover.key \
@@ -78,7 +79,16 @@ $ echo "Clone the zero-provers repository" \
 6. Start the mock server
 
 ```sh
-mock-server
+edge-grpc-mock-server \
+  --debug \
+  --grpc-port 8546 \
+  --http-port 8080 \
+  --http-save-endpoint /save \
+  --mock-data-dir edge-grpc-mock-server/data \
+  --mock-data-block-file block.json \
+  --mock-data-status-file status.json \
+  --mock-data-trace-file trace1.json \
+  --output-dir out
 ```
 
 7. Start the worker
