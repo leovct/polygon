@@ -27,7 +27,7 @@ echo "Set up to build docker pos setup images" \
   && alias make='sudo make' \
   && echo "Install packages" \
   && sudo apt-get update \
-  && sudo apt-get install -y make jq shellcheck python3-pip \
+  && sudo apt-get install -y make jq shellcheck python3-pip unzip \
   && sudo snap install yq \
   && pip install yq \
   && echo "Install Docker (https://docs.docker.com/engine/install/ubuntu/)" \
