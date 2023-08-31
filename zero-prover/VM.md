@@ -72,6 +72,7 @@ $ echo "Clone the zero-provers repository" \
   && cd \
   && git clone git@github.com:leovct/edge-grpc-mock-server.git \
   && cd edge-grpc-mock-server \
+  && git checkout missing_prev_block_bypass_hack \
   && go build -o edge-grpc-mock-server main.go \
   && sudo mv ./edge-grpc-mock-server /usr/local/bin
 ```
@@ -80,15 +81,15 @@ $ echo "Clone the zero-provers repository" \
 
 ```sh
 edge-grpc-mock-server \
-  --debug \
   --grpc-port 8546 \
   --http-port 8080 \
   --http-save-endpoint /save \
-  --mock-data-dir edge-grpc-mock-server/data \
-  --mock-data-block-file block.json \
-  --mock-data-status-file status.json \
-  --mock-data-trace-file trace1.json \
-  --output-dir out
+  --mock-data-block-dir edge-grpc-mock-server/data/blocks \
+  --mock-data-trace-dir edge-grpc-mock-server/data/traces \
+  --mode dynamic \
+  --update-data-threshold 30 \
+  --output-dir out \
+  --verbosity 0
 ```
 
 7. Start the worker
