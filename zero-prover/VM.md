@@ -25,7 +25,7 @@ Most of the code is located in this [repository](https://github.com/mir-protocol
 $ echo "Set up to run the zero prover setup" \
   && echo "Install packages" \
   && sudo apt-get update \
-  && sudo apt-get install -y build-essential pkg-config libssl-dev protobuf-compiler \
+  && sudo apt-get install -y build-essential pkg-config libssl-dev protobuf-compiler jq \
   && echo "Install rust" \
   && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh \
   && source "$HOME/.cargo/env" \
@@ -59,6 +59,7 @@ ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
 $ echo "Clone the zero-provers repository" \
   && git clone git@github.com:mir-protocol/zero-provers.git \
   && cd zero-provers \
+  && git checkout missing_prev_block_bypass_hack \
   && echo "Build binaries" \
   && cargo build --bin zero_prover_leader --release -F extern-query-mock \
   && cargo build --bin zero_prover_worker --release \
@@ -72,24 +73,25 @@ $ echo "Clone the zero-provers repository" \
   && cd \
   && git clone git@github.com:leovct/edge-grpc-mock-server.git \
   && cd edge-grpc-mock-server \
-  && git checkout missing_prev_block_bypass_hack \
   && go build -o edge-grpc-mock-server main.go \
-  && sudo mv ./edge-grpc-mock-server /usr/local/bin
+  && sudo mv ./edge-grpc-mock-server /usr/local/bin \
+  && tar -xf data/archives/mock-uniswap-snowball.tar.bz2 -C data
 ```
 
 6. Start the mock server
 
 ```sh
+cd edge-grpc-mock-server
 edge-grpc-mock-server \
-  --grpc-port 8546 \
-  --http-port 8080 \
-  --http-save-endpoint /save \
-  --mock-data-block-dir edge-grpc-mock-server/data/blocks \
-  --mock-data-trace-dir edge-grpc-mock-server/data/traces \
-  --mode dynamic \
-  --update-data-threshold 30 \
-  --output-dir out \
-  --verbosity 0
+    --grpc-port 8546 \
+    --http-port 8080 \
+    --http-save-endpoint /save \
+    --mock-data-block-dir data/mock-uniswap-snowball/blocks \
+    --mock-data-trace-dir data/mock-uniswap-snowball/traces \
+    --mode dynamic \
+    --update-data-threshold 30 \
+    --output-dir out \
+    --verbosity 0
 ```
 
 7. Start the worker
@@ -103,6 +105,8 @@ RUST_LOG="debug" zero_prover_worker http://127.0.0.1:9001 \
 ```
 
 8. Start the leader
+
+Wait for the worker to start 
 
 ```sh
 RUST_LOG="debug" zero_prover_leader \
