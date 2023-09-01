@@ -75,7 +75,7 @@ $ echo "Clone the zero-provers repository" \
   && cd edge-grpc-mock-server \
   && go build -o edge-grpc-mock-server main.go \
   && sudo mv ./edge-grpc-mock-server /usr/local/bin \
-  && tar -xf data/archives/mock-uniswap-snowball.tar.bz2 -C data
+  && tar -xf data/archives/mock-uniswap-snowball-2.tar.bz2 -C data
 ```
 
 6. Start the mock server
@@ -85,8 +85,8 @@ edge-grpc-mock-server \
     --grpc-port 8546 \
     --http-port 8080 \
     --http-save-endpoint /save \
-    --mock-data-block-dir edge-grpc-mock-server/data/mock-uniswap-snowball/blocks \
-    --mock-data-trace-dir edge-grpc-mock-server/data/mock-uniswap-snowball/traces \
+    --mock-data-block-dir edge-grpc-mock-server/data/mock-uniswap-snowball-2/blocks \
+    --mock-data-trace-dir edge-grpc-mock-server/data/mock-uniswap-snowball-2/traces \
     --mode dynamic \
     --update-data-threshold 30 \
     --output-dir out \
