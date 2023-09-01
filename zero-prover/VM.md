@@ -81,13 +81,12 @@ $ echo "Clone the zero-provers repository" \
 6. Start the mock server
 
 ```sh
-cd edge-grpc-mock-server
 edge-grpc-mock-server \
     --grpc-port 8546 \
     --http-port 8080 \
     --http-save-endpoint /save \
-    --mock-data-block-dir data/mock-uniswap-snowball/blocks \
-    --mock-data-trace-dir data/mock-uniswap-snowball/traces \
+    --mock-data-block-dir edge-grpc-mock-server/data/mock-uniswap-snowball/blocks \
+    --mock-data-trace-dir edge-grpc-mock-server/data/mock-uniswap-snowball/traces \
     --mode dynamic \
     --update-data-threshold 30 \
     --output-dir out \
@@ -105,8 +104,6 @@ RUST_LOG="debug" zero_prover_worker http://127.0.0.1:9001 \
 ```
 
 8. Start the leader
-
-Wait for the worker to start 
 
 ```sh
 RUST_LOG="debug" zero_prover_leader \
