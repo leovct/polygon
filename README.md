@@ -15,6 +15,7 @@
 ## Systems
 
 - [⚙️ Zero Prover Overview](zero-prover/Overview.md): Break down the system using diagrams to understand how it works and what it is used for.
+- [⚡️ zkEVM Education Series](https://drive.google.com/drive/u/1/folders/1X1A-00w2L07CJUC7KPeNqAsdw0e50m_i): A detailed course on zkEVM and its various components (prover, aggregator, sequencer, etc.).
 
 ## Operations
 
