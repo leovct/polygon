@@ -59,7 +59,7 @@ ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
 $ echo "Clone the zero-provers repository" \
   && git clone git@github.com:mir-protocol/zero-provers.git \
   && cd zero-provers \
-  && git checkout missing_prev_block_bypass_hack \
+  && git checkout additional_trace_roots \
   && echo "Build binaries" \
   && cargo build --bin zero_prover_leader --release -F extern-query-mock \
   && cargo build --bin zero_prover_worker --release \
