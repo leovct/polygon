@@ -8,7 +8,20 @@ contract Counter {
         number = newNumber;
     }
 
-    function increment() public {
+    function increment() public returns(uint256) {
         number++;
+        return number;
+    }
+
+    function tryRevert() public {
+        number++;
+        revert();
+    }
+    function terminate(address payable addr) public {
+        selfdestruct(addr);
+    }
+    function stop() public {
+        number++;
+        assembly {stop()}
     }
 }
