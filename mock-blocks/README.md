@@ -1,8 +1,9 @@
-## Mock blocks
+## 🧱 Mock blocks
 
 ## Table of contents
 
-TODO
+- [Introduction](#introduction)
+- [Usage](#usage)
 
 ## Introduction
 
@@ -10,52 +11,4 @@ We would like to be able to generate a list of blocks that represent the activit
 
 ## Usage
 
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Simply run the script: `./create-test-blocks.sh`.
