@@ -2,21 +2,14 @@
 pragma solidity ^0.8.21;
 
 import "./Counter.sol";
-
 contract Snowball {
-    uint64 public seed;
+    enum Mode {Tx, Msg, Block, Contract, Precompile}
 
+    uint64 public seed;
     mapping(uint256 => uint256) public executionResults;
     mapping(uint256 => uint256) public primeNumbers;
-
     bytes returnData;
     bool success;
-
-    uint256 public constant modeTx = 1;
-    uint256 public constant modeMsg = 2;
-    uint256 public constant modeBlock = 4;
-    uint256 public constant modeContract = 8;
-    uint256 public constant modePrecompile = 16;
 
     // LOG 0
     event TestStart() anonymous;
@@ -64,19 +57,18 @@ contract Snowball {
         return j;
     }
 
-    // The goal of this function is to hit as many op codes as possible in a way that we can determine if any of that are behaving unexpectedly. There are a few op codes that we aren't testing
-    // CALLCODE - deprecated for delegatecall
-    // DUPX - We don't hit every dup call
-    // MSTORE8
+    // The goal of this function is to hit as many op codes as possible in a way that we can determine if any of that are behaving unexpectedly.
+    // There are a few op codes that we aren't testing.
+    // CALLCODE - Deprecated for `delegatecall`.
+    // DUPX/PUSHX/SWAPX - We don't hit every variation but that's not a problem since those are stack operations.
+    // MSTORE8 - Save byte to memory.
     // PC - Removed on solidity 0.7
-    // PUSHX - we don't hit every variation
-    // SHA3 - Also deprecated for kaccak256
-    // SWAPX - we don't hit every variation
+    // SHA3 - Deprecated for `keccak256`.
     //
     // We are also skipping a few procompiles at the moment
     // BLAKE2 - is not really used https://eips.ethereum.org/EIPS/eip-7266
     // ecParing - haven't figured out how to implement TODO
-    function test(uint64 _seed, uint32 loops, uint256 mode) public payable returns (bytes32) {
+    function test(uint64 _seed, uint32 _loops, Mode _mode) public payable returns (bytes32) {
         seed = _seed;
         emit TestStartSeed(_seed);
 
@@ -93,7 +85,7 @@ contract Snowball {
 
         emit TestStart();
 
-        for (uint32 i = 0; i < loops; i = i + 1) {
+        for (uint32 i = 0; i < _loops; i = i + 1) {
             // ADD
             a = generateNumber();
             b = generateNumber();
@@ -243,16 +235,15 @@ contract Snowball {
             // using addres(this).balance doesn't actually use the balance opcode?
             snowball = keccak256(abi.encodePacked(snowball, address(0).balance));
             snowball = keccak256(abi.encodePacked(snowball, address(this).balance));
-
             snowball = keccak256(abi.encodePacked(snowball, gasleft()));
 
-            if (mode & modeTx == modeTx) {
+            if (_mode == Mode.Tx) {
                 snowball = keccak256(abi.encodePacked(snowball, tx.origin));
                 snowball = keccak256(abi.encodePacked(snowball, tx.gasprice));
             }
             h1 = uint256(snowball);
 
-            if (mode & modeMsg == modeMsg) {
+            if (_mode == Mode.Msg) {
                 snowball = keccak256(abi.encodePacked(snowball, msg.sender));
                 snowball = keccak256(abi.encodePacked(snowball, msg.data));
                 snowball = keccak256(abi.encodePacked(snowball, msg.sig));
@@ -260,7 +251,7 @@ contract Snowball {
             }
             h2 = uint256(snowball);
 
-            if (mode & modeBlock == modeBlock) {
+            if (_mode == Mode.Block) {
                 snowball = keccak256(abi.encodePacked(snowball, blockhash(block.number)));
                 snowball = keccak256(abi.encodePacked(snowball, block.basefee));
                 snowball = keccak256(abi.encodePacked(snowball, block.chainid));
@@ -272,7 +263,7 @@ contract Snowball {
             }
             h3 = uint256(snowball);
 
-            if (mode & modeContract == modeContract) {
+            if (_mode == Mode.Contract) {
                 a = generateNumber();
                 Counter counter = new Counter();
                 Counter counter2 = new Counter{salt: bytes32(a)}();
@@ -299,7 +290,7 @@ contract Snowball {
                 counter.stop();
             }
 
-            if (mode & modePrecompile == modePrecompile) {
+            if (_mode == Mode.Precompile) {
                 // https://github.com/smartcontractkit/chainlink/blob/develop/contracts/src/v0.8/vrf/VRF.sol#L274
                 a = generateNumber();
                 b = generateNumber();
@@ -397,6 +388,7 @@ contract Snowball {
         }
     }
 
+    // Precompile `ecPairing` (https://www.evm.codes/precompiled#0x08).
     function callBn256Pairing(bytes memory input) public returns (bytes32 result) {
         // input is a serialized bytes stream of (a1, b1, a2, b2, ..., ak, bk) from (G_1 x G_2)^k
         uint256 len = input.length;
