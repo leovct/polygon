@@ -20,7 +20,7 @@ function deploy_contract() {
 		--from $eth_address \
 		--private-key $eth_private_key \
 		--rpc-url $rpc_url \
-		-j \
+		--json \
 		--create \
 		"$(jq -r '.bytecode.object' out/$contract_name_upper.sol/$contract_name_upper.json)" | \
 		jq '.' | tee out/$contract_name_lower.json
@@ -38,7 +38,7 @@ function main() {
 	deploy_contract "erc721"
 
 	echo -e "\n🪙 Minting ERC20 tokens..."
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j \
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json \
 	"$(jq -r '.contractAddress' out/erc20.json)" \
 	'function mint(uint256 amount) returns()' \
 	100000000000000000000000000000 | jq '.' | tee out/erc20.mint.json
@@ -47,7 +47,6 @@ function main() {
 	"$(jq -r '.contractAddress' out/erc20.json)" \
 	'function balanceOf(address ) view returns(uint256)' \
 	$eth_address
-
 
 	echo -e "\n➡️  Sending transactions between accounts..."
 	polycli loadtest --legacy --verbosity $verbosity --mode t --rate-limit 1000 --requests 1 --concurrency 1 $rpc_url
@@ -103,85 +102,83 @@ function main() {
 	polycli loadtest --legacy --verbosity $verbosity --mode 7 --rate-limit 500 --requests 8 --concurrency 64 --erc721-address "$(jq -r '.contractAddress' out/erc721.json)" $rpc_url
 
 	echo -e "\n🚀 Deploying huge contracts..."
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.32.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.64.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.128.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.256.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.512.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.1024.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.2048.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.4096.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.8192.bin)" | jq '.'
-	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url -j --create "$(cat testdata/huge-contract.16384.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.32.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.64.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.128.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.256.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.512.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.1024.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.2048.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.4096.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.8192.bin)" | jq '.'
+	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.16384.bin)" | jq '.'
 
 	echo -e "\n❄️ Calling random opcodes using the Snowball contract..."
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
-		'function test(uint64 _seed, uint32 loops, uint256 mode) payable returns(bytes32)' \
-		1 1 65519
+	seed=65519
+	loops=2
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
+		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' \
+		$seed $loops 0
 
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
-		'function test(uint64 _seed, uint32 loops, uint256 mode) payable returns(bytes32)' \
-		2 2 65519
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
+		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' \
+		$seed $loops 1
 
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
-		'function test(uint64 _seed, uint32 loops, uint256 mode) payable returns(bytes32)' \
-		4 4 65519
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
+		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' \
+		$seed $loops 2
 
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
-		'function test(uint64 _seed, uint32 loops, uint256 mode) payable returns(bytes32)' \
-		8 8 65519
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
+		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' \
+		$seed $loops 3
 
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
-		'function test(uint64 _seed, uint32 loops, uint256 mode) payable returns(bytes32)' \
-		16 16 65519
-
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
-	'function test(uint64 _seed, uint32 loops, uint256 mode) payable returns(bytes32)' \
-	32 32 65519
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
+		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' \
+		$seed $loops 4
 
 	echo -e "\n💻 Computing prime numbers..."
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		4
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		8
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		16
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		32
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		64
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		128
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		256
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		512
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		1024
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		2048
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		4096
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		8192
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
 		'function calcPrimes(uint256 ) view returns(uint256)' \
 		16384
 
 	echo -e "\nStoring any type of value..."
-	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/storage.json)" -j \
+	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/storage.json)" --json \
 		'function store() public'
 }
 
