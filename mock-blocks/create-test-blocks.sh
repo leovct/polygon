@@ -15,7 +15,7 @@ function deploy_contract() {
 	contract_name_lower=$1
 	contract_name_upper=$(echo "$1" | awk '{print toupper(substr($0,1,1)) tolower(substr($0,2))}')
 
-	echo "Deploying $contract_name_upper..."
+	echo -e "\n🚀 Deploying $contract_name_upper contract..."
 	cast send \
 		--from $eth_address \
 		--private-key $eth_private_key \
@@ -28,10 +28,9 @@ function deploy_contract() {
 }
 
 function main() {
-	echo "🏗️  Building contracts.."
+	echo "🏗️  Building contracts..."
 	forge build
 
-	echo -e "\n🚀 Deploying contracts..."
 	deploy_contract "snowball"
 	deploy_contract "storage"
 	deploy_contract "loadtester"
