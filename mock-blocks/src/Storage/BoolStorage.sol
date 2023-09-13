@@ -2,9 +2,9 @@
 pragma solidity ^0.8.13;
 
 contract BoolStorage {
-  bool public b;
+    bool public b;
 
-  function setBool(bool _b) public {
-    b = _b;
-  }
+    function setBool(bool _b) public {
+        b = _b;
+    }
 }

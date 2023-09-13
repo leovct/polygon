@@ -2,9 +2,9 @@
 pragma solidity ^0.8.13;
 
 contract AddressStorage {
-  address public a;
+    address public a;
 
-  function setAddress(address _a) public {
-    a = _a;
-  }
+    function setAddress(address _a) public {
+        a = _a;
+    }
 }
