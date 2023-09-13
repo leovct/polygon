@@ -113,7 +113,7 @@ function main() {
 	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.8192.bin)" | jq '.'
 	cast send --from $eth_address --private-key $eth_private_key --rpc-url $rpc_url --json --create "$(cat testdata/huge-contract.16384.bin)" | jq '.'
 
-	echo -e "\n❄️ Calling random opcodes using the Snowball contract..."
+	echo -e "\n❄️  Calling random opcodes using the Snowball contract..."
 	seed=65519
 	loops=2
 	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
