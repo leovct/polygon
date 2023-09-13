@@ -33,6 +33,7 @@ function main() {
 
 	echo -e "\n🚀 Deploying contracts..."
 	deploy_contract "snowball"
+	deploy_contract "storage"
 	deploy_contract "loadtester"
 	deploy_contract "erc20"
 	deploy_contract "erc721"
