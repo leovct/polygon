@@ -14,37 +14,74 @@ function deploy_contract() {
 		--from $eth_address \
 		--private-key $eth_private_key \
 		--rpc-url $rpc_url \
-		-j \
+		--json \
 		--create \
-		"$(jq -r '.bytecode.object' out/$contract_name_upper.sol/$contract_name_upper.json)" | \
-		jq '.' | tee out/$contract_name_lower_deploy.json
+		"$(jq -r '.bytecode.object' out/$contract_name_upper.sol/$contract_name_upper.json)" \
+		| jq '.' \
+		| tee out/${contract_name_lower}_deploy.json
 	echo
+}
+
+function call_opcodes() {
+	seed=$1
+	loops=$2
+	mode=$3
+	echo -e "\n🪄 Calling random opcodes (seed=$seed,loops=$loops,mode=$mode)..."
+  cast send \
+		--from $eth_address \
+		--private-key $eth_private_key \
+		--rpc-url $rpc_url \
+		--json \
+		"$(jq -r '.contractAddress' out/snowball_deploy.json)" \
+		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' $seed $loops $mode \
+		| jq > out/snowball_tx$mode.json
+	cat out/snowball_tx$mode.json
+	cast rpc debug_traceTransaction "$(jq -r '.transactionHash' out/snowball_tx$mode.json)" {} \
+    | jq -r '.structLogs[].op' | sort | uniq > out/snowball_tx${mode}_opcodes.txt
 }
 
 function main() {
   echo "🏗️  Building contracts..."
 	forge build
 
+	# Contract deployment.
   echo
 	deploy_contract "snowball"
   deploy_contract "storage"
 
-  echo -e "\n🪄 Executing a few transactions..."
-  cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" -j \
-		'function test(uint64 _seed, uint32 loops, uint256 mode) payable returns(bytes32)' \
-		1 1 65519 | jq > out/snowball_tx.json
-  cast rpc debug_traceTransaction "$(jq -r '.transactionHash' out/snowball_tx.json)" {} | \
-    jq -r '.structLogs[].op' | sort | uniq  > out/snowball-opcodes.txt
+  # Executing transactions.
+	## Calling random opcodes.
+	seed=65519
+	loops=1
+	call_opcodes $seed $loops 0
+	call_opcodes $seed $loops 1
+	call_opcodes $seed $loops 2
+	call_opcodes $seed $loops 3
+	call_opcodes $seed $loops 4
 
-  cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/storage.json)" -j \
-		'function store() public' > out/storage_tx.json
-  cast rpc debug_traceTransaction "$(jq -r '.transactionHash' out/storage_tx.json)" {} | \
-    jq -r '.structLogs[].op' | sort | uniq  > out/storage-opcodes.txt
+	## Storing values.
+	echo -e "\n 🪄 Storing all types of values..."
+  cast send \
+		--from $eth_address \
+		--private-key $eth_private_key \
+		--rpc-url $rpc_url "$(jq -r '.contractAddress' out/storage_deploy.json)" -j \
+		'function store() public' \
+		| jq > out/storage_tx.json
+	cat out/storage_tx.json
+  cast rpc debug_traceTransaction "$(jq -r '.transactionHash' out/storage_tx.json)" {} \
+    | jq -r '.structLogs[].op' | sort | uniq > out/storage_opcodes.txt
 
-  sort -u out/snowball-opcodes.txt out/storage-opcodes.txt > seen-opcodes.txt
-  sort opcodes.txt <(sort seen-opcodes.txt opcodes.txt | uniq -d) | uniq -u > missing-opcodes.txt
-
+	# Displaying missing opcodes.
 	echo -e "\n❌ Opcodes not called in this transaction (out of all the EVM opcodes):"
+	sort -u \
+		out/snowball_tx0_opcodes.txt \
+		out/snowball_tx1_opcodes.txt \
+		out/snowball_tx2_opcodes.txt \
+		out/snowball_tx3_opcodes.txt \
+		out/snowball_tx4_opcodes.txt \
+		out/storage_opcodes.txt \
+		> seen-opcodes.txt
+  sort opcodes.txt <(sort seen-opcodes.txt opcodes.txt | uniq -d) | uniq -u > missing-opcodes.txt
 	cat missing-opcodes.txt
 }
 
