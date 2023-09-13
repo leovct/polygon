@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.21;
 
 import '@openzeppelin/token/ERC721/extensions/ERC721Enumerable.sol';
 import '@openzeppelin/access/Ownable.sol';
