@@ -6,6 +6,7 @@ eth_address=0x85dA99c8a7C2C95964c8EfD687E95E632Fc533D6
 eth_private_key=0x42b6e34dc21598a807dc19d7784c71b2a7a01f6480dc6f58258f78e539f1a1fa
 
 snowball_contract=out/Snowball.sol/Snowball.json
+storage_contract=out/Storage.sol/Storage.json
 loadtest_contract=testdata/LoadTester.bin
 erc20_contract=testdata/ERC20.bin
 erc721_contract=testdata/ERC721.bin
@@ -171,6 +172,9 @@ function main() {
     cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out.snowball.json)" -j \
          'function calcPrimes(uint256 ) view returns(uint256)' \
          16384
+
+     cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out.storage.json)" -j \
+         'function store() public'
 
 }
 
