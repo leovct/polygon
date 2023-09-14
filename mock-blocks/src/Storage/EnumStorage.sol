@@ -2,15 +2,15 @@
 pragma solidity ^0.8.21;
 
 contract EnumStorage {
-    enum Status {
-        Inactive,
-        Active,
-        Pending
-    }
+  enum Status {
+    Inactive,
+    Active,
+    Pending
+  }
 
-    Status public status;
+  Status public status;
 
-    function setStatus(Status _status) public {
-        status = _status;
-    }
+  function setStatus(Status _status) public {
+    status = _status;
+  }
 }
