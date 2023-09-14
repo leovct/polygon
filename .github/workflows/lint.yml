@@ -29,8 +29,12 @@ jobs:
         id: install
 
       - name: Lint code
-        run: make prettier
-        id: lint
+        run: npx prettier --check .
+        id: lint-code
+
+      - name: Lint tables
+        run: npx markdown-table-formatter --check **/*.md
+        id: lint-tables
 
   broken-links:
     strategy:
