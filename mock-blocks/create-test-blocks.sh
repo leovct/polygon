@@ -31,6 +31,14 @@ function main() {
 	echo "🏗️  Building contracts..."
 	forge build
 
+	echo -e "\n💸 Funding deploy account..."
+	cast send \
+		--from "$(cast rpc --rpc-url localhost:8545 eth_coinbase | jq -r '.')" \
+    --rpc-url localhost:8545 \
+		--unlocked \
+		--value 1000000ether \
+    $eth_address
+
 	deploy_contract "snowball"
 	deploy_contract "storage"
 	deploy_contract "loadtester"
