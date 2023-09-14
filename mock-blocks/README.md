@@ -11,4 +11,26 @@ We would like to be able to generate a list of blocks that represent the activit
 
 ## Usage
 
-Simply run the script: `./create-test-blocks.sh`.
+First, run a local blockchain (for example using `geth`).
+
+```sh
+geth \
+  --dev \
+  --dev.period 5 \
+  --http \
+  --http.addr localhost \
+  --http.port 8545 \
+  --http.api 'admin,debug,web3,eth,txpool,personal,clique,miner,net' \
+  --verbosity 5 \
+  --rpc.gascap 100000000000 \
+  --rpc.txfeecap 0 \
+  --miner.gaslimit  10 \
+  --miner.gasprice 1 \
+  --gpo.blocks 1 \
+  --gpo.percentile 1 \
+  --gpo.maxprice 10 \
+  --gpo.ignoreprice 2 \
+  --dev.gaslimit 100000000000
+```
+
+To create the mock blocks, simply run the `create-test-blocks` script. If you want to see which opcodes are called and which ones are not called by the `Snowball` and `Storage` contracts, use the `opcodes` script.
