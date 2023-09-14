@@ -57,17 +57,13 @@ contract Snowball {
         return j;
     }
 
-    // The goal of this function is to hit as many op codes as possible in a way that we can determine if any of that are behaving unexpectedly.
-    // There are a few op codes that we aren't testing.
+    // The goal of this function is to hit as many opcodes and precompiles as possible in a way that we can determine if any of that are behaving unexpectedly.
+    // There are a few opcodes that we aren't testing.
     // CALLCODE - Deprecated for `delegatecall`.
     // DUPX/PUSHX/SWAPX - We don't hit every variation but that's not a problem since those are stack operations.
     // MSTORE8 - Save byte to memory.
     // PC - Removed on solidity 0.7
     // SHA3 - Deprecated for `keccak256`.
-    //
-    // We are also skipping a few procompiles at the moment
-    // BLAKE2 - is not really used https://eips.ethereum.org/EIPS/eip-7266
-    // ecParing - haven't figured out how to implement TODO
     function test(uint64 _seed, uint32 _loops, Mode _mode) public payable returns (bytes32) {
         seed = _seed;
         emit TestStartSeed(_seed);
