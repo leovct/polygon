@@ -141,6 +141,7 @@ function main() {
 		$seed $loops 3
 
 	cast send --private-key $eth_private_key --rpc-url $rpc_url "$(jq -r '.contractAddress' out/snowball.json)" --json \
+		--gas-limit 10000000000 \
 		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' \
 		$seed $loops 4
 

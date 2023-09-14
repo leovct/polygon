@@ -27,11 +27,14 @@ function call_opcodes() {
 	loops=$2
 	mode=$3
 	echo -e "\n🪄 Calling random opcodes (seed=$seed,loops=$loops,mode=$mode)..."
+	# Note: we increase the gas limit because calling the `test` function with mode 4 (precompiles)
+	# requires a lot of gas.
   cast send \
 		--from $eth_address \
 		--private-key $eth_private_key \
 		--rpc-url $rpc_url \
 		--json \
+		--gas-limit 10000000000 \
 		"$(jq -r '.contractAddress' out/snowball_deploy.json)" \
 		'function test(uint64 _seed, uint32 _loops, uint8 _mode) payable returns(bytes32)' $seed $loops $mode \
 		| jq > out/snowball_tx$mode.json
