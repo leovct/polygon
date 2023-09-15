@@ -2,17 +2,16 @@ name: lint
 
 on: push
 
+env:
+  PNPM_VERSION: "8.6"
+  NODE_VERSION: "18"
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   lint:
-    strategy:
-      fail-fast: true
-      matrix:
-        version: [18]
-
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -22,11 +21,11 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: ${{ env.PNPM_VERSION }}
 
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -38,11 +37,6 @@ jobs:
         id: lint-code
 
   broken-links:
-    strategy:
-      fail-fast: true
-      matrix:
-        version: [18]
-
     name: Broken links
     runs-on: ubuntu-latest
     steps:
@@ -52,11 +46,11 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: ${{ env.PNPM_VERSION }}
 
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
 
       - name: Install dependencies
