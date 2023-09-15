@@ -45,12 +45,17 @@ jobs:
         with:
           submodules: recursive
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.version }}
+          cache: 'pnpm'
 
-      - name: Install npm dependencies
-        run: npm ci
+      - name: Install dependencies
+        run: pnpm install
         id: install
 
       - name: Check for broken links
