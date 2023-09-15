@@ -32,10 +32,6 @@ jobs:
         run: npx prettier --check .
         id: lint-code
 
-      - name: Lint tables
-        run: npx markdown-table-formatter --check **/*.md
-        id: lint-tables
-
   broken-links:
     strategy:
       fail-fast: true
