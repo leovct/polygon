@@ -38,7 +38,7 @@ As an example, let's consider four basic NFT smart contracts, implemented using 
 Here is the gas cost of minting an NFT depending on the different contracts. To reproduce the numbers, you can use `make test` which will run forge tests under the hood.
 
 | Contract                                                                 | Gas used for the 1st mint | Gas used for all the other mints | Difference (\*)       |
-|--------------------------------------------------------------------------|---------------------------|----------------------------------|-----------------------|
+| ------------------------------------------------------------------------ | ------------------------- | -------------------------------- | --------------------- |
 | [ERC721A](src/ERC721A_NFT.sol)                                           | 101,324 gwei              | 32,724 gwei                      |                       |
 | [Solmate](src/Solmate_NFT.sol)                                           | 81,520 gwei               | 32,820 gwei                      | +96 gwei (~ +$0.017)  |
 | [OpenZeppelinERC721](src/OpenZeppelinERC721_NFT.sol)                     | 103,965 gwei              | 33,265 gwei                      | +541 gwei (~ +$0.97)  |
