@@ -1,4 +1,4 @@
-# 🗒️  Generate Traces for EVM Transactions and Blocks
+# 🗒️ Generate Traces for EVM Transactions and Blocks
 
 This is a very simple way of generating traces using geth built-in tracers.
 
@@ -7,6 +7,7 @@ This is a very simple way of generating traces using geth built-in tracers.
 The [simplest](https://geth.ethereum.org/docs/developers/evm-tracing/basic-traces) type of transaction trace that Geth can generate are raw EVM opcode traces but the tracing API also accepts an optional `tracer` parameter that defines how the data returned to the API call should be processed. Geth comes bundled with a choice of tracers that can be invoked via the [tracing](https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-debug) API. It's also possible to implement [custom](https://geth.ethereum.org/docs/developers/evm-tracing#custom-tracers) tracers in Javascript or Go.
 
 The built-in tracer we use here is called the [prestate](https://geth.ethereum.org/docs/developers/evm-tracing/built-in-tracers#prestate-tracer) tracer. This tracer returns the accounts necessary to execute a given transaction. It reexecutes the given transaction and tracks every part of state that is touched. The result is an object. The keys are addresses of accounts. The values is an object with the following fields:
+
 - `balance` (`string`) which represents the account balance in Wei.
 - `nonce` (`uint64`) which represents the account nonce.
 - `code` (`string`) which represents the hex-encoded account bytecode (if there's any).
