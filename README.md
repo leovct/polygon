@@ -4,6 +4,7 @@
 
 - [Research](#research)
 - [Systems](#systems)
+- [Tools](#tools)
 - [Operations](#operations)
 
 ## Research
@@ -16,6 +17,10 @@
 
 - [⚙️ Zero Prover Overview](zero-prover/Overview.md): Break down the system using diagrams to understand how it works and what it is used for.
 - [⚡️ zkEVM Education Series](https://drive.google.com/drive/u/1/folders/1X1A-00w2L07CJUC7KPeNqAsdw0e50m_i): A detailed course on zkEVM and its various components (prover, aggregator, sequencer, etc.).
+
+## Tools
+
+- [🗒️ Generate Traces for EVM Transactions and Blocks](trace/README.md): Simple way of generating standard traces using [geth](https://github.com/ethereum/go-ethereum)'s built-in tracers.
 
 ## Operations
 
