@@ -124,11 +124,4 @@ $ n=$(cast bn) && curl \
 ]
 ```
 
-To go further, we could build a custom tool that would aggregate those traces to generate a unified block trace. There could be challenges such as conflicts when multiple transactions, within the same block, attempt to modify the same state (`account`, `storage` or `nonce`) in different ways. Here are a few examples.
-
-- Two transactions attempt to change the balance of the same account differently.
-- Or to increment the nonce of the same account differently.
-- Or to modify the same storage slot of a contract differently.
-- Or if a contract is created (or deleted) and called in the same block.
-
-To handle those issues, a solution would be to iterate over the traces in the order of the transactions in the block. Each time a conflict arises, we accept the change made by the last transaction in order.
+To go further, we could build a custom tracer that would add more information to the traces such as storage reads/writes, gas used by the transaction etc.
