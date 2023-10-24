@@ -58,7 +58,8 @@ echo "Set up to build docker pos setup images" \
 4. Make sure `tomlq` is installed (most of the time, this is the reason why `init.sh` fails)
 
 ```sh
-sudo su && pip install tomlq
+sudo su
+pip install tomlq
 ```
 
 5. Generate an SSH key to clone the `polygon-devnets` private repository. Don't forget to [add it to your Github account](https://github.com/settings/ssh/new).
