@@ -25,6 +25,8 @@ echo "Set up to build docker pos setup images" \
   && echo "Set handy aliases" \
   && alias docker='sudo docker' \
   && alias make='sudo make' \
+  && echo "Enable auto restarting services when upgrading packages" \
+  && sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf \
   && echo "Install packages" \
   && sudo apt-get update \
   && sudo apt-get install -y make jq shellcheck python3-pip unzip \
@@ -39,22 +41,29 @@ echo "Set up to build docker pos setup images" \
   && sudo apt-get update \
   && sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y \
   && sudo docker run hello-world \
-  && echo "Install polycli (https://github.com/maticnetwork/polygon-cli)" \
-  && cd /tmp \
-  && curl -s -LO https://github.com/maticnetwork/polygon-cli/releases/download/v0.1.28/polycli_0.1.28_linux_amd64.tar.gz \
-  && tar -xzf polycli_0.1.28_linux_amd64.tar.gz \
-  && sudo mv polycli_0.1.28_linux_amd64/polycli /usr/bin/ \
-  && polycli version
+  && echo "Install go" \
+  && sudo snap install go --classic \
+  && go version \
+  && echo "Compile polycli (https://github.com/maticnetwork/polygon-cli)" \
+  && pushd /tmp \
+  && git clone https://github.com/maticnetwork/polygon-cli.git \
+  && pushd polygon-cli \
+  && make build \
+  && sudo cp ./out/polycli /usr/bin/ \
+  && polycli version \
+  && popd \
+  && popd
 ```
 
 4. Make sure `tomlq` is installed (most of the time, this is the reason why `init.sh` fails)
 
 ```sh
-sudo su
-pip install tomlq
+sudo su && pip install tomlq
 ```
 
 5. Generate an SSH key to clone the `polygon-devnets` private repository. Don't forget to [add it to your Github account](https://github.com/settings/ssh/new).
+
+Note: this will ask for user confirmation.
 
 ```sh
 ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
@@ -62,9 +71,10 @@ ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
 
 6. Build the images and start the setup
 
+Note: this will ask for user confirmation.
+
 ```sh
-cd \
-  && git clone git@github.com:maticnetwork/polygon-devnets.git \
+git clone git@github.com:maticnetwork/polygon-devnets.git \
   && cd polygon-devnets/docker/pos \
   && touch private.env \
   && echo "EXECUTION_FLAGS=--antithesis --race" > .env \
