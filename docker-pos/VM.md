@@ -77,6 +77,7 @@ Note: this will ask for user confirmation.
 ```sh
 git clone git@github.com:maticnetwork/polygon-devnets.git \
   && cd polygon-devnets/docker/pos \
+  && git checkout your-branch \
   && touch private.env \
   && echo "EXECUTION_FLAGS=--antithesis --race" > .env \
   && make all \
