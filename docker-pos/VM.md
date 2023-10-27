@@ -88,6 +88,7 @@ git clone git@github.com:maticnetwork/polygon-devnets.git \
 
 ```sh
 alias docker='sudo docker'
-docker logs $(docker ps -a | grep -E 'bor_3' | awk '{print $1}') -f -n 10
-docker exec -it $(docker ps | grep -E 'config' | awk '{print $1}') /bin/bash
+docker logs bor_3 -f -n 10
+docker exec -it workload /bin/bash
+docker ps -a | grep -e 'ganache\|workload\|heimdall\|bor\|config\|status' | awk '{print $1}' | xargs -I xxx docker rm xxx
 ```
