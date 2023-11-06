@@ -21,7 +21,7 @@
 
 ## Tools
 
-Nothing here...
+- [🎭 Edge gRPC Mock Server](https://github.com/leovct/edge-grpc-mock-server): Simple mock of an edge gRPC server node meant to be used along a zero-prover leader/worker setup.
 
 ## Operations
 
