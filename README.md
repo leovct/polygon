@@ -22,7 +22,7 @@
 ## Tools
 
 - [🎭 Edge gRPC Mock Server](https://github.com/leovct/edge-grpc-mock-server): Simple mock of an edge gRPC server node meant to be used along a zero-prover leader/worker setup.
-- [🦄 Integrate UniswapV3 into polygon-cli](tools/INTEGRATE_UNIV3_INTO_POLYCLI.md): Add a new functionality to `polycli loadtest` that involves deploying UniswapV3 contracts and executing swaps, to replicate real-world traffic.
+- [🦄 Integrating UniswapV3 into polygon-cli](tools/INTEGRATING_UNISWAPV3_INTO_POLYCLI.md): New `polycli loadtest` functionality that involves deploying UniswapV3 contracts and executing swaps, to replicate real-world traffic.
 
 ## Operations
 

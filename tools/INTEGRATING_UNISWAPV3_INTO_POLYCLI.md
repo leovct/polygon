@@ -1,4 +1,4 @@
-# 🦄 Integrate [UniswapV3](https://uniswap.org/whitepaper-v3.pdf) into [polygon-cli](https://github.com/maticnetwork/polygon-cli)
+# 🦄 Integrating [UniswapV3](https://uniswap.org/whitepaper-v3.pdf) into [polygon-cli](https://github.com/maticnetwork/polygon-cli)
 
 ## Table of contents
 
