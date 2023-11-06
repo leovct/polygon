@@ -10,7 +10,7 @@
 
 The DevTools team at Polygon Labs is working on a fascinating project called [polygon-cli](https://github.com/maticnetwork/polygon-cli). It is a tool made to make your life easier when interacting with blockchains, quite similar to [cast](https://book.getfoundry.sh/cast/) but with a different feature set.
 
-One standout feature of polygon-cli is its ability to conduct generic load tests on RPC endpoints, allowing for configurable load scenarios. This spans from simple ETH transfers to more complex tasks like ERC20/ERC721 transfers, invoking random opcodes in a designated contract, interacting with precompiles, storing random data in a smart contract, and simulating RPC traffic. It's an impressively comprehensive tool, but there was one missing piece— a [UniswapV3](https://app.uniswap.org/swap)-like load test. The idea is to replicate real-world traffic using polygon-cli, and considering UniswapV3's extensive usage across platforms (on Ethereum and L2 chains like Polygon), we aim to integrate it into polygon-cli.
+One standout feature of polygon-cli is its ability to conduct generic load tests on RPC endpoints, allowing for configurable load scenarios. This spans from simple ETH transfers to more complex tasks like ERC20/ERC721 transfers, invoking random opcodes in a designated contract, interacting with precompiles, storing random data in a smart contract, and simulating RPC traffic. It is an impressively comprehensive tool, but there was one missing piece— a [UniswapV3](https://app.uniswap.org/swap)-like load test. The idea is to replicate real-world traffic using polygon-cli, and considering UniswapV3's extensive usage across platforms (on Ethereum and L2 chains like Polygon), we aim to integrate it into polygon-cli.
 
 ## Deploying UniswapV3 in Go
 
@@ -40,9 +40,9 @@ This is the most complex part of the deployment.
 
 - Providing liquidity poses its own set of challenges:
 
-  - As a liquidity provider, specifying the price range for liquidity provision (upper and lower ticks) can be complex. It's also essential to ensure that [tick values are multiples of the default tick spacing](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go#L190-L191) (or override it) to avoid errors.
+  - As a liquidity provider, specifying the price range for liquidity provision (upper and lower ticks) can be complex. It is also essential to ensure that [tick values are multiples of the default tick spacing](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go#L190-L191) (or override it) to avoid errors.
 
-  - When providing liquidity, give allowances to the involved contracts and ensure sufficient token balances. This is straightforward, but it's easy to overlook! Also, make sure to reserve a portion of your tokens for swapping. If you use up all your tokens during the minting process, you won't have any left for conducting swaps.
+  - When providing liquidity, give allowances to the involved contracts and ensure sufficient token balances. This is straightforward, but it is easy to overlook! Also, make sure to reserve a portion of your tokens for swapping. If you use up all your tokens during the minting process, you will not have any left for conducting swaps.
 
   - Consider the operation deadline, the Unix time after which the minting will fail, to safeguard against prolonged transactions and volatile price swings. If you set it too low, it may cause problems but too high is not advisable neither, especially in production.
 
