@@ -30,7 +30,9 @@ Initially, we attempted to use [`abigen`](https://pkg.go.dev/github.com/synapsec
 
 While not very difficult, it was a lengthy process that required careful deployment order.
 
-4. **[Setting up a liquidity pool](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go) which involves creating a new pool, initialising it and providing liquidity**. This is the most complex part of the deployment.
+4. **[Setting up a liquidity pool](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go) which involves creating a new pool, initialising it and providing liquidity**.
+
+This is the most complex part of the deployment.
 
 - Creating a pool is a straightforward task, requiring the addresses of two ERC20 tokens and a fee amount. It is crucial to ensure that the fee aligns with one of the [pool fee tiers](https://docs.uniswap.org/concepts/protocol/fees) – 0.05%, 0.30%, or 1%. Additionally, make sure the fee amount is correctly formatted in hundredths of a bip (basis point).
 
