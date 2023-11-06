@@ -8,7 +8,7 @@
 
 ## Introduction
 
-The DevTools team at Polygon Labs is working on a fascinating project called [polygon-cli]((https://github.com/maticnetwork/polygon-cli)). It is a tool made to make your life easier when interacting with blockchains, quite similar to [cast](https://book.getfoundry.sh/cast/) but with a different feature set. One standout feature of polygon-cli is its ability to conduct generic load tests on RPC endpoints, allowing for configurable load scenarios. This spans from simple ETH transfers to more complex tasks like ERC20/ERC721 transfers, invoking random opcodes in a designated contract, interacting with precompiles, storing random data in a smart contract, and simulating RPC traffic. It's an impressively comprehensive tool, but there was one missing piece— a UniswapV3-like load test. The idea is to replicate real-world traffic using polygon-cli, and considering UniswapV3's extensive usage across platforms (on Ethereum and L2 chains like Polygon), we aim to integrate it into polygon-cli.
+The DevTools team at Polygon Labs is working on a fascinating project called [polygon-cli](<(https://github.com/maticnetwork/polygon-cli)>). It is a tool made to make your life easier when interacting with blockchains, quite similar to [cast](https://book.getfoundry.sh/cast/) but with a different feature set. One standout feature of polygon-cli is its ability to conduct generic load tests on RPC endpoints, allowing for configurable load scenarios. This spans from simple ETH transfers to more complex tasks like ERC20/ERC721 transfers, invoking random opcodes in a designated contract, interacting with precompiles, storing random data in a smart contract, and simulating RPC traffic. It's an impressively comprehensive tool, but there was one missing piece— a UniswapV3-like load test. The idea is to replicate real-world traffic using polygon-cli, and considering UniswapV3's extensive usage across platforms (on Ethereum and L2 chains like Polygon), we aim to integrate it into polygon-cli.
 
 ## Deploying UniswapV3 in Go
 
@@ -42,7 +42,7 @@ https://github.com/Uniswap/v3-periphery/blob/697c2474757ea89fec12a4e6db16a574fe2
 
   - Maintain slippage protection by setting minimum acceptable amounts of token0 and token1 during minting to prevent potential token loss. While this may be less critical in a devnet setup, it is crucial in testnet or production environments.
 
-5. Performing swaps, a relatively straightforward step. Just remember to establish a minimum amount to guard against slippage, and you also have the option to set a limit price for the swap to mitigate potential price impact.
+5. [Performing swaps](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/swap.go), a relatively straightforward step. Just remember to establish a minimum amount to guard against slippage, and you also have the option to set a limit price for the swap to mitigate potential price impact.
 
 The implementation of the UniswapV3 mode lies [here](https://github.com/maticnetwork/polygon-cli/tree/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3).
 
@@ -76,7 +76,6 @@ $eth_coinbase=$(curl -s -H 'Content-Type: application/json' -d '{"jsonrpc": "2.0
 ```
 
 3. Perform UniswapV3 load test.
-
 
 ```sh
 $ go run main.go loadtest uniswapv3 --rpc-url http://localhost:8545 --requests 20 --verbosity 500
