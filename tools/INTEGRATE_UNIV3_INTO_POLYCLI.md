@@ -8,41 +8,47 @@
 
 ## Introduction
 
-The DevTools team at Polygon Labs is working on a fascinating project called [polygon-cli](<(https://github.com/maticnetwork/polygon-cli)>). It is a tool made to make your life easier when interacting with blockchains, quite similar to [cast](https://book.getfoundry.sh/cast/) but with a different feature set. One standout feature of polygon-cli is its ability to conduct generic load tests on RPC endpoints, allowing for configurable load scenarios. This spans from simple ETH transfers to more complex tasks like ERC20/ERC721 transfers, invoking random opcodes in a designated contract, interacting with precompiles, storing random data in a smart contract, and simulating RPC traffic. It's an impressively comprehensive tool, but there was one missing piece— a UniswapV3-like load test. The idea is to replicate real-world traffic using polygon-cli, and considering UniswapV3's extensive usage across platforms (on Ethereum and L2 chains like Polygon), we aim to integrate it into polygon-cli.
+The DevTools team at Polygon Labs is working on a fascinating project called [polygon-cli](https://github.com/maticnetwork/polygon-cli). It is a tool made to make your life easier when interacting with blockchains, quite similar to [cast](https://book.getfoundry.sh/cast/) but with a different feature set.
+
+One standout feature of polygon-cli is its ability to conduct generic load tests on RPC endpoints, allowing for configurable load scenarios. This spans from simple ETH transfers to more complex tasks like ERC20/ERC721 transfers, invoking random opcodes in a designated contract, interacting with precompiles, storing random data in a smart contract, and simulating RPC traffic. It's an impressively comprehensive tool, but there was one missing piece— a [UniswapV3](https://app.uniswap.org/swap)-like load test. The idea is to replicate real-world traffic using polygon-cli, and considering UniswapV3's extensive usage across platforms (on Ethereum and L2 chains like Polygon), we aim to integrate it into polygon-cli.
 
 ## Deploying UniswapV3 in Go
 
-We started to look at documentation on UniswapV3 in order to deploy it locally on our devnets. It is not a trivial process, involving over 15 steps numerous contracts, configurations, and dependencies. Thankfully, the Uniswap team created a [CLI](https://github.com/Uniswap/deploy-v3) for deploying UniswapV3 on any Ethereum-compatible network. Our task was to translate these Typescript scripts into Go, and while the overall process went smoothly, we did encounter and document some challenges.
+We started to look at documentation on UniswapV3 in order to deploy it locally on our devnets. It is not a trivial process, involving over 15 steps, numerous contracts, configurations, and dependencies. Thankfully, the Uniswap team created a [CLI](https://github.com/Uniswap/deploy-v3) for deploying UniswapV3 on any Ethereum-compatible network. Our task was to translate these Typescript scripts into Go, and while the overall process went smoothly, we did encounter and document some challenges.
 
 The process unfolded as follows:
 
-1. Identifying all the [contracts](https://github.com/maticnetwork/polygon-cli/tree/aed352b9abfe829ada718509668db37e5f94609b/contracts/uniswapv3) involved in UniswapV3 deployment.This involved navigating through various repositories, such as [v3-core](https://github.com/Uniswap/v3-core), [v3-periphery](https://github.com/Uniswap/v3-periphery), [v3-staker](https://github.com/Uniswap/v3-staker), [v3-router](https://github.com/Uniswap/v3-router) and other contracts from [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) and [WETH9](https://github.com/gnosis/canonical-weth/blob/master/contracts/WETH9.sol). The challenge lay in dealing with different tag versions and repositories, introducing an element of error-prone complexity.
+1. **Identifying all the [contracts](https://github.com/maticnetwork/polygon-cli/tree/aed352b9abfe829ada718509668db37e5f94609b/contracts/uniswapv3) involved in UniswapV3 deployment**.
 
-2. Generating go bindings for those contracts using [`forge`](https://github.com/foundry-rs/foundry). Initially, we attempted to use [`abigen`](https://pkg.go.dev/github.com/synapsecns/sanguine/tools/abigen#section-readme), but faced issues with linking dependencies in [`NonfungibleTokenPositionDescriptor.sol`](https://github.com/Uniswap/v3-periphery/blob/697c2474757ea89fec12a4e6db16a574fe259610/contracts/NonfungibleTokenPositionDescriptor.sol). The contract uses a library called `NFTDescriptor` but it does not take a parameter for the address of library in the `constructor` method which makes it a pain to deploy. This means that the tool used to generate the go bindings needs to handle linking the library address in `NonfungibleTokenPositionDescriptor` bytecode by itself. Otherwise, there will be issues when trying to interact with the contracts.
+This involved navigating through various repositories, such as [v3-core](https://github.com/Uniswap/v3-core), [v3-periphery](https://github.com/Uniswap/v3-periphery), [v3-staker](https://github.com/Uniswap/v3-staker), [v3-router](https://github.com/Uniswap/v3-router) and other contracts from [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) and [WETH9](https://github.com/gnosis/canonical-weth/blob/master/contracts/WETH9.sol). The challenge lay in dealing with different tag versions and repositories, introducing an element of error-prone complexity.
 
-https://github.com/Uniswap/v3-periphery/blob/697c2474757ea89fec12a4e6db16a574fe259610/contracts/NonfungibleTokenPositionDescriptor.sol#L29-L32
+2. **Generating go bindings for those contracts using [`forge`](https://github.com/foundry-rs/foundry)**.
 
-https://github.com/Uniswap/v3-periphery/blob/697c2474757ea89fec12a4e6db16a574fe259610/contracts/NonfungibleTokenPositionDescriptor.sol#L48-L93
+Initially, we attempted to use [`abigen`](https://pkg.go.dev/github.com/synapsecns/sanguine/tools/abigen#section-readme), but faced issues with linking dependencies in [`NonfungibleTokenPositionDescriptor.sol`](https://github.com/Uniswap/v3-periphery/blob/697c2474757ea89fec12a4e6db16a574fe259610/contracts/NonfungibleTokenPositionDescriptor.sol). The contract uses a library called [`NFTDescriptor`](https://github.com/Uniswap/v3-periphery/blob/697c2474757ea89fec12a4e6db16a574fe259610/contracts/NonfungibleTokenPositionDescriptor.sol#L48-L93) but it does not take a parameter for the address of the library in the [`constructor`](https://github.com/Uniswap/v3-periphery/blob/697c2474757ea89fec12a4e6db16a574fe259610/contracts/NonfungibleTokenPositionDescriptor.sol#L29-L32) method which makes it a pain to deploy! This means that the tool used to generate the go bindings needs to handle linking the library address in `NonfungibleTokenPositionDescriptor` bytecode by itself. Otherwise, there will be issues when trying to interact with the contracts.
 
-3. Implementing the [15 steps](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/deploy.go) of the UniswapV3 deployment in Go. While not very difficult, it was a lengthy process that required careful deployment order.
+3. **Implementing the [15 steps](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/deploy.go) of the UniswapV3 deployment in Go**.
 
-4. [Set up a liquidity pool](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go) which involves creating a new pool, initialising it and providing liquidity. This a bit tricky.
+While not very difficult, it was a lengthy process that required careful deployment order.
 
-- Creating a pool is a straightforward task, requiring the addresses of two ERC20 tokens and a specified fee amount. It's crucial to ensure that the fee aligns with one of the [pool fee tiers](https://docs.uniswap.org/concepts/protocol/fees) – 0.05%, 0.30%, or 1%. Additionally, make sure the fee amount is correctly formatted in hundredths of a bip (basis point).
+4. **[Setting up a liquidity pool](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go) which involves creating a new pool, initialising it and providing liquidity**. This is the most complex part of the deployment.
 
-- Initialising a pool introduces more complexity, involving the establishment of the initial price in a specific notation known as [Q64.96](https://uniswapv3book.com/docs/milestone_3/more-on-fixed-point-numbers/). For a detailed understanding, Jeiwan provides excellent explanations in his [Uniswapv3book](https://uniswapv3book.com/docs/milestone_1/calculating-liquidity/). This is a great resource to undestand how UniswapV3 works under the hood.
+- Creating a pool is a straightforward task, requiring the addresses of two ERC20 tokens and a fee amount. It is crucial to ensure that the fee aligns with one of the [pool fee tiers](https://docs.uniswap.org/concepts/protocol/fees) – 0.05%, 0.30%, or 1%. Additionally, make sure the fee amount is correctly formatted in hundredths of a bip (basis point).
+
+- Initialising a pool introduces more complexity, involving setting the initial price of the pool in a specific notation known as [Q64.96](https://uniswapv3book.com/docs/milestone_3/more-on-fixed-point-numbers/). For a detailed understanding, [Jeiwan](https://twitter.com/jeiwan7) provides excellent explanations in his [UniswapV3 Book](https://uniswapv3book.com/docs/milestone_1/calculating-liquidity/). This is a great resource to undestand how UniswapV3 works under the hood.
 
 - Providing liquidity poses its own set of challenges:
 
-  - As a liquidity provider, specifying the price range for liquidity provision (upper and lower ticks) can be complex. It's also essential to ensure that [tick values are multiples of the default tick spacing](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go#L189) (or override it) to avoid errors.
+  - As a liquidity provider, specifying the price range for liquidity provision (upper and lower ticks) can be complex. It's also essential to ensure that [tick values are multiples of the default tick spacing](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/pool.go#L190-L191) (or override it) to avoid errors.
 
-  - When providing liquidity, allocate allowances to the involved contracts and ensure sufficient token balances. This is straightforward, but it's easy to overlook.
+  - When providing liquidity, give allowances to the involved contracts and ensure sufficient token balances. This is straightforward, but it's easy to overlook! Also, make sure to reserve a portion of your tokens for swapping. If you use up all your tokens during the minting process, you won't have any left for conducting swaps.
 
-  - Consider the operation deadline, the Unix time after which the minting will fail, to safeguard against prolonged transactions and volatile price swings. If you set it too low, it may cause problems but too high is not advisable neither.
+  - Consider the operation deadline, the Unix time after which the minting will fail, to safeguard against prolonged transactions and volatile price swings. If you set it too low, it may cause problems but too high is not advisable neither, especially in production.
 
   - Maintain slippage protection by setting minimum acceptable amounts of token0 and token1 during minting to prevent potential token loss. While this may be less critical in a devnet setup, it is crucial in testnet or production environments.
 
-5. [Performing swaps](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/swap.go), a relatively straightforward step. Just remember to establish a minimum amount to guard against slippage, and you also have the option to set a limit price for the swap to mitigate potential price impact.
+5. **[Performing swaps](https://github.com/maticnetwork/polygon-cli/blob/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3/swap.go)**.
+
+A relatively straightforward step. Just remember to establish a minimum amount to guard against slippage, and you also have the option to set a limit price for the swap to mitigate potential price impact.
 
 The implementation of the UniswapV3 mode lies [here](https://github.com/maticnetwork/polygon-cli/tree/aed352b9abfe829ada718509668db37e5f94609b/cmd/loadtest/uniswapv3).
 
@@ -164,3 +170,7 @@ $ go run main.go loadtest uniswapv3 --rpc-url http://localhost:8545 --requests 2
 10:55AM INF Num errors numErrors=0
 10:55AM INF Finished
 ```
+
+## Conclusion
+
+It was an interesting experience that gave us a better understanding of how UniswapV3 works. It also allowed us to see how complicated and error prone the deployment of DEX really is. It might be interesting to add other protocols that are widely used on Polygon, such as [OpenSea](https://opensea.io/), an NFT marketplace or [Aave](https://aave.com/), a DeFi liquidity protocol.
