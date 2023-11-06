@@ -1,4 +1,4 @@
-## 🧱 Mock blocks
+## 🧱 Generate Edge blocks
 
 ## Table of contents
 
