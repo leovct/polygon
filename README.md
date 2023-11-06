@@ -20,7 +20,7 @@
 
 ## Tools
 
-- [🗒️ Generate Traces for EVM Transactions and Blocks](trace/README.md): Simple way of generating standard traces using [geth](https://github.com/ethereum/go-ethereum)'s built-in tracers.
+- [🗒️ Generate Traces for EVM Transactions and Blocks](tools/EVM_TRACER.md): Simple way of generating standard traces using [geth](https://github.com/ethereum/go-ethereum)'s built-in tracers.
 
 ## Operations
 
