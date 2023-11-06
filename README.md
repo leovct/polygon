@@ -27,4 +27,4 @@ Nothing here...
 
 - [🐳 VM Setup Playbook for Docker PoS](ops/DOCKER_POS_VM_SETUP.md): A simple playbook to set up an Ubuntu 22.04 VM with all the dependencies needed to build the docker images with instrumentation and to run the entire system.
 - [🤖 Zero Prover VM Setup](ops/ZERO_PROVER_VM_SETUP.md): Same thing as the VM setup playbook for Docker PoS but for [zero provers](https://github.com/mir-protocol/zero-provers).
-- [🧱 Generate edge blocks](ops/generate-edge-blocks/README.md): Generate a list of Edge blocks that represent the activity of the Polygon chain to check that the zero-prover can generate proofs for all these types of transactions.
+- [🧱 Generate Edge Blocks](ops/generate-edge-blocks/README.md): Generate a list of Edge blocks that represent the activity of the Polygon chain to check that the zero-prover can generate proofs for all these types of transactions.
