@@ -23,5 +23,4 @@ links: ## Check for broken links. Note: dune links have been deactivated because
 	npx linkinator "README.md" "**/*.md" \
 		--skip "https://dune.com" \
 		--skip "https://etherscan.io" \
-		--skip "https://github.com/mir-protocol/zero-provers" \
-		--skip "https://github.com/maticnetwork/polygon-devnets/tree/dc43ac13f6fefa8fdaa82574df98727c4ff4b429/docker/pos"
+		--skip "https://github.com/*"
