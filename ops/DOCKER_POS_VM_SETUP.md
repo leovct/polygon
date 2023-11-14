@@ -73,6 +73,7 @@ ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
 6. Build the images and start the setup
 
 Note:
+
 - This will ask for user confirmation.
 - For a faster build, run `make all DEV=true` to produce only the `bor-vanilla` and `heimdall-vanilla` binaries, excluding those with `antithesis` and `race` flags. If you prefer this lightweight build, remember to set `EXECUTION_FLAGS=` (no this is not a typo!) in your `.env` file.
 
