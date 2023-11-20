@@ -43,7 +43,10 @@ echo "Set up to build docker pos setup images" \
   && echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null \
   && sudo apt-get update \
   && sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y \
-  && sudo docker run hello-world \
+  && sudo groupadd docker \
+  && sudo usermod -aG docker $USER \
+  && newgrp docker \
+  && docker run hello-world \
   && echo "Install go" \
   && sudo snap install go --classic \
   && go version \
