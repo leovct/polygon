@@ -20,6 +20,8 @@ The code for building the images and running the setup is located [here](https:/
 
 3. Install dependencies
 
+Note: don't forget to [add the public key to your Github account](https://github.com/settings/ssh/new).
+
 ```sh
 echo "Set up to build docker pos setup images" \
   && echo "Set handy aliases" \
@@ -32,6 +34,7 @@ echo "Set up to build docker pos setup images" \
   && sudo apt-get install -y make jq shellcheck python3-pip unzip \
   && sudo snap install yq \
   && pip install yq \
+  && sudo pip install tomlq \
   && echo "Install Docker (https://docs.docker.com/engine/install/ubuntu/)" \
   && sudo apt-get install ca-certificates curl gnupg -y \
   && sudo install -m 0755 -d /etc/apt/keyrings \
@@ -52,25 +55,13 @@ echo "Set up to build docker pos setup images" \
   && sudo cp ./out/polycli /usr/bin/ \
   && polycli version \
   && popd \
-  && popd
+  && popd \
+  && echo "Generate SSH key" \
+  && ssh-keygen -t ed25519 -C "your_email@example.com" -f /home/ubuntu/.ssh/id_ed25519 -N "" \
+  && cat ~/.ssh/id_ed25519.pub
 ```
 
-4. Make sure `tomlq` is installed (most of the time, this is the reason why `init.sh` fails)
-
-```sh
-sudo su
-pip install tomlq
-```
-
-5. Generate an SSH key to clone the `polygon-devnets` private repository. Don't forget to [add it to your Github account](https://github.com/settings/ssh/new).
-
-Note: this will ask for user confirmation.
-
-```sh
-ssh-keygen -t ed25519 -C "your_email@example.com" && cat ~/.ssh/id_ed25519.pub
-```
-
-6. Build the images and start the setup
+5. Build the images and start the setup
 
 Note:
 
