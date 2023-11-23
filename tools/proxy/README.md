@@ -1,6 +1,6 @@
 # Proxy
 
-A lightweight HTTP server, implemented in Go, offering the flexibility to toggle batch request support on the fly using a command-line flag.
+A lightweight HTTP server, implemented in Go, offering the flexibility to toggle batch request support on the fly using a command-line flag. The proxy forwards requests to a local node running at `localhost:8545` and returns the response to the client.
 
 ## Usage
 
