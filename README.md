@@ -23,6 +23,7 @@
 
 - [🎭 Edge gRPC Mock Server](https://github.com/leovct/edge-grpc-mock-server): Simple mock of an edge gRPC server node meant to be used along a zero-prover leader/worker setup.
 - [🦄 Integrating UniswapV3 into polygon-cli](tools/INTEGRATING_UNISWAPV3_INTO_POLYCLI.md): New `polycli loadtest` functionality that involves deploying UniswapV3 contracts and executing swaps, to replicate real-world traffic.
+- [🤖 Simple proxy](tools/proxy//README.md): a lightweight HTTP server, implemented in Go, offering the flexibility to toggle batch request support on the fly using a command-line flag.
 
 ## Operations
 
