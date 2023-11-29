@@ -1,4 +1,16 @@
 {
+  "name": "polygon",
+  "version": "1.0.0",
+  "description": "Polygon notebook",
+  "main": "index.js",
+  "scripts": {
+    "check": "pnpm exec prettier --check .",
+    "lint": "pnpm exec prettier --write .",
+    "links": "pnpm exec linkinator README.md '**/*.md' --skip https://dune.com --skip https://etherscan.io --skip https://github.com --skip https://opensea.io --skip https://platform.arkhamintelligence.com --verbosity DEBUG"
+  },
+  "keywords": [],
+  "author": "@leovct",
+  "license": "ISC",
   "devDependencies": {
     "linkinator": "^4.1.3",
     "prettier": "^2.8.8",
