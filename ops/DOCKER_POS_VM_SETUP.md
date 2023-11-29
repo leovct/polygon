@@ -45,7 +45,6 @@ echo "Set up to build docker pos setup images" \
   && sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y \
   && sudo groupadd docker \
   && sudo usermod -aG docker $USER \
-  && newgrp docker \
   && docker run hello-world \
   && echo "Install go" \
   && sudo snap install go --classic \
