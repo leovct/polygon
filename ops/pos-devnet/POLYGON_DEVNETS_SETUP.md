@@ -86,7 +86,7 @@ echo ">> Building docker images..." \
 
 6. Install tools to deploy a Kubernetes cluster (optional).
 
-``` bash
+```bash
 echo ">> Installing kubectl..." \
   && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
   && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
