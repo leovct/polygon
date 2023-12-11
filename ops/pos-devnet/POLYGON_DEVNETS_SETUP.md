@@ -14,6 +14,8 @@ The code for building the images and running the setup is located [here](https:/
 
 ## Setup
 
+### Docker setup
+
 1. Start an Ubuntu 22.04 VM. Make sure to have at least 16GB of memory and 100GB of storage.
 
 2. Connect to the VM
@@ -80,6 +82,8 @@ echo ">> Building docker images..." \
   && docker compose up
 ```
 
+### Kubernetes setup
+
 6. Install tools to deploy a Kubernetes cluster (optional).
 
 ``` bash
@@ -97,11 +101,35 @@ echo ">> Installing kubectl..." \
   && kubectl get nodes
 ```
 
+7. Once docker images have been successfully built (see step 5), you can load them into the k8s cluster (optional).
+
+```bash
+kind load docker-image ganache:latest heimdall:latest bor:latest workload:latest status:latest
+```
+
+8. Deploy the PoS k8s devnet.
+
+Note: Make sure to update the `namespace` value in both `kustomization.yaml` and `namespace.yaml`.
+
+```bash
+kubectl apply -k ./k8s \
+  && kubectl get statefulsets -n test \
+  && kubectl get deployments -n test \
+  && kubectl get pods -n test \
+  && kubectl get services -n test
+```
+
 ## Handy commands
 
 ```sh
+## Docker commands
 alias docker='sudo docker'
 docker logs bor_3 -f -n 10
 docker exec -it workload /bin/bash
 docker ps -a | grep -e 'ganache\|workload\|heimdall\|bor\|config\|status' | awk '{print $1}' | xargs -I xxx docker rm xxx
+
+## Kubernets commands
+kubectl describe pods -n test
+kubectl logs -n test -f rootchain-5ccc58d466-8m29p
+kubectl exec -n test -it rootchain-5ccc58d466-8m29p -- /bin/bash
 ```
