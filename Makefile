@@ -25,4 +25,5 @@ links: ## Check for broken links. Note: dune links have been deactivated because
 		--skip "https://etherscan.io" \
 		--skip "https://github.com" \
 		--skip "https://opensea.io" \
-		--skip "https://platform.arkhamintelligence.com"
+		--skip "https://platform.arkhamintelligence.com" \
+		--skip "https://library.dedaub.com"
