@@ -6,7 +6,7 @@
   "scripts": {
     "check": "pnpm exec prettier --check .",
     "lint": "pnpm exec prettier --write .",
-    "links": "pnpm exec linkinator README.md '**/*.md' --skip https://dune.com --skip https://etherscan.io --skip https://github.com --skip https://opensea.io --skip https://platform.arkhamintelligence.com --skip https://library.dedaub.com --verbosity DEBUG"
+    "links": "pnpm exec linkinator README.md '**/*.md' --skip https://dune.com --skip https://etherscan.io --skip https://github.com --skip https://opensea.io --skip https://platform.arkhamintelligence.com --skip https://library.dedaub.com --skip https://www.reddit.com/ --verbosity DEBUG"
   },
   "keywords": [],
   "author": "@leovct",
