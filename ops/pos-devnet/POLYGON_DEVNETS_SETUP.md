@@ -25,19 +25,19 @@ The code for building the images and running the setup is located [here](https:/
 Note: don't forget to [add the public key to your Github account](https://github.com/settings/ssh/new).
 
 ```sh
-echo ">> Setting up to build docker pos setup images.." \
-  && echo ">> Setting handy aliases..." \
+echo -e "\n>> Setting up to build docker pos setup images.." \
+  && echo -e "\n>> Setting handy aliases..." \
   && alias docker='sudo docker' \
   && alias make='sudo make' \
-  && echo ">> Enabling auto restarting services when upgrading packages.." \
+  && echo -e "\n>> Enabling auto restarting services when upgrading packages.." \
   && sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf \
-  && echo ">> Installing packages.." \
+  && echo -e "\n>> Installing packages.." \
   && sudo apt-get update \
   && sudo apt-get install -y make jq shellcheck python3-pip unzip \
   && sudo snap install yq \
   && pip install yq \
   && sudo pip install tomlq \
-  && echo ">> Installing docker..." \
+  && echo -e "\n>> Installing docker..." \
   && sudo apt-get install ca-certificates curl gnupg -y \
   && sudo install -m 0755 -d /etc/apt/keyrings \
   && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
@@ -48,10 +48,10 @@ echo ">> Setting up to build docker pos setup images.." \
   && sudo groupadd docker \
   && sudo usermod -aG docker $USER \
   && docker run hello-world \
-  && echo ">> Installing go..." \
+  && echo -e "\n>> Installing go..." \
   && sudo snap install go --classic \
   && go version \
-  && echo ">> Compiling polycli..." \
+  && echo -e "\n>> Compiling polycli..." \
   && pushd /tmp \
   && git clone https://github.com/maticnetwork/polygon-cli.git \
   && pushd polygon-cli \
@@ -60,7 +60,7 @@ echo ">> Setting up to build docker pos setup images.." \
   && polycli version \
   && popd \
   && popd \
-  && echo ">> Generating SSH key..." \
+  && echo -e "\n>> Generating SSH key..." \
   && ssh-keygen -t ed25519 -C "your_email@example.com" -f /home/ubuntu/.ssh/id_ed25519 -N "" \
   && cat ~/.ssh/id_ed25519.pub
 ```
@@ -74,7 +74,7 @@ Note:
 - To build the image for Kubernetes, run `make all K8S_ENV=true K8S_NS=<your-namespace>`.
 
 ```sh
-echo ">> Building docker images..." \
+echo -e "\n>> Building docker images..." \
   && git clone git@github.com:maticnetwork/polygon-devnets.git \
   && cd polygon-devnets/docker/pos \
   && git checkout your-branch \
@@ -89,15 +89,15 @@ echo ">> Building docker images..." \
 6. Install tools to deploy a Kubernetes cluster (optional).
 
 ```bash
-echo ">> Installing kubectl..." \
+echo -e "\n>> Installing kubectl..." \
   && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
   && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
   && kubectl version --client \
-  && echo ">> Installing kind..." \
+  && echo -e "\n>> Installing kind..." \
   && go install sigs.k8s.io/kind@v0.20.0 \
   && sudo mv ./go/bin/kind /usr/local/bin/kind \
   && kind --version \
-  && echo ">> Creating a local k8s cluster..." \
+  && echo -e "\n>> Creating a local k8s cluster..." \
   && kind create cluster \
   && kind get clusters \
   && kubectl get nodes
