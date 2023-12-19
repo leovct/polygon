@@ -69,6 +69,7 @@ echo -e "\n>> Setting up to build docker pos setup images.." \
 Note:
 
 - This will ask for user confirmation.
+- To build images with Antithesis automation, use `make all` and to start them in containers, use `echo "EXECUTION_FLAGS=--antithesis --race" > .env`.
 - For a faster build, run `make all DEV=true` to produce only the `bor-vanilla` and `heimdall-vanilla` binaries, excluding those with `antithesis` and `race` flags. If you prefer this lightweight build, remember to set `EXECUTION_FLAGS=` (no this is not a typo!) in your `.env` file.
 - To build the image for Kubernetes, run `make all K8S_ENV=true K8S_NS=<your-namespace>`.
 
@@ -78,8 +79,8 @@ echo -e "\n>> Building docker images..." \
   && cd polygon-devnets/docker/pos \
   && git checkout your-branch \
   && touch private.env \
-  && echo "EXECUTION_FLAGS=--antithesis --race" > .env \
-  && make all \
+  && echo 'EXECUTION_FLAGS=""' > .env \
+  && make all DEV=true \
   && docker compose up
 ```
 
