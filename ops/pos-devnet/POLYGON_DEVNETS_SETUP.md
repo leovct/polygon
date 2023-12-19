@@ -78,8 +78,6 @@ echo -e "\n>> Building docker images..." \
   && git clone git@github.com:maticnetwork/polygon-devnets.git \
   && cd polygon-devnets/docker/pos \
   && git checkout your-branch \
-  && touch private.env \
-  && echo 'EXECUTION_FLAGS=""' > .env \
   && make all DEV=true \
   && docker compose up
 ```
