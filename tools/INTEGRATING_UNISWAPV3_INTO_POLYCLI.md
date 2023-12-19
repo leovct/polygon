@@ -36,7 +36,7 @@ This is the most complex part of the deployment.
 
 - Creating a pool is a straightforward task, requiring the addresses of two ERC20 tokens and a fee amount. It is crucial to ensure that the fee aligns with one of the [pool fee tiers](https://docs.uniswap.org/concepts/protocol/fees) – 0.05%, 0.30%, or 1%. Additionally, make sure the fee amount is correctly formatted in hundredths of a bip (basis point).
 
-- Initialising a pool introduces more complexity, involving setting the initial price of the pool in a specific notation known as [Q64.96](https://uniswapv3book.com/docs/milestone_3/more-on-fixed-point-numbers/). For a detailed understanding, [Jeiwan](https://twitter.com/jeiwan7) provides excellent explanations in his [UniswapV3 Book](https://uniswapv3book.com/docs/milestone_1/calculating-liquidity/). This is a great resource to undestand how UniswapV3 works under the hood.
+- Initialising a pool introduces more complexity, involving setting the initial price of the pool in a specific notation known as [Q64.96](https://uniswapv3book.com/milestone_3/more-on-fixed-point-numbers). For a detailed understanding, [Jeiwan](https://twitter.com/jeiwan7) provides excellent explanations in his [UniswapV3 Book](https://uniswapv3book.com/milestone_1/calculating-liquidity). This is a great resource to undestand how UniswapV3 works under the hood.
 
 - Providing liquidity poses its own set of challenges:
 
