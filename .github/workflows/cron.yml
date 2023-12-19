@@ -1,0 +1,31 @@
+---
+name: Daily check for broken links
+
+on:
+  schedule:
+    - cron: '0 5 * * *' # Run every day at 6 AM (UTC+1) - Paris
+
+env:
+  PNPM_VERSION: '8.11.0'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  submodules-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check for broken links
+        run: pnpm run links
