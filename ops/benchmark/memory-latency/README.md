@@ -1,7 +1,11 @@
 # Memory latency tool
 
 ```bash
-$ go build -o memlatency main.go
+# Build for linux
+$ GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o memlatency
+# Build for macOS
+$ go build -o memlatency
+
 $ ./memlatency --help
 Measure memory latency
 
