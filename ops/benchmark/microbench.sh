@@ -86,7 +86,7 @@ customenv=/etc/profile.d/netflix_environment.sh
 
 ### add software
 echo Adding packages...
-addpkgs numactl sysbench fio hdparm iperf sharutils openssl
+addpkgs numactl sysbench fio hdparm iperf sharutils openssl libtime-hires-perl
 
 sudo mkdir -p $DATADIR
 [[ "$USER" == "" ]] && die "ERROR: Username not found (\$USER?)"
