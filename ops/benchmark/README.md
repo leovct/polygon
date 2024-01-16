@@ -17,6 +17,7 @@ gcloud auth login
 ```
 
 Run benchmarks.
+
 ```bash
 $ ./bench.sh
 Values loaded from .env
