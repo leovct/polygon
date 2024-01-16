@@ -5,7 +5,7 @@ function bench {
   instance=$2
   echo "Running benchmark script on $name..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
-    "curl -L https://gist.github.com/leovct/833bc3dc065df839cfeb24c10cbcb57a/raw/microbench.sh | bash" > results/$name.bench 2>&1 &
+    "curl -L https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/microbench.sh | bash" > results/$name.bench 2>&1 &
 }
 
 # Load variables.
