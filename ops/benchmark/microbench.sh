@@ -88,6 +88,11 @@ customenv=/etc/profile.d/netflix_environment.sh
 echo Adding packages...
 addpkgs numactl sysbench fio hdparm iperf sharutils openssl libtime-hires-perl
 
+# install rust nightly
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source "$HOME/.cargo/env"
+rustup default nightly
+
 sudo mkdir -p $DATADIR
 [[ "$USER" == "" ]] && die "ERROR: Username not found (\$USER?)"
 sudo chown $USER $DATADIR
@@ -103,6 +108,7 @@ echo governor: $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
 echo sysbench: "$(sysbench --version)"
 echo perl: "$(perl --version)"
 echo openssl: "$(openssl version)"
+echo rustc: "$(rustc --version)"
 ) | tee -a $LOGFILE
 
 ### run benchmarks
@@ -208,6 +214,14 @@ run D5 fio --name=iops --rw=read --bs=1m --size=4g --filename=$mntdev --direct=1
 run N1 bash -c 'iperf -s & sleep 1; iperf -c 127.0.0.1 -i 1 -t 15; pkill iperf'
 
 # other network tests needs a remote host...
+
+# poseidon hashes
+run H1 poseidonhash 1000 10
+run H1 poseidonhash 1000 10
+run H1 poseidonhash 10000 10
+run H1 poseidonhash 10000 10
+run H1 poseidonhash 100000 10
+run H1 poseidonhash 100000 10
 
 # TODO: add proof block benchmark
 # https://0xpolygon.slack.com/archives/C02JAJVVAH1/p1705418808846019
