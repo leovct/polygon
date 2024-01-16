@@ -21,6 +21,7 @@ echo "ZONE=$ZONE"
 echo
 
 # Run benchmarks in the background.
+rm -rf ./results
 mkdir -p results
 bench "c3d-standard-8" "leovct-bench-test-01"
 bench "t2d-standard-8" "leovct-bench-test-02"
