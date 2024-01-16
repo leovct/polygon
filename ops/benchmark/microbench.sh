@@ -169,6 +169,14 @@ run S3 perl -e 'use Time::HiRes; for (;$i++ < 100_000_000;) { Time::HiRes::getti
 # memory bandwidth, CPU and memory node bound:
 #run M5 numactl --membind=0 --physcpubind=0 /usr/lib/lmbench/bin/x86_64-linux-gnu/bw_mem 2500m cp
 
+# memory access and write latency alternatives
+run M1 memlatency --seed 42 --samples 1000 --size 1000
+run M1 memlatency --seed 42 --samples 1000 --size 1000
+run M1 memlatency --seed 42 --samples 1000 --size 1000000
+run M1 memlatency --seed 42 --samples 1000 --size 1000000
+run M1 memlatency --seed 42 --samples 1000 --size 1000000000
+run M1 memlatency --seed 42 --samples 1000 --size 1000000000
+
 # file system writes, ending with an fsync to flush:
 run F1 fio --name=seqwrite --rw=write --filename=fio.data --bs=128k --size=4g --end_fsync=1 --loops=4
 
