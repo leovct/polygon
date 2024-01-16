@@ -209,6 +209,9 @@ run N1 bash -c 'iperf -s & sleep 1; iperf -c 127.0.0.1 -i 1 -t 15; pkill iperf'
 
 # other network tests needs a remote host...
 
+# TODO: add proof block benchmark
+# https://0xpolygon.slack.com/archives/C02JAJVVAH1/p1705418808846019
+
 echo Done.
 echo DATE: $(date) | tee -a $LOGFILE
 echo
