@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  submodules-update:
+  check-broken-links:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
