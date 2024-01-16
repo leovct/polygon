@@ -6,6 +6,7 @@ function bench {
   echo "Running benchmark script on $name..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
     "sudo curl -L https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/memory-latency/memlatency --output /usr/bin/memlatency \
+      && sudo chmod +x /usr/bin/memlatency \
       && curl -L https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/microbench.sh | bash" > results/$name.bench 2>&1 &
 }
 
