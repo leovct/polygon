@@ -1,0 +1,862 @@
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  7653  100  7653    0     0  85033      0 --:--:-- --:--:-- --:--:-- 85033
+no /mnt device; defaulting to /.
+Logfile: /home/leovct/out.microbench.4462
+Main Memory: 32111 Mbytes
+CPUs: 8
+CPU:
+processor	: 0
+vendor_id	: AuthenticAMD
+cpu family	: 25
+model		: 17
+model name	: AMD EPYC 9B14
+stepping	: 1
+microcode	: 0xffffffff
+cpu MHz		: 2599.998
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 16
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext invpcid_single ssbd ibrs ibpb stibp vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves avx512_bf16 clzero xsaveerptr wbnoinvd arat avx512vbmi umip avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid fsrm
+bugs		: sysret_ss_attrs spectre_v1 spectre_v2 spec_store_bypass srso
+bogomips	: 5199.99
+TLB size	: 3584 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 52 bits physical, 57 bits virtual
+power management:
+
+NUMASTAT:
+                           node0
+numa_hit                28153294
+numa_miss                      0
+numa_foreign                   0
+interleave_hit             12800
+local_node              28153294
+other_node                     0
+DF:
+Filesystem       Size  Used Avail Use% Mounted on
+udev              16G     0   16G   0% /dev
+tmpfs            3.2G  412K  3.2G   1% /run
+/dev/nvme0n1p1   9.7G  2.2G  7.0G  24% /
+tmpfs             16G     0   16G   0% /dev/shm
+tmpfs            5.0M     0  5.0M   0% /run/lock
+/dev/nvme0n1p15  124M   11M  114M   9% /boot/efi
+tmpfs            3.2G     0  3.2G   0% /run/user/1000
+FSTAB:
+# /etc/fstab: static file system information
+UUID=b2e2b5e0-61bb-4fa5-9169-fd1ab2ba4255 / ext4 rw,discard,errors=remount-ro,x-systemd.growfs 0 1
+UUID=D056-4B67 /boot/efi vfat defaults 0 0
+MTAB:
+sysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0
+proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
+udev /dev devtmpfs rw,nosuid,relatime,size=16430156k,nr_inodes=4107539,mode=755 0 0
+devpts /dev/pts devpts rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000 0 0
+tmpfs /run tmpfs rw,nosuid,nodev,noexec,relatime,size=3288192k,mode=755 0 0
+/dev/nvme0n1p1 / ext4 rw,relatime,discard,errors=remount-ro 0 0
+securityfs /sys/kernel/security securityfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /dev/shm tmpfs rw,nosuid,nodev 0 0
+tmpfs /run/lock tmpfs rw,nosuid,nodev,noexec,relatime,size=5120k 0 0
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0
+pstore /sys/fs/pstore pstore rw,nosuid,nodev,noexec,relatime 0 0
+efivarfs /sys/firmware/efi/efivars efivarfs rw,nosuid,nodev,noexec,relatime 0 0
+none /sys/fs/bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700 0 0
+systemd-1 /proc/sys/fs/binfmt_misc autofs rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=15657 0 0
+debugfs /sys/kernel/debug debugfs rw,nosuid,nodev,noexec,relatime 0 0
+hugetlbfs /dev/hugepages hugetlbfs rw,relatime,pagesize=2M 0 0
+mqueue /dev/mqueue mqueue rw,nosuid,nodev,noexec,relatime 0 0
+tracefs /sys/kernel/tracing tracefs rw,nosuid,nodev,noexec,relatime 0 0
+fusectl /sys/fs/fuse/connections fusectl rw,nosuid,nodev,noexec,relatime 0 0
+configfs /sys/kernel/config configfs rw,nosuid,nodev,noexec,relatime 0 0
+/dev/nvme0n1p15 /boot/efi vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro 0 0
+tmpfs /run/user/1000 tmpfs rw,nosuid,nodev,relatime,size=3288188k,nr_inodes=822047,mode=700,uid=1000,gid=1001 0 0
+/mnt DEV: /dev/nvme0n1p1
+
+DATE: Tue Jan 16 14:17:43 UTC 2024
+UNAME: Linux leovct-bench-test-01 5.10.0-27-cloud-amd64 #1 SMP Debian 5.10.205-2 (2023-12-31) x86_64 GNU/Linux
+ENV:
+SHELL=/bin/bash
+PWD=/home/leovct
+LOGNAME=leovct
+XDG_SESSION_TYPE=tty
+MOTD_SHOWN=pam
+HOME=/home/leovct
+LANG=C.UTF-8
+SSH_CONNECTION=212.195.220.254 55821 10.132.0.2 22
+XDG_SESSION_CLASS=user
+USER=leovct
+SHLVL=1
+XDG_SESSION_ID=11
+LC_CTYPE=UTF-8
+XDG_RUNTIME_DIR=/run/user/1000
+SSH_CLIENT=212.195.220.254 55821 22
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/games
+_=/usr/bin/env
+Adding packages...
+All packages already installed.
+cd /mnt/microbench
+clocksource: tsc
+governor:
+cat: /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: No such file or directory
+sysbench: sysbench 1.0.20
+perl: 
+This is perl 5, version 32, subversion 1 (v5.32.1) built for x86_64-linux-gnu-thread-multi
+(with 47 registered patches, see perl -V for more detail)
+
+Copyright 1987-2021, Larry Wall
+
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5 source kit.
+
+Complete documentation for Perl, including FAQ lists, should be found on
+this system using "man perl" or "perldoc perl".  If you have access to the
+Internet, point your browser at http://www.perl.org/, the Perl Home Page.
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_CTYPE = "UTF-8",
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("C.UTF-8").
+openssl: OpenSSL 1.1.1w  11 Sep 2023
+Running benchmarks...
+----------------------------------------
+BENCHMARK: C2
+----------------------------------------
+RUN: sysbench --events=10000000 --time=10 --num-threads=1 --cpu-max-prime=10000 cpu run
+
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+CPU speed:
+    events per second:  3389.26
+
+General statistics:
+    total time:                          10.0002s
+    total number of events:              33895
+
+Latency (ms):
+         min:                                    0.25
+         avg:                                    0.29
+         max:                                   16.29
+         95th percentile:                        0.28
+         sum:                                 9993.27
+
+Threads fairness:
+    events (avg/stddev):           33895.0000/0.00
+    execution time (avg/stddev):   9.9933/0.00
+
+
+EXIT STATUS: 0
+
+real	0m10.025s
+user	0m9.197s
+sys	0m0.000s
+----------------------------------------
+BENCHMARK: C2
+----------------------------------------
+RUN: sysbench --events=10000000 --time=10 --num-threads=1 --cpu-max-prime=10000 cpu run
+
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+CPU speed:
+    events per second:  3290.98
+
+General statistics:
+    total time:                          10.0002s
+    total number of events:              32912
+
+Latency (ms):
+         min:                                    0.25
+         avg:                                    0.30
+         max:                                   24.28
+         95th percentile:                        0.28
+         sum:                                 9993.47
+
+Threads fairness:
+    events (avg/stddev):           32912.0000/0.00
+    execution time (avg/stddev):   9.9935/0.00
+
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: C2
+----------------------------------------
+
+real	0m10.029s
+user	0m8.827s
+sys	0m0.004s
+RUN: sysbench --events=10000000 --time=10 --num-threads=1 --cpu-max-prime=10000 cpu run
+
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+CPU speed:
+    events per second:  3941.23
+
+General statistics:
+    total time:                          10.0002s
+    total number of events:              39415
+
+Latency (ms):
+         min:                                    0.24
+         avg:                                    0.25
+         max:                                    0.65
+         95th percentile:                        0.26
+         sum:                                 9993.68
+
+Threads fairness:
+    events (avg/stddev):           39415.0000/0.00
+    execution time (avg/stddev):   9.9937/0.00
+
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: C2
+----------------------------------------
+RUN: sysbench --events=10000000 --time=10 --num-threads=1 --cpu-max-prime=10000 cpu run
+
+
+real	0m10.004s
+user	0m10.004s
+sys	0m0.000s
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+CPU speed:
+    events per second:  3950.24
+
+General statistics:
+    total time:                          10.0001s
+    total number of events:              39505
+
+Latency (ms):
+         min:                                    0.24
+         avg:                                    0.25
+         max:                                    0.46
+         95th percentile:                        0.26
+         sum:                                 9993.52
+
+Threads fairness:
+    events (avg/stddev):           39505.0000/0.00
+    execution time (avg/stddev):   9.9935/0.00
+
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: C2
+----------------------------------------
+RUN: sysbench --events=10000000 --time=10 --num-threads=1 --cpu-max-prime=10000 cpu run
+
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+
+real	0m10.004s
+user	0m10.000s
+sys	0m0.004s
+CPU speed:
+    events per second:  3950.78
+
+General statistics:
+    total time:                          10.0003s
+    total number of events:              39511
+
+Latency (ms):
+         min:                                    0.24
+         avg:                                    0.25
+         max:                                    0.43
+         95th percentile:                        0.26
+         sum:                                 9993.79
+
+Threads fairness:
+    events (avg/stddev):           39511.0000/0.00
+    execution time (avg/stddev):   9.9938/0.00
+
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: C3
+----------------------------------------
+RUN: numactl --physcpubind=0 sysbench --events=10000000 --time=10 --num-threads=1 --cpu-max-prime=10000 cpu run
+
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+
+real	0m10.005s
+user	0m10.004s
+sys	0m0.000s
+CPU speed:
+    events per second:  3964.61
+
+General statistics:
+    total time:                          10.0002s
+    total number of events:              39649
+
+Latency (ms):
+         min:                                    0.24
+         avg:                                    0.25
+         max:                                    0.37
+         95th percentile:                        0.26
+         sum:                                 9993.87
+
+Threads fairness:
+    events (avg/stddev):           39649.0000/0.00
+    execution time (avg/stddev):   9.9939/0.00
+
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: C4
+----------------------------------------
+
+real	0m10.005s
+user	0m10.005s
+sys	0m0.000s
+RUN: sysbench --events=10000000 --time=10 --num-threads=8 --cpu-max-prime=10000 cpu run
+
+WARNING: --num-threads is deprecated, use --threads instead
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 8
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+CPU speed:
+    events per second: 17137.91
+
+General statistics:
+    total time:                          10.0004s
+    total number of events:              171393
+
+Latency (ms):
+         min:                                    0.24
+         avg:                                    0.47
+         max:                                   24.47
+         95th percentile:                        0.46
+         sum:                                79955.20
+
+Threads fairness:
+    events (avg/stddev):           21424.1250/1728.19
+    execution time (avg/stddev):   9.9944/0.01
+
+
+EXIT STATUS: 0
+
+real	0m10.005s
+user	1m10.944s
+sys	0m0.000s
+----------------------------------------
+BENCHMARK: C5
+----------------------------------------
+RUN: openssl speed -multi 8 rsa4096
+
+Got: +F2:4:4096:108.691309:7889.300000 from 0
+Got: +F2:4:4096:114.400000:7820.300000 from 1
+Got: +F2:4:4096:114.100000:8085.600000 from 2
+Got: +F2:4:4096:113.286713:7850.500000 from 3
+Got: +F2:4:4096:126.000000:6982.200000 from 4
+Got: +F2:4:4096:119.100000:7653.200000 from 5
+Got: +F2:4:4096:109.200000:7414.800000 from 6
+Got: +F2:4:4096:135.500000:7688.000000 from 7
+OpenSSL 1.1.1w  11 Sep 2023
+built on: Wed Sep 13 19:21:33 2023 UTC
+options:bn(64,64) rc4(8x,int) des(int) aes(partial) blowfish(ptr) 
+compiler: gcc -fPIC -pthread -m64 -Wa,--noexecstack -Wall -Wa,--noexecstack -g -O2 -ffile-prefix-map=/build/reproducible-path/openssl-1.1.1w=. -fstack-protector-strong -Wformat -Werror=format-security -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSL_CPUID_OBJ -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DKECCAK1600_ASM -DRC4_ASM -DMD5_ASM -DAESNI_ASM -DVPAES_ASM -DGHASH_ASM -DECP_NISTZ256_ASM -DX25519_ASM -DPOLY1305_ASM -DNDEBUG -Wdate-time -D_FORTIFY_SOURCE=2
+                  sign    verify    sign/s verify/s
+rsa 4096 bits 0.001064s 0.000016s    940.3  61383.9
+
+real	0m20.031s
+user	0m0.003s
+sys	0m0.000s
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: S1
+----------------------------------------
+RUN: dd if=/dev/zero of=/dev/null bs=1 count=100000000
+
+100000000+0 records in
+100000000+0 records out
+100000000 bytes (100 MB, 95 MiB) copied, 47.8266 s, 2.1 MB/s
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: S1
+----------------------------------------
+RUN: dd if=/dev/zero of=/dev/null bs=1 count=100000000
+
+
+real	0m47.827s
+user	0m8.892s
+sys	0m38.935s
+100000000+0 records in
+100000000+0 records out
+100000000 bytes (100 MB, 95 MiB) copied, 47.4417 s, 2.1 MB/s
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: S1
+----------------------------------------
+RUN: dd if=/dev/zero of=/dev/null bs=1 count=100000000
+
+
+real	0m47.442s
+user	0m8.885s
+sys	0m38.558s
+100000000+0 records in
+100000000+0 records out
+100000000 bytes (100 MB, 95 MiB) copied, 48.5538 s, 2.1 MB/s
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: S2
+----------------------------------------
+RUN: numactl --membind=0 --physcpubind=0 dd if=/dev/zero of=/dev/null bs=1 count=100000000
+
+
+real	0m48.554s
+user	0m9.204s
+sys	0m39.350s
+100000000+0 records in
+100000000+0 records out
+100000000 bytes (100 MB, 95 MiB) copied, 47.3179 s, 2.1 MB/s
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: S3
+----------------------------------------
+RUN: perl -e use Time::HiRes; for (;$i++ < 100_000_000;) { Time::HiRes::gettimeofday(); }
+
+
+real	0m47.319s
+user	0m8.632s
+sys	0m38.686s
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_CTYPE = "UTF-8",
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("C.UTF-8").
+Can't locate Time/HiRes.pm in @INC (you may need to install the Time::HiRes module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.32.1 /usr/local/share/perl/5.32.1 /usr/lib/x86_64-linux-gnu/perl5/5.32 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.32 /usr/share/perl/5.32 /usr/local/lib/site_perl) at -e line 1.
+BEGIN failed--compilation aborted at -e line 1.
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: S3
+----------------------------------------
+
+real	0m0.001s
+user	0m0.001s
+sys	0m0.000s
+RUN: perl -e use Time::HiRes; for (;$i++ < 100_000_000;) { Time::HiRes::gettimeofday(); }
+
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_CTYPE = "UTF-8",
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("C.UTF-8").
+Can't locate Time/HiRes.pm in @INC (you may need to install the Time::HiRes module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.32.1 /usr/local/share/perl/5.32.1 /usr/lib/x86_64-linux-gnu/perl5/5.32 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.32 /usr/share/perl/5.32 /usr/local/lib/site_perl) at -e line 1.
+BEGIN failed--compilation aborted at -e line 1.
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: S3
+----------------------------------------
+RUN: perl -e use Time::HiRes; for (;$i++ < 100_000_000;) { Time::HiRes::gettimeofday(); }
+
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_CTYPE = "UTF-8",
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("C.UTF-8").
+Can't locate Time/HiRes.pm in @INC (you may need to install the Time::HiRes module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.32.1 /usr/local/share/perl/5.32.1 /usr/lib/x86_64-linux-gnu/perl5/5.32 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.32 /usr/share/perl/5.32 /usr/local/lib/site_perl) at -e line 1.
+BEGIN failed--compilation aborted at -e line 1.
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: F1
+----------------------------------------
+RUN: fio --name=seqwrite --rw=write --filename=fio.data --bs=128k --size=4g --end_fsync=1 --loops=4
+
+
+real	0m0.001s
+user	0m0.001s
+sys	0m0.000s
+
+real	0m0.001s
+user	0m0.001s
+sys	0m0.000s
+seqwrite: (g=0): rw=write, bs=(R) 128KiB-128KiB, (W) 128KiB-128KiB, (T) 128KiB-128KiB, ioengine=psync, iodepth=1
+fio-3.25
+Starting 1 process
+seqwrite: Laying out IO file (1 file / 4096MiB)
+
+seqwrite: (groupid=0, jobs=1): err= 0: pid=4785: Tue Jan 16 14:24:23 2024
+  write: IOPS=1114, BW=139MiB/s (146MB/s)(16.0GiB/117631msec); 0 zone resets
+    clat (usec): min=27, max=630, avg=30.76, stdev= 2.88
+     lat (usec): min=27, max=631, avg=31.10, stdev= 2.89
+    clat percentiles (nsec):
+     |  1.00th=[28544],  5.00th=[28800], 10.00th=[29056], 20.00th=[29568],
+     | 30.00th=[29824], 40.00th=[30080], 50.00th=[30336], 60.00th=[30592],
+     | 70.00th=[31104], 80.00th=[31360], 90.00th=[32128], 95.00th=[33536],
+     | 99.00th=[38656], 99.50th=[41728], 99.90th=[52480], 99.95th=[58112],
+     | 99.99th=[96768]
+   bw (  MiB/s): min=   11, max= 4041, per=100.00%, avg=2522.68, stdev=2044.35, samples=8
+   iops        : min=   95, max=32330, avg=20181.25, stdev=16355.00, samples=8
+  lat (usec)   : 50=99.83%, 100=0.17%, 250=0.01%, 750=0.01%
+  cpu          : usr=0.08%, sys=5.22%, ctx=79876, majf=0, minf=13
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,131072,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=139MiB/s (146MB/s), 139MiB/s-139MiB/s (146MB/s-146MB/s), io=16.0GiB (17.2GB), run=117631-117631msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/79374, merge=0/126, ticks=0/11727059, in_queue=11727059, util=97.06%
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: F2
+----------------------------------------
+RUN: fio --name=randread --rw=randread --pre_read=1 --norandommap --bs=4k --size=256m --runtime=30 --loops=1000000
+
+
+real	1m57.894s
+user	0m0.302s
+sys	0m6.236s
+randread: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=psync, iodepth=1
+fio-3.25
+Starting 1 process
+
+randread: (groupid=0, jobs=1): err= 0: pid=4808: Tue Jan 16 14:24:53 2024
+  read: IOPS=1038k, BW=4054MiB/s (4251MB/s)(119GiB/30001msec)
+    clat (nsec): min=330, max=155620, avg=811.66, stdev=257.49
+     lat (nsec): min=390, max=155640, avg=828.78, stdev=259.92
+    clat percentiles (nsec):
+     |  1.00th=[  482],  5.00th=[  588], 10.00th=[  660], 20.00th=[  748],
+     | 30.00th=[  772], 40.00th=[  788], 50.00th=[  804], 60.00th=[  828],
+     | 70.00th=[  860], 80.00th=[  892], 90.00th=[  932], 95.00th=[  980],
+     | 99.00th=[ 1064], 99.50th=[ 1128], 99.90th=[ 4016], 99.95th=[ 5344],
+     | 99.99th=[10688]
+   bw (  MiB/s): min= 3884, max= 4080, per=100.00%, avg=4056.00, stdev=24.87, samples=59
+   iops        : min=994310, max=1044508, avg=1038336.47, stdev=6367.84, samples=59
+  lat (nsec)   : 500=1.68%, 750=17.08%, 1000=77.55%
+  lat (usec)   : 2=3.59%, 4=0.01%, 10=0.09%, 20=0.01%, 50=0.01%
+  lat (usec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=27.13%, sys=72.86%, ctx=72, majf=0, minf=10
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=31137262,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=4054MiB/s (4251MB/s), 4054MiB/s-4054MiB/s (4251MB/s-4251MB/s), io=119GiB (128GB), run=30001-30001msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/6, merge=0/6, ticks=0/4, in_queue=4, util=0.03%
+
+EXIT STATUS: 0
+
+real	0m30.285s
+user	0m8.297s
+sys	0m21.915s
+----------------------------------------
+BENCHMARK: F3
+----------------------------------------
+RUN: fio --numjobs=8 --name=randread --rw=randread --pre_read=1 --norandommap --bs=4k --size=32m --runtime=30 --loops=1000000
+
+randread: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=psync, iodepth=1
+...
+fio-3.25
+Starting 8 processes
+randread: Laying out IO file (1 file / 32MiB)
+randread: Laying out IO file (1 file / 32MiB)
+randread: Laying out IO file (1 file / 32MiB)
+randread: Laying out IO file (1 file / 32MiB)
+randread: Laying out IO file (1 file / 32MiB)
+randread: Laying out IO file (1 file / 32MiB)
+randread: Laying out IO file (1 file / 32MiB)
+
+randread: (groupid=0, jobs=1): err= 0: pid=4823: Tue Jan 16 14:25:26 2024
+  read: IOPS=794k, BW=3103MiB/s (3254MB/s)(90.9GiB/30001msec)
+    clat (nsec): min=340, max=179820, avg=1023.04, stdev=635.61
+     lat (nsec): min=370, max=179840, avg=1049.02, stdev=642.99
+    clat percentiles (nsec):
+     |  1.00th=[  450],  5.00th=[  548], 10.00th=[  620], 20.00th=[  900],
+     | 30.00th=[  980], 40.00th=[ 1020], 50.00th=[ 1048], 60.00th=[ 1096],
+     | 70.00th=[ 1128], 80.00th=[ 1176], 90.00th=[ 1224], 95.00th=[ 1288],
+     | 99.00th=[ 1416], 99.50th=[ 1480], 99.90th=[ 6944], 99.95th=[ 7712],
+     | 99.99th=[23424]
+   bw (  MiB/s): min= 2906, max= 5679, per=13.04%, avg=3090.24, stdev=503.73, samples=59
+   iops        : min=744156, max=1453950, avg=791101.44, stdev=128954.64, samples=59
+  lat (nsec)   : 500=3.97%, 750=9.97%, 1000=20.48%
+  lat (usec)   : 2=65.45%, 4=0.01%, 10=0.10%, 20=0.01%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=28.78%, sys=71.21%, ctx=83, majf=0, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=23831830,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+randread: (groupid=0, jobs=1): err= 0: pid=4824: Tue Jan 16 14:25:26 2024
+  read: IOPS=742k, BW=2898MiB/s (3039MB/s)(84.9GiB/30001msec)
+    clat (nsec): min=370, max=208040, avg=1102.04, stdev=780.94
+     lat (nsec): min=390, max=208070, avg=1129.37, stdev=791.73
+    clat percentiles (nsec):
+     |  1.00th=[  668],  5.00th=[  852], 10.00th=[  924], 20.00th=[  980],
+     | 30.00th=[ 1020], 40.00th=[ 1048], 50.00th=[ 1080], 60.00th=[ 1112],
+     | 70.00th=[ 1144], 80.00th=[ 1192], 90.00th=[ 1256], 95.00th=[ 1304],
+     | 99.00th=[ 1448], 99.50th=[ 1496], 99.90th=[ 7776], 99.95th=[ 8768],
+     | 99.99th=[47872]
+   bw (  MiB/s): min= 2871, max= 2978, per=12.23%, avg=2897.14, stdev=21.30, samples=59
+   iops        : min=735196, max=762596, avg=741668.80, stdev=5452.32, samples=59
+  lat (nsec)   : 500=0.04%, 750=1.75%, 1000=21.85%
+  lat (usec)   : 2=76.20%, 4=0.02%, 10=0.11%, 20=0.01%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=27.23%, sys=72.43%, ctx=2885, majf=0, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22255653,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+randread: (groupid=0, jobs=1): err= 0: pid=4825: Tue Jan 16 14:25:26 2024
+  read: IOPS=747k, BW=2920MiB/s (3061MB/s)(85.5GiB/30001msec)
+    clat (nsec): min=400, max=180240, avg=1090.36, stdev=634.18
+     lat (nsec): min=410, max=180260, avg=1117.60, stdev=641.80
+    clat percentiles (nsec):
+     |  1.00th=[  692],  5.00th=[  852], 10.00th=[  924], 20.00th=[  980],
+     | 30.00th=[ 1012], 40.00th=[ 1048], 50.00th=[ 1064], 60.00th=[ 1096],
+     | 70.00th=[ 1144], 80.00th=[ 1176], 90.00th=[ 1240], 95.00th=[ 1304],
+     | 99.00th=[ 1432], 99.50th=[ 1496], 99.90th=[ 7392], 99.95th=[ 8640],
+     | 99.99th=[23936]
+   bw (  MiB/s): min= 2896, max= 2988, per=12.33%, avg=2920.83, stdev=19.53, samples=59
+   iops        : min=741502, max=765078, avg=747732.92, stdev=4998.71, samples=59
+  lat (nsec)   : 500=0.01%, 750=1.77%, 1000=23.22%
+  lat (usec)   : 2=74.87%, 4=0.01%, 10=0.11%, 20=0.01%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=28.50%, sys=71.39%, ctx=1119, majf=0, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22423261,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+randread: (groupid=0, jobs=1): err= 0: pid=4826: Tue Jan 16 14:25:26 2024
+  read: IOPS=757k, BW=2958MiB/s (3102MB/s)(86.7GiB/30001msec)
+    clat (nsec): min=400, max=183350, avg=1073.46, stdev=635.57
+     lat (nsec): min=420, max=183380, avg=1100.72, stdev=644.37
+    clat percentiles (nsec):
+     |  1.00th=[  604],  5.00th=[  740], 10.00th=[  884], 20.00th=[  972],
+     | 30.00th=[ 1012], 40.00th=[ 1048], 50.00th=[ 1064], 60.00th=[ 1096],
+     | 70.00th=[ 1128], 80.00th=[ 1176], 90.00th=[ 1240], 95.00th=[ 1304],
+     | 99.00th=[ 1416], 99.50th=[ 1480], 99.90th=[ 6432], 99.95th=[ 7392],
+     | 99.99th=[23424]
+   bw (  MiB/s): min= 2883, max= 3036, per=12.49%, avg=2959.02, stdev=25.97, samples=59
+   iops        : min=738146, max=777352, avg=757509.69, stdev=6648.29, samples=59
+  lat (nsec)   : 500=0.01%, 750=5.18%, 1000=21.44%
+  lat (usec)   : 2=73.24%, 4=0.01%, 10=0.11%, 20=0.01%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=28.63%, sys=71.36%, ctx=35, majf=0, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22717346,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+randread: (groupid=0, jobs=1): err= 0: pid=4827: Tue Jan 16 14:25:26 2024
+  read: IOPS=773k, BW=3019MiB/s (3166MB/s)(88.5GiB/30001msec)
+    clat (nsec): min=330, max=177900, avg=1054.57, stdev=615.05
+     lat (nsec): min=370, max=177930, avg=1081.08, stdev=621.02
+    clat percentiles (nsec):
+     |  1.00th=[  572],  5.00th=[  668], 10.00th=[  812], 20.00th=[  940],
+     | 30.00th=[  988], 40.00th=[ 1032], 50.00th=[ 1064], 60.00th=[ 1096],
+     | 70.00th=[ 1128], 80.00th=[ 1176], 90.00th=[ 1240], 95.00th=[ 1288],
+     | 99.00th=[ 1416], 99.50th=[ 1480], 99.90th=[ 6368], 99.95th=[ 7392],
+     | 99.99th=[23424]
+   bw (  MiB/s): min= 2881, max= 4003, per=12.69%, avg=3006.04, stdev=178.49, samples=59
+   iops        : min=737592, max=1024964, avg=769547.05, stdev=45694.04, samples=59
+  lat (nsec)   : 500=0.40%, 750=6.75%, 1000=24.39%
+  lat (usec)   : 2=68.32%, 4=0.01%, 10=0.11%, 20=0.01%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=26.93%, sys=73.06%, ctx=36, majf=0, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=23189542,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+randread: (groupid=0, jobs=1): err= 0: pid=4828: Tue Jan 16 14:25:26 2024
+  read: IOPS=755k, BW=2951MiB/s (3094MB/s)(86.4GiB/30001msec)
+    clat (nsec): min=410, max=174980, avg=1076.37, stdev=639.09
+     lat (nsec): min=430, max=175010, avg=1103.61, stdev=648.58
+    clat percentiles (nsec):
+     |  1.00th=[  604],  5.00th=[  740], 10.00th=[  868], 20.00th=[  972],
+     | 30.00th=[ 1012], 40.00th=[ 1048], 50.00th=[ 1064], 60.00th=[ 1096],
+     | 70.00th=[ 1144], 80.00th=[ 1176], 90.00th=[ 1240], 95.00th=[ 1304],
+     | 99.00th=[ 1432], 99.50th=[ 1496], 99.90th=[ 6944], 99.95th=[ 7712],
+     | 99.99th=[23424]
+   bw (  MiB/s): min= 2871, max= 3030, per=12.46%, avg=2951.73, stdev=26.82, samples=59
+   iops        : min=735026, max=775688, avg=755642.95, stdev=6866.86, samples=59
+  lat (nsec)   : 500=0.01%, 750=5.14%, 1000=21.48%
+  lat (usec)   : 2=73.23%, 4=0.01%, 10=0.11%, 20=0.01%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=29.79%, sys=70.19%, ctx=41, majf=0, minf=12
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22661387,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+randread: (groupid=0, jobs=1): err= 0: pid=4829: Tue Jan 16 14:25:26 2024
+  read: IOPS=747k, BW=2917MiB/s (3058MB/s)(85.5GiB/30001msec)
+    clat (nsec): min=410, max=466230, avg=1093.29, stdev=609.55
+     lat (nsec): min=420, max=477619, avg=1120.36, stdev=624.45
+    clat percentiles (nsec):
+     |  1.00th=[  732],  5.00th=[  852], 10.00th=[  924], 20.00th=[  980],
+     | 30.00th=[ 1012], 40.00th=[ 1048], 50.00th=[ 1080], 60.00th=[ 1112],
+     | 70.00th=[ 1144], 80.00th=[ 1176], 90.00th=[ 1256], 95.00th=[ 1304],
+     | 99.00th=[ 1416], 99.50th=[ 1480], 99.90th=[ 8160], 99.95th=[ 9152],
+     | 99.99th=[23424]
+   bw (  MiB/s): min= 2905, max= 2986, per=12.32%, avg=2918.21, stdev=14.72, samples=59
+   iops        : min=743780, max=764452, avg=747062.10, stdev=3768.70, samples=59
+  lat (nsec)   : 500=0.01%, 750=1.29%, 1000=23.29%
+  lat (usec)   : 2=75.27%, 4=0.01%, 10=0.10%, 20=0.02%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%, 500=0.01%
+  cpu          : usr=28.11%, sys=71.86%, ctx=188, majf=0, minf=10
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22401632,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+randread: (groupid=0, jobs=1): err= 0: pid=4830: Tue Jan 16 14:25:26 2024
+  read: IOPS=749k, BW=2925MiB/s (3067MB/s)(85.7GiB/30000msec)
+    clat (nsec): min=400, max=975170, avg=1090.17, stdev=573.23
+     lat (nsec): min=420, max=975200, avg=1117.22, stdev=579.90
+    clat percentiles (nsec):
+     |  1.00th=[  732],  5.00th=[  852], 10.00th=[  924], 20.00th=[  980],
+     | 30.00th=[ 1012], 40.00th=[ 1048], 50.00th=[ 1080], 60.00th=[ 1112],
+     | 70.00th=[ 1144], 80.00th=[ 1176], 90.00th=[ 1240], 95.00th=[ 1304],
+     | 99.00th=[ 1416], 99.50th=[ 1480], 99.90th=[ 7328], 99.95th=[ 8640],
+     | 99.99th=[23424]
+   bw (  MiB/s): min= 2911, max= 2991, per=12.35%, avg=2926.36, stdev=13.42, samples=59
+   iops        : min=745346, max=765810, avg=749147.68, stdev=3436.31, samples=59
+  lat (nsec)   : 500=0.01%, 750=1.28%, 1000=23.56%
+  lat (usec)   : 2=75.02%, 4=0.01%, 10=0.11%, 20=0.01%, 50=0.02%
+  lat (usec)   : 100=0.01%, 250=0.01%, 1000=0.01%
+  cpu          : usr=27.68%, sys=72.31%, ctx=72, majf=0, minf=12
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22466061,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=23.1GiB/s (24.8GB/s), 2898MiB/s-3103MiB/s (3039MB/s-3254MB/s), io=694GiB (745GB), run=30000-30001msec
+
+Disk stats (read/write):
+  nvme0n1: ios=1813/14, merge=0/5, ticks=19651/12, in_queue=19663, util=4.68%
+
+real	0m33.160s
+user	1m7.975s
+sys	2m52.428s
+
+EXIT STATUS: 0
+----------------------------------------
+BENCHMARK: F4
+----------------------------------------
+RUN: bash -c echo 3 > /proc/sys/vm/drop_caches; fio --numjobs=8 --name=partial --rw=randread --filename=fio.data --norandommap --random_distribution=pareto:0.9 --bs=4k --size=4g --runtime=60 --loops=1000
+
+bash: line 1: /proc/sys/vm/drop_caches: Permission denied
+partial: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=psync, iodepth=1
+...
+fio-3.25
+Starting 8 processes
