@@ -1,4 +1,7 @@
 #!/bin/bash
+PROJECT=prj-polygonlabs-devtools-dev
+ZONE=europe-west1-b
+
 MEMLATENCY_BINARY_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/memory-latency/memlatency
 POSEIDONHASH_BINARY_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/poseidon-hashes/poseidonhash
 LEADER_BINARY_ARCHIVE_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/proof/prover.tar.gz
@@ -31,22 +34,15 @@ function bench {
       && curl -L $MICROBENCH_SCRIPT_URL | bash" > results/$name.bench 2>&1 &
 }
 
-# Load variables.
-if [ -f .env ]; then
-  source .env
-else
-  echo "Error: .env file not found."
-  exit 1
-fi
-echo "Values loaded from .env"
-echo "PROJECT=$PROJECT"
-echo "ZONE=$ZONE"
+echo "Running with parameters:"
+echo "- PROJECT=$PROJECT"
+echo "- ZONE=$ZONE"
 echo
 
 # Run benchmarks in the background.
 rm -rf ./results
 mkdir -p results
-bench "t2d-standard-16" "leovct-bench-test-04"
+bench "t2d-standard-16" "leovct-bench-test-05"
 
 # Wait for all background processes to finish
 wait

@@ -4,12 +4,6 @@ Very simple script inspired from [brendangregg](https://github.com/brendangregg)
 
 ## How to use it
 
-Populate `.env`.
-
-```bash
-mv .env.sample .env
-```
-
 Log in to GCP Cloud.
 
 ```bash
@@ -20,9 +14,9 @@ Run benchmarks.
 
 ```bash
 $ ./bench.sh
-Values loaded from .env
-PROJECT=...
-ZONE=...
+Running with parameters:
+- PROJECT=prj-polygonlabs-devtools-dev
+- ZONE=europe-west1-b
 
 Running benchmark script on c3d-standard-8...
 Running benchmark script on t2d-standard-8..
