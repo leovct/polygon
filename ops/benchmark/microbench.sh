@@ -223,8 +223,21 @@ run H1 poseidonhash 10000 10
 run H1 poseidonhash 100000 10
 run H1 poseidonhash 100000 10
 
-# TODO: add proof block benchmark
-# https://0xpolygon.slack.com/archives/C02JAJVVAH1/p1705418808846019
+# block proof
+run P1 bash -c 'env RUST_BACKTRACE=1 \
+	RUST_LOG=info \
+	RUST_MIN_STACK=33554432 \
+	ARITHMETIC_CIRCUIT_SIZE="15..28" \
+	BYTE_PACKING_CIRCUIT_SIZE="9..28" \
+	CPU_CIRCUIT_SIZE="12..28" \
+	KECCAK_CIRCUIT_SIZE="14..28" \
+	KECCAK_SPONGE_CIRCUIT_SIZE="9..28" \
+	LOGIC_CIRCUIT_SIZE="12..28" \
+	MEMORY_CIRCUIT_SIZE="17..30" \
+	leader prove \
+	--runtime in-memory \
+	--num-workers 8 \
+	--input-witness 0x2f0faea6778845b02f9faf84e7e911ef12c287ce7deb924c5925f3626c77906e.json 2>&1 | tee logs.txt'
 
 echo Done.
 echo DATE: $(date) | tee -a $LOGFILE
