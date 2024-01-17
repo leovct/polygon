@@ -231,7 +231,7 @@ run P1 bash -c 'env RUST_BACKTRACE=1 \
 	leader prove \
 	--runtime in-memory \
 	--num-workers 8 \
-	--input-witness 0x2f0faea6778845b02f9faf84e7e911ef12c287ce7deb924c5925f3626c77906e.json 2>&1 | tee logs.txt'
+	--input-witness 0x2f0faea6778845b02f9faf84e7e911ef12c287ce7deb924c5925f3626c77906e.json'
 
 echo Done.
 echo DATE: $(date) | tee -a $LOGFILE
