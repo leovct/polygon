@@ -36,7 +36,7 @@ function run_benchmark {
       && echo Download witness file \
       && sudo apt-get install bzip2 --yes \
       && curl -OJL $WITNESS_ARCHIVE_URL \
-      && bzip2 -d $(basename $WITNESS_ARCHIVE_URL) \
+      && bzip2 --decompress $(basename $WITNESS_ARCHIVE_URL) --force \
       && echo Download micro benchmark script \
       && curl -OJL $MICROBENCH_SCRIPT_URL"
 
