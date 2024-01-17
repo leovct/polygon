@@ -30,7 +30,7 @@ function download_binaries {
       && curl -OJL $WITNESS_ARCHIVE_URL \
       && bzip2 -d $(basename $WITNESS_ARCHIVE_URL) \
       && echo Download micro benchmark script \
-      && curl -L $MICROBENCH_SCRIPT_URL"
+      && curl -OJL $MICROBENCH_SCRIPT_URL"
 }
 
 function run_benchmark {
