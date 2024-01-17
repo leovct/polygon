@@ -88,11 +88,6 @@ customenv=/etc/profile.d/netflix_environment.sh
 echo Adding packages...
 addpkgs numactl sysbench fio hdparm iperf sharutils openssl libtime-hires-perl
 
-# install rust nightly
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-source "$HOME/.cargo/env"
-rustup default nightly
-
 sudo mkdir -p $DATADIR
 [[ "$USER" == "" ]] && die "ERROR: Username not found (\$USER?)"
 sudo chown $USER $DATADIR
