@@ -38,7 +38,7 @@ function run_benchmark {
       && curl -OJL $WITNESS_ARCHIVE_URL \
       && bzip2 --decompress $(basename $WITNESS_ARCHIVE_URL) --force
 
-  echo "Running benchmark script on $name..."
+  echo; echo "Running benchmark script on $name..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
     curl -L $MICROBENCH_SCRIPT_URL | bash" > results/$name.bench 2>&1 &
 }
