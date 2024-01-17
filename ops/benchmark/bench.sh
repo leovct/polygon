@@ -36,13 +36,11 @@ function run_benchmark {
       && echo Download witness file \
       && sudo apt-get install bzip2 --yes \
       && curl -OJL $WITNESS_ARCHIVE_URL \
-      && bzip2 --decompress $(basename $WITNESS_ARCHIVE_URL) --force \
-      && echo Download micro benchmark script \
-      && curl -OJL $MICROBENCH_SCRIPT_URL"
+      && bzip2 --decompress $(basename $WITNESS_ARCHIVE_URL) --force
 
   echo "Running benchmark script on $name..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
-    "$(basename $MICROBENCH_SCRIPT_URL) | bash" > results/$name.bench 2>&1 &
+    curl -L $MICROBENCH_SCRIPT_URL | bash" > results/$name.bench 2>&1 &
 }
 
 echo "Running with parameters:"
