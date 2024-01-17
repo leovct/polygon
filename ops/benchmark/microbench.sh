@@ -103,7 +103,6 @@ echo governor: $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
 echo sysbench: "$(sysbench --version)"
 echo perl: "$(perl --version)"
 echo openssl: "$(openssl version)"
-echo rustc: "$(rustc --version)"
 ) | tee -a $LOGFILE
 
 ### run benchmarks
