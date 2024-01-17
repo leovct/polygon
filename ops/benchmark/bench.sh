@@ -1,7 +1,7 @@
 #!/bin/bash
 MEMLATENCY_BINARY_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/memory-latency/memlatency
 POSEIDONHASH_BINARY_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/poseidon-hashes/poseidonhash
-PROVER_BINARY_ARCHIVE_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/proof/prover.tar.bz2
+PROVER_BINARY_ARCHIVE_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/proof/prover.tar.gz
 WITNESS_ARCHIVE_URL=http://jhilliard-zero-highmem.hardfork.dev/0x2f0faea6778845b02f9faf84e7e911ef12c287ce7deb924c5925f3626c77906e.json.bz2
 MICROBENCH_SCRIPT_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/microbench.sh
 
@@ -19,11 +19,12 @@ function bench {
       && chmod +x poseidonhash \
       && sudo mv poseidonhash /usr/bin/poseidonhash \
       && echo Download prover \
-      && sudo apt-get install bzip2 --yes \
       && curl -OJL $PROVER_BINARY_ARCHIVE_URL \
-      && bzip2 -d $(basename $PROVER_BINARY_ARCHIVE_URL) \
-      && chmod +x /usr/bin/prover \
+      && tar -xzf $(basename $PROVER_BINARY_ARCHIVE_URL) \
+      && chmod +x prover \
+      && sudo mv prover /usr/bin/prover \
       && echo Download witness file \
+      && sudo apt-get install bzip2 --yes \
       && sudo mv prover /usr/bin/prover \
       && curl -OJL $WITNESS_ARCHIVE_URL \
       && bzip2 -d $(basename $WITNESS_ARCHIVE_URL) \
