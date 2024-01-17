@@ -11,6 +11,14 @@ MICROBENCH_SCRIPT_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benc
 function download_binaries {
   name=$1
   instance=$2
+
+}
+
+function run_benchmark {
+  name=$1
+  instance=$2
+
+  echo "Downloading binaries..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
     "echo Download memlatency \
       && curl -OJL $MEMLATENCY_BINARY_URL \
@@ -31,13 +39,7 @@ function download_binaries {
       && bzip2 -d $(basename $WITNESS_ARCHIVE_URL) \
       && echo Download micro benchmark script \
       && curl -OJL $MICROBENCH_SCRIPT_URL"
-}
 
-function run_benchmark {
-  name=$1
-  instance=$2
-  echo "Download binaries"
-  download_binaries $name $instance
   echo "Running benchmark script on $name..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
     "$(basename $MICROBENCH_SCRIPT_URL) | bash" > results/$name.bench 2>&1 &
