@@ -10,17 +10,24 @@ function bench {
   instance=$2
   echo "Running benchmark script on $name..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
-    "sudo curl -L $MEMLATENCY_BINARY_URL --output /usr/bin/memlatency \
-      && sudo chmod +x /usr/bin/memlatency \
-      && sudo curl -L $POSEIDONHASH_BINARY_URL --output /usr/bin/poseidonhash \
-      && sudo chmod +x /usr/bin/poseidonhash \
+    "echo Download memlatency \
+      && curl -OJL $MEMLATENCY_BINARY_URL \
+      && chmod +x memlatency \
+      && sudo mv memlatency /usr/bin/memlatency \
+      && echo Download poseidonhash \
+      && curl -OJL $POSEIDONHASH_BINARY_URL \
+      && chmod +x poseidonhash \
+      && sudo mv poseidonhash /usr/bin/poseidonhash \
+      && echo Download prover \
       && sudo apt-get install bzip2 --yes \
-      && sudo curl -OJL $PROVER_BINARY_ARCHIVE_URL \
+      && curl -OJL $PROVER_BINARY_ARCHIVE_URL \
       && bzip2 -d $(basename $PROVER_BINARY_ARCHIVE_URL) \
-      && sudo chmod +x /usr/bin/prover \
+      && chmod +x /usr/bin/prover \
+      && echo Download witness file \
       && sudo mv prover /usr/bin/prover \
       && curl -OJL $WITNESS_ARCHIVE_URL \
       && bzip2 -d $(basename $WITNESS_ARCHIVE_URL) \
+      && echo Download micro benchmark script \
       && curl -L $MICROBENCH_SCRIPT_URL | bash" > results/$name.bench 2>&1 &
 }
 
@@ -39,7 +46,7 @@ echo
 # Run benchmarks in the background.
 rm -rf ./results
 mkdir -p results
-bench "t2d-standard-16" "leovct-bench-test-03"
+bench "t2d-standard-16" "leovct-bench-test-04"
 
 # Wait for all background processes to finish
 wait
