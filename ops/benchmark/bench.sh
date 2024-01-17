@@ -8,10 +8,9 @@ LEADER_BINARY_ARCHIVE_URL=https://raw.githubusercontent.com/leovct/polygon/feat/
 WITNESS_ARCHIVE_URL=http://jhilliard-zero-highmem.hardfork.dev/0x2f0faea6778845b02f9faf84e7e911ef12c287ce7deb924c5925f3626c77906e.json.bz2
 MICROBENCH_SCRIPT_URL=https://raw.githubusercontent.com/leovct/polygon/feat/benchmarks/ops/benchmark/microbench.sh
 
-function bench {
+function download_binaries {
   name=$1
   instance=$2
-  echo "Running benchmark script on $name..."
   gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
     "echo Download memlatency \
       && curl -OJL $MEMLATENCY_BINARY_URL \
@@ -31,7 +30,17 @@ function bench {
       && curl -OJL $WITNESS_ARCHIVE_URL \
       && bzip2 -d $(basename $WITNESS_ARCHIVE_URL) \
       && echo Download micro benchmark script \
-      && curl -L $MICROBENCH_SCRIPT_URL | bash" > results/$name.bench 2>&1 &
+      && curl -L $MICROBENCH_SCRIPT_URL"
+}
+
+function run_benchmark {
+  name=$1
+  instance=$2
+  echo "Download binaries"
+  download_binaries $name $instance
+  echo "Running benchmark script on $name..."
+  gcloud compute ssh --zone "$ZONE" "$instance" --project "$PROJECT" -- \
+    "$(basename $MICROBENCH_SCRIPT_URL) | bash" > results/$name.bench 2>&1 &
 }
 
 echo "Running with parameters:"
@@ -42,7 +51,7 @@ echo
 # Run benchmarks in the background.
 rm -rf ./results
 mkdir -p results
-bench "t2d-standard-16" "leovct-bench-test-05"
+run_benchmark "t2d-standard-16" "leovct-bench-test-05"
 
 # Wait for all background processes to finish
 wait
