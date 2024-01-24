@@ -73,7 +73,6 @@ $ ssh-add -l
 The agent has no identities.
 $ sudo chmod 0644 .ssh/id_ed25519 && ssh-add ~/.ssh/id_ed25519
 Identity added: /home/leovct/.ssh/id_ed25519 (your_email@example.com)
-$ sudo chmod 0600 .ssh/id_ed25519
 ```
 
 5. Build the images and start the setup
