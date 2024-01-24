@@ -24,13 +24,13 @@ The code for building the images and running the setup is located [here](https:/
 
 Note: don't forget to [add the public key to your Github account](https://github.com/settings/ssh/new).
 
+You can use this on AWs to enable auto restart when installing packages: `echo -e "\n>> Enabling auto restarting services when upgrading packages.." && sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf`.
+
 ```sh
 echo -e "\n>> Setting up to build docker pos setup images.." \
   && echo -e "\n>> Setting handy aliases..." \
   && alias docker='sudo docker' \
   && alias make='sudo make' \
-  && echo -e "\n>> Enabling auto restarting services when upgrading packages.." \
-  && sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf \
   && echo -e "\n>> Installing packages.." \
   && sudo apt-get update \
   && sudo apt-get install -y make jq shellcheck python3-pip unzip \
