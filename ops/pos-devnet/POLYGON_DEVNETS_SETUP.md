@@ -60,8 +60,8 @@ echo -e "\n>> Setting up to build docker pos setup images.." \
   && popd \
   && popd \
   && echo -e "\n>> Generating SSH key..." \
-  && ssh-keygen -t ed25519 -C "your_email@example.com" -f /home/ubuntu/.ssh/id_ed25519 -N "" \
-  && cat ~/.ssh/id_ed25519.pub
+  && sudo ssh-keygen -t ed25519 -C "your_email@example.com" -f /home/ubuntu/.ssh/id_ed25519 -N "" \
+  && sudo cat /home/ubuntu/.ssh/id_ed25519
 ```
 
 5. Build the images and start the setup
