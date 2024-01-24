@@ -60,8 +60,20 @@ echo -e "\n>> Setting up to build docker pos setup images.." \
   && popd \
   && popd \
   && echo -e "\n>> Generating SSH key..." \
-  && sudo ssh-keygen -t ed25519 -C "your_email@example.com" -f /home/ubuntu/.ssh/id_ed25519 -N "" \
-  && sudo cat /home/ubuntu/.ssh/id_ed25519.pub
+  && sudo ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519 -N "" \
+  && sudo cat ~/id_ed25519.pub
+```
+
+On GCP, it can be a bit tedious to clone a private repository. Follow those steps.
+
+```bash
+$ eval "$(ssh-agent -s)"
+Agent pid 18416
+$ ssh-add -l
+The agent has no identities.
+$ sudo chmod 0644 .ssh/id_ed25519 && ssh-add ~/.ssh/id_ed25519
+Identity added: /home/leovct/.ssh/id_ed25519 (your_email@example.com)
+$ sudo chmod 0600 .ssh/id_ed25519
 ```
 
 5. Build the images and start the setup
