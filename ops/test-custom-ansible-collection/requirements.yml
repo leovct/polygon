@@ -1,0 +1,5 @@
+---
+collections:
+  - name: https://github.com/leovct/blockchain.tools.git
+    type: git
+    version: feat/grafana
