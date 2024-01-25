@@ -1,0 +1,17 @@
+---
+- name: Basic Setup
+  hosts: all
+  remote_user: ansible
+  become: true
+  collections:
+    - blockchain.tools
+  roles:
+    #- atop
+    #- bcc
+    - foundry
+    - golang
+    - grafana
+    - packages
+    - polycli
+  tags:
+    - init

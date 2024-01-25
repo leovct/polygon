@@ -31,4 +31,5 @@
 - [🐳 Setup for matic-cli docker PoS](ops/pos-devnet/MATIC_CLI_SETUP.md): Similar to the polygon-devnets docker PoS setup, but instead it relies on [matic-cli](https://github.com/maticnetwork/matic-cli#matic-cli) scripts.
 - [🤖 Zero Prover VM Setup](ops/ZERO_PROVER_VM_SETUP.md): Same thing as the VM setup playbook for Docker PoS but for [zero provers](https://github.com/mir-protocol/zero-provers).
 - [🧱 Generate Edge Blocks](ops/generate-edge-blocks/README.md): Generate a list of Edge blocks that represent the activity of the Polygon chain to check that the zero-prover can generate proofs for all these types of transactions.
-- [🌥️ Cloud Benchmarks](ops/benchmark/README.md): Simple script to compare cloud instances.
+- [🌥️ Cloud Benchmarks](ops/benchmarks/README.md): Simple script to compare cloud instances.
+- [🧪 Test Custom Ansible Collection](ops/test-custom-ansible-collection/README.md): Simple guide to test a custom Ansible collection.
