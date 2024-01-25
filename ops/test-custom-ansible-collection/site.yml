@@ -1,5 +1,4 @@
 ---
-
 - name: Basic Setup
   hosts: all
   remote_user: ansible
