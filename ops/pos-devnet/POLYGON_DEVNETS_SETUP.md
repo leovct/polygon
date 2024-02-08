@@ -103,7 +103,7 @@ echo -e "\n>> Installing kubectl..." \
   && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
   && kubectl version --client \
   && echo -e "\n>> Installing kind..." \
-  && go install sigs.k8s.io/kind@v0.20.0 \
+  && go install sigs.k8s.io/kind@v0.21.0 \
   && sudo mv ./go/bin/kind /usr/local/bin/kind \
   && kind --version \
   && echo -e "\n>> Creating a local k8s cluster..." \
