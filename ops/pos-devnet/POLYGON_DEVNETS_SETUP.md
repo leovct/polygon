@@ -104,7 +104,7 @@ echo -e "\n>> Installing kubectl..." \
   && kubectl version --client \
   && echo -e "\n>> Installing kind..." \
   && go install sigs.k8s.io/kind@v0.21.0 \
-  && sudo mv ./go/bin/kind /usr/local/bin/kind \
+  && sudo mv $HOME/go/bin/kind /usr/local/bin/kind \
   && kind --version \
   && echo -e "\n>> Creating a local k8s cluster..." \
   && kind create cluster \
