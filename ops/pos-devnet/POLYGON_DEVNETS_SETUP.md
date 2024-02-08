@@ -61,7 +61,7 @@ echo -e "\n>> Setting up to build docker pos setup images.." \
   && popd \
   && echo -e "\n>> Generating SSH key..." \
   && sudo ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519 -N "" \
-  && sudo cat ~/id_ed25519.pub
+  && sudo cat ~/.ssh/id_ed25519.pub
 ```
 
 On GCP, it can be a bit tedious to clone a private repository. Follow those steps.
