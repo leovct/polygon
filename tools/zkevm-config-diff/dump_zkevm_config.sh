@@ -1,18 +1,44 @@
 #!/bin/bash
 # This script will dump default and current configurations used in the CDK stack.
 
+set_zkevm_components_versions() {
+  echo "Updating zkevm component versions in the go.mod file using values from params.yml"
+
+  cdk_validium_node_version="v$(yq -r .args.zkevm_node_image params.yml | cut -d':' -f 2 | sed 's/-/+/g')"
+  echo "Using cdk validium node version: $cdk_validium_node_version"
+  sed -i "" -E "s|github.com/0xPolygon/cdk-validium-node .*|github.com/0xPolygon/cdk-validium-node $cdk_validium_node_version|g" go.mod
+  go mod tidy
+
+  zkevm_da_version="v$(yq -r .args.zkevm_da_image params.yml | cut -d':' -f 2)"
+  echo "Using zkevm da version: $zkevm_da_version"
+  go get "github.com/0xPolygon/cdk-data-availability@$zkevm_da_version"
+
+  zkevm_agglayer_version="v$(yq -r .args.zkevm_agglayer_image params.yml | cut -d':' -f 2)"
+  echo "Using zkevm agglayer version: $zkevm_agglayer_version"
+  go get "github.com/0xPolygon/agglayer@$zkevm_agglayer_version"
+
+  # TODO: Uncomment this once the bridge service default config is supported.
+  # zkevm_bridge_service_version="$(yq -r .args.zkevm_bridge_service_image params.yml | cut -d':' -f 2)"
+  # echo "Using zkevm bridge service version: $zkevm_bridge_service_version"
+  # go get "github.com/0xPolygonHermez/zkevm-bridge-service@$zkevm_bridge_service_version"
+}
+
 dump_default_zkevm_configs() {
   directory="${1%/}"
-  echo "Dumping default zkevm configurations in $directory/..."
+  echo "Dumping default zkevm configurations in $directory/"
 
   # Dump default configs of zkevm components written in go.
   go run dump_zkevm_default_config.go "$directory"
 
   # Dump default configs of the rest of the zkevm components, not written in go.
-  ZKEVM_NODE_INIT_EVENT_DB_DEFAULT_SCRIPT="https://raw.githubusercontent.com/0xPolygonHermez/zkevm-node/develop/db/scripts/init_event_db.sql"
-  ZKEVM_NODE_INIT_PROVER_DB_DEFAULT_SCRIPT="https://raw.githubusercontent.com/0xPolygonHermez/zkevm-node/develop/db/scripts/init_prover_db.sql"
-  ZKEVM_PROVER_DEFAULT_CONFIG="https://raw.githubusercontent.com/0xPolygonHermez/zkevm-prover/main/config/config_prover.json"
-  ZKEVM_EXECUTOR_DEFAULT_CONFIG="https://raw.githubusercontent.com/0xPolygonHermez/zkevm-prover/main/config/config_executor.json"
+  cdk_validium_node_version="v$(yq -r .args.zkevm_node_image params.yml | cut -d':' -f 2 | sed 's/-/+/g')"
+  ZKEVM_NODE_INIT_EVENT_DB_DEFAULT_SCRIPT="https://raw.githubusercontent.com/0xPolygon/cdk-validium-node/$cdk_validium_node_version/db/scripts/init_event_db.sql"
+  ZKEVM_NODE_INIT_PROVER_DB_DEFAULT_SCRIPT="https://raw.githubusercontent.com/0xPolygon/cdk-validium-node/$cdk_validium_node_version/db/scripts/init_prover_db.sql"
+
+  zkevm_prover_version="$(yq -r .args.zkevm_prover_image params.yml | cut -d':' -f 2)"
+  ZKEVM_PROVER_DEFAULT_CONFIG="https://raw.githubusercontent.com/0xPolygonHermez/zkevm-prover/$zkevm_prover_version/config/config_prover.json"
+  ZKEVM_EXECUTOR_DEFAULT_CONFIG="https://raw.githubusercontent.com/0xPolygonHermez/zkevm-prover/$zkevm_prover_version/config/config_executor.json"
+
   ZKEVM_BRIDGE_UI_DEFAULT_CONFIG="https://raw.githubusercontent.com/0xPolygonHermez/zkevm-bridge-ui/develop/.env.example"
 
   echo "Dumping default event db init script"
@@ -40,7 +66,7 @@ dump_default_zkevm_configs() {
 dump_current_zkevm_configs() {
   directory="${1%/}"
   ENCLAVE="cdk-v1"
-  echo "Dumping current zkevm configurations from kurtosis $ENCLAVE enclave in $directory..."
+  echo "Dumping current zkevm configurations from kurtosis $ENCLAVE enclave in $directory"
 
   # Dump current configs from the Kurtosis enclave.
   echo "Dumping current zkevm-node config"
@@ -173,7 +199,7 @@ compare_configs_keys() {
   default_directory="${1%/}"
   current_directory="${2%/}"
 
-  echo "Comparing configs in $default_directory/ and $current_directory/..."
+  echo "Comparing configs in $default_directory/ and $current_directory/"
   mkdir -p diff/
   find "$default_directory" -type f \( -name "*.toml" -o -name "*.json" \) | while read -r f; do
     file="$(basename "$f")"
@@ -197,6 +223,10 @@ if [ $# -lt 1 ]; then
   echo "> Compare default and current configs: $0 compare"
   exit 1
 fi
+
+# Set zkevm components versions using values from params.yml.
+set_zkevm_components_versions
+echo
 
 # Determine the action and target based on the arguments
 case $1 in
