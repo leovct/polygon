@@ -12,6 +12,12 @@ A simple tool to compare our current zkEVM/CDK configurations with the default o
 mkdir -p default current
 ```
 
+Or clean those folders if they are not empty.
+
+```bash
+rm -rf ./default/* ./current/*
+```
+
 3. Dump default configurations.
 
 ```bash

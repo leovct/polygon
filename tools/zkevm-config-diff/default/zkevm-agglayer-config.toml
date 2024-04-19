@@ -12,8 +12,9 @@ forcedgas = 0
 frequencytomonitortxs = "1s"
 gasoffset = 100000
 gaspricemarginfactor = 1
+kmsconnectiontimeout = "30s"
+kmskeyname = "gcp/resource/id"
 maxgaspricelimit = 0
-maxretries = 10
 waittxtobemined = "2m"
 
 [[ethtxmanager.privatekeys]]

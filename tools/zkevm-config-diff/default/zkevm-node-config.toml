@@ -198,7 +198,6 @@ user = "state_user"
 l1synccheckl2blockhash = true
 l1synccheckl2blocknumberhmodulus = 30
 l1synchronizationmode = "sequential"
-syncblockprotection = "safe"
 syncchunksize = 100
 syncinterval = "1s"
 trustedsequencerurl = ""
