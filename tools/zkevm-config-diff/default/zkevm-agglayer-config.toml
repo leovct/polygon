@@ -1,0 +1,44 @@
+[db]
+enablelog = false
+host = "agglayer-db"
+maxconns = 200
+name = "agglayer_db"
+password = "agglayer_password"
+port = "5432"
+user = "agglayer_user"
+
+[ethtxmanager]
+forcedgas = 0
+frequencytomonitortxs = "1s"
+gasoffset = 100000
+gaspricemarginfactor = 1
+maxgaspricelimit = 0
+maxretries = 10
+waittxtobemined = "2m"
+
+[[ethtxmanager.privatekeys]]
+password = "testonly"
+path = "/pk/agglayer.keystore"
+
+[fullnoderpcs]
+1 = "http://zkevm-node:8123"
+
+[l1]
+chainid = 1337
+nodeurl = "http://zkevm-mock-l1-network:8545"
+rollupmanagercontract = "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e"
+
+[log]
+environment = "development"
+level = "debug"
+outputs = ["stderr"]
+
+[rpc]
+host = "0.0.0.0"
+maxrequestsperipandsecond = 5000
+port = 4444
+readtimeout = "60s"
+writetimeout = "60s"
+
+[telemetry]
+prometheusaddr = "0.0.0.0:2223"

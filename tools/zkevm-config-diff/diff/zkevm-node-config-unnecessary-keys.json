@@ -1,0 +1,20 @@
+[
+  "aggregator.senderaddress",
+  "etherscan.apikey",
+  "ethtxmanager.privatekeys.password",
+  "ethtxmanager.privatekeys.path",
+  "eventlog.db.enablelog",
+  "eventlog.db.host",
+  "eventlog.db.maxconns",
+  "eventlog.db.name",
+  "eventlog.db.password",
+  "eventlog.db.port",
+  "eventlog.db.user",
+  "metrics.profilingenabled",
+  "metrics.profilinghost",
+  "metrics.profilingport",
+  "pool.freeclaimgaslimit",
+  "sequencer.streamserver.chainid",
+  "sequencesender.senderaddress",
+  "sequencesender.streamclient.server"
+]

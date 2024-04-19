@@ -1,0 +1,35 @@
+[db]
+enablelog = false
+host = "cdk-data-availability-db"
+maxconns = 200
+name = "committee_db"
+password = "committee_password"
+port = "5432"
+user = "committee_user"
+
+[l1]
+blockbatchsize = "64"
+datacommitteeaddress = "0x68B1D87F95878fE05B998F19b66F4baba5De1aed"
+genesisblock = "0"
+polygonvalidiumaddress = "0x8dAF17A20c9DBA35f005b6324F493785D239719d"
+retryperiod = "5s"
+rpcurl = "http://127.0.0.1:8545"
+timeout = "1m"
+tracksequencer = true
+wsurl = "ws://127.0.0.1:8546"
+
+[log]
+environment = "development"
+level = "info"
+outputs = ["stderr"]
+
+[privatekey]
+password = "testonly"
+path = "/pk/test-member.keystore"
+
+[rpc]
+host = "0.0.0.0"
+maxrequestsperipandsecond = 500
+port = 8444
+readtimeout = "60s"
+writetimeout = "60s"

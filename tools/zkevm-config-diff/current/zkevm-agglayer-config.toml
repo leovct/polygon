@@ -1,0 +1,45 @@
+[db]
+enablelog = false
+host = "agglayer-db-001"
+maxconns = 200
+name = "agglayer_db"
+password = "PzycR2uB6PQv8ahj465ExvdyRLkknRNW"
+port = "5432"
+user = "agglayer_user"
+
+[ethtxmanager]
+forcedgas = 0
+frequencytomonitortxs = "1s"
+gaspricemarginfactor = 1
+kmskeyname = ""
+maxgaspricelimit = 0
+waittxtobemined = "2m"
+
+[[ethtxmanager.privatekeys]]
+password = "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+path = "/etc/zkevm/agglayer.keystore"
+
+[fullnoderpcs]
+1 = "http://zkevm-node-rpc-001:8123"
+
+[l1]
+chainid = 271828
+nodeurl = "http://el-1-geth-lighthouse:8545"
+rollupmanagercontract = "0x2F50ef6b8e8Ee4E579B17619A92dE3E2ffbD8AD2"
+
+[log]
+environment = "production"
+level = "info"
+outputs = ["stderr"]
+
+[proofsigners]
+
+[rpc]
+host = "0.0.0.0"
+maxrequestsperipandsecond = 5000
+port = 4444
+readtimeout = "60s"
+writetimeout = "60s"
+
+[telemetry]
+prometheusaddr = "0.0.0.0:9091"

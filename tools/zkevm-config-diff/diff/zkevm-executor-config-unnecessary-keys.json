@@ -1,0 +1,17 @@
+[
+  "ECRecoverPrecalc",
+  "ECRecoverPrecalcNThreads",
+  "dbFlushInParallel",
+  "keccakScriptFile",
+  "maxHashDBThreads",
+  "proverClientHost",
+  "proverClientPort",
+  "proverName",
+  "proverServerMockPort",
+  "proverServerMockTimeout",
+  "proverServerPort",
+  "runAggregatorClientMock",
+  "stateManager",
+  "storageRomFile",
+  "useAssociativeCache"
+]

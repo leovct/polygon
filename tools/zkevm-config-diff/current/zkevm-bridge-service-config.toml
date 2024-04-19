@@ -1,0 +1,59 @@
+[bridgecontroller]
+height = 32
+store = "postgres"
+
+[bridgeserver]
+bridgeversion = "v1"
+defaultpagelimit = 25
+grpcport = "9090"
+httpport = "8080"
+maxpagelimit = 100
+
+[bridgeserver.db]
+database = "postgres"
+host = "bridge-db-001"
+maxconns = 20
+name = "bridge_db"
+password = "aXPqaRvgo5DfnTbHtpYS9rMhVpjvb6tY"
+port = "5432"
+user = "bridge_user"
+
+[claimtxmanager]
+enabled = true
+frequencytomonitortxs = "5s"
+retryinterval = "1s"
+retrynumber = 10
+
+[claimtxmanager.privatekey]
+password = "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+path = "/etc/zkevm/claimtxmanager.keystore"
+
+[etherman]
+l1url = "http://el-1-geth-lighthouse:8545"
+l2urls = ["http://zkevm-node-rpc-001:8123"]
+
+[log]
+environment = "production"
+level = "info"
+outputs = ["stderr"]
+
+[networkconfig]
+genblocknumber = "19"
+l2polygonbridgeaddresses = ["0xD71f8F956AD979Cc2988381B8A743a2fE280537D"]
+polygonbridgeaddress = "0xD71f8F956AD979Cc2988381B8A743a2fE280537D"
+polygonrollupmanageraddress = "0x2F50ef6b8e8Ee4E579B17619A92dE3E2ffbD8AD2"
+polygonzkevmaddress = "0x1Fe038B54aeBf558638CA51C91bC8cCa06609e91"
+polygonzkevmglobalexitrootaddress = "0x1f7ad7caA53e35b4f0D138dC5CBF91aC108a2674"
+
+[syncdb]
+database = "postgres"
+host = "bridge-db-001"
+maxconns = 20
+name = "bridge_db"
+password = "aXPqaRvgo5DfnTbHtpYS9rMhVpjvb6tY"
+port = "5432"
+user = "bridge_user"
+
+[synchronizer]
+syncchunksize = 100
+syncinterval = "5s"

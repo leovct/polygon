@@ -1,0 +1,223 @@
+forkupgradebatchnumber = 0
+forkupgradenewforkid = 0
+istrustedsequencer = false
+[aggregator]
+agglayertxtimeout = "5m"
+agglayerurl = "http://zkevm-agglayer"
+batchproofl1blockconfirmations = 2
+cleanuplockedproofsinterval = "2m"
+gasoffset = 0
+generatingproofcleanupthreshold = "10m"
+host = "0.0.0.0"
+port = 50081
+proofstatepollinginterval = "5s"
+retrytime = "5s"
+settlementbackend = "agglayer"
+txprofitabilitycheckertype = "acceptall"
+txprofitabilityminreward = "1.1"
+upgradeetrogbatchnumber = 0
+verifyproofinterval = "90s"
+
+[aggregator.sequencerprivatekey]
+password = "testonly"
+path = "/pk/sequencer.keystore"
+
+[etherman]
+forkidchunksize = 20000
+multigasprovider = false
+url = "http://localhost:8545"
+[etherman.etherscan]
+apikey = ""
+
+[ethtxmanager]
+forcedgas = 0
+frequencytomonitortxs = "1s"
+gaspricemarginfactor = 1
+maxgaspricelimit = 0
+waittxtobemined = "2m"
+
+[executor]
+maxgrpcmessagesize = 100000000
+maxresourceexhaustedattempts = 3
+uri = "zkevm-prover:50071"
+waitonresourceexhaustion = "1s"
+
+[hashdb]
+enablelog = false
+host = "zkevm-state-db"
+maxconns = 200
+name = "prover_db"
+password = "prover_pass"
+port = "5432"
+user = "prover_user"
+
+[l2gaspricesuggester]
+cleanhistoryperiod = "1h"
+cleanhistorytimeretention = "5m"
+defaultgaspricewei = 2000000000
+factor = 0.15
+maxgaspricewei = 0
+type = "follower"
+updateperiod = "10s"
+
+[log]
+environment = "development"
+level = "info"
+outputs = ["stderr"]
+
+[metrics]
+enabled = false
+host = "0.0.0.0"
+port = 9091
+
+[mtclient]
+uri = "zkevm-prover:50061"
+
+[pool]
+accountqueue = 64
+defaultmingaspriceallowed = 1000000000
+globalqueue = 1024
+intervaltorefreshblockedaddresses = "5m"
+intervaltorefreshgasprices = "5s"
+maxtxbytessize = 100132
+maxtxdatabytessize = 100000
+minallowedgaspriceinterval = "5m"
+pollminallowedgaspriceinterval = "15s"
+
+[pool.db]
+enablelog = false
+host = "zkevm-pool-db"
+maxconns = 200
+name = "pool_db"
+password = "pool_password"
+port = "5432"
+user = "pool_user"
+
+[pool.effectivegasprice]
+breakevenfactor = 1.1
+bytegascost = 16
+enabled = false
+ethtransfergasprice = 0
+ethtransferl1gaspricefactor = 0
+finaldeviationpct = 10
+l1gaspricefactor = 0.25
+l2gaspricesuggesterfactor = 0.5
+netprofit = 1
+zerobytegascost = 4
+
+[rpc]
+batchrequestsenabled = false
+batchrequestslimit = 20
+enablehttplog = true
+enablel2suggestedgaspricepolling = true
+host = "0.0.0.0"
+maxlogsblockrange = 10000
+maxlogscount = 10000
+maxnativeblockhashblockrange = 60000
+maxrequestsperipandsecond = 500
+port = 8545
+readtimeout = "60s"
+sequencernodeuri = ""
+writetimeout = "60s"
+
+[rpc.websockets]
+enabled = true
+host = "0.0.0.0"
+port = 8546
+readlimit = 104857600
+
+[sequencer]
+deletepooltxscheckinterval = "12h"
+deletepooltxsl1blockconfirmations = 100
+loadpooltxscheckinterval = "500ms"
+stateconsistencycheckinterval = "5s"
+txlifetimecheckinterval = "10m"
+txlifetimemax = "3h"
+
+[sequencer.finalizer]
+batchmaxdeltatimestamp = "10s"
+forcedbatchescheckinterval = "10s"
+forcedbatchesl1blockconfirmations = 64
+forcedbatchestimeout = "60s"
+haltonbatchnumber = 0
+l1infotreecheckinterval = "10s"
+l1infotreel1blockconfirmations = 64
+l2blockmaxdeltatimestamp = "3s"
+newtxswaitinterval = "100ms"
+resourceexhaustedmarginpct = 10
+sequentialbatchsanitycheck = false
+sequentialprocessl2block = true
+
+[sequencer.finalizer.metrics]
+enablelog = true
+interval = "60m"
+
+[sequencer.streamserver]
+enabled = false
+filename = ""
+port = 0
+version = 0
+
+[sequencesender]
+gasoffset = 80000
+l1blocktimestampmargin = "30s"
+l2coinbase = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+lastbatchvirtualizationtimemaxwaitperiod = "5s"
+maxbatchesforl1 = 300
+maxtxsizeforl1 = 131072
+waitperiodsendsequence = "5s"
+
+[sequencesender.privatekey]
+password = "testonly"
+path = "/pk/sequencer.keystore"
+
+[state]
+[state.batch.constraints]
+maxarithmetics = 236585
+maxbatchbytessize = 120000
+maxbinaries = 473170
+maxcumulativegasused = 1125899906842624
+maxkeccakhashes = 2145
+maxmemaligns = 236585
+maxposeidonhashes = 252357
+maxposeidonpaddings = 135191
+maxsha256hashes = 1596
+maxsteps = 7570538
+maxtxsperbatch = 300
+
+[state.db]
+enablelog = false
+host = "zkevm-state-db"
+maxconns = 200
+name = "state_db"
+password = "state_password"
+port = "5432"
+user = "state_user"
+
+[synchronizer]
+l1synccheckl2blockhash = true
+l1synccheckl2blocknumberhmodulus = 30
+l1synchronizationmode = "sequential"
+syncblockprotection = "safe"
+syncchunksize = 100
+syncinterval = "1s"
+trustedsequencerurl = ""
+[synchronizer.l1parallelsynchronization]
+fallbacktosequentialmodeonsynchronized = false
+maxclients = 10
+maxpendingnoprocessedblocks = 25
+requestlastblockmaxretries = 3
+requestlastblockperiod = "5s"
+requestlastblocktimeout = "5s"
+rollupinforetriesspacing = "5s"
+statisticsperiod = "5m"
+timeoutmainloop = "5m"
+
+[synchronizer.l1parallelsynchronization.performancewarning]
+aceptableinacctivitytime = "5s"
+applyafternumrollupreceived = 10
+
+[synchronizer.l2synchronization]
+acceptemptyclosedbatches = false
+checklastl2blockhashonclosebatch = true
+reprocessfullbatchonclose = false

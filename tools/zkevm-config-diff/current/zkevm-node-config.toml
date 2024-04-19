@@ -1,0 +1,220 @@
+istrustedsequencer = true
+[aggregator]
+agglayertxtimeout = "600s"
+agglayerurl = "http://zkevm-agglayer-001:4444"
+batchproofl1blockconfirmations = 2
+cleanuplockedproofsinterval = "2m"
+generatingproofcleanupthreshold = "10m"
+host = "0.0.0.0"
+port = 50081
+proofstatepollinginterval = "5s"
+retrytime = "5s"
+senderaddress = "0x351e560852ee001d5D19b5912a269F849f59479a"
+settlementbackend = "agglayer"
+txprofitabilitycheckertype = "acceptall"
+txprofitabilityminreward = "1.1"
+upgradeetrogbatchnumber = 0
+verifyproofinterval = "10s"
+
+[aggregator.sequencerprivatekey]
+password = "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+path = "/etc/zkevm/sequencer.keystore"
+
+[etherman]
+forkidchunksize = 20000
+multigasprovider = false
+url = "http://el-1-geth-lighthouse:8545"
+
+[etherscan]
+apikey = ""
+
+[ethtxmanager]
+forcedgas = 0
+
+[[ethtxmanager.privatekeys]]
+password = "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+path = "/etc/zkevm/sequencer.keystore"
+
+[[ethtxmanager.privatekeys]]
+password = "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+path = "/etc/zkevm/aggregator.keystore"
+
+[eventlog.db]
+enablelog = true
+host = "event-db-001"
+maxconns = 200
+name = "event_db"
+password = "rJXJN6iUAczh4oz8HRKYbVM8yC7tPeZm"
+port = "5432"
+user = "event_user"
+
+[executor]
+maxgrpcmessagesize = 100000000
+uri = "zkevm-prover-001:50071"
+
+[hashdb]
+enablelog = false
+host = "prover-db-001"
+maxconns = 200
+name = "prover_db"
+password = "SR5xq2KZPgvQkPDranCRhvkv6pnqfo77"
+port = "5432"
+user = "prover_user"
+
+[l2gaspricesuggester]
+defaultgaspricewei = 1000000000
+factor = 0.5
+maxgaspricewei = 0
+type = "default"
+updateperiod = "10s"
+
+[log]
+environment = "production"
+level = "debug"
+outputs = ["stderr"]
+
+[metrics]
+enabled = true
+host = "0.0.0.0"
+port = 9091
+profilingenabled = true
+profilinghost = "0.0.0.0"
+profilingport = 6060
+
+[mtclient]
+uri = "zkevm-prover-001:50061"
+
+[pool]
+accountqueue = 64
+defaultmingaspriceallowed = 1000000000
+freeclaimgaslimit = 1500000
+globalqueue = 1024
+intervaltorefreshblockedaddresses = "5m"
+intervaltorefreshgasprices = "5s"
+maxtxbytessize = 100132
+maxtxdatabytessize = 100000
+minallowedgaspriceinterval = "5m"
+pollminallowedgaspriceinterval = "15s"
+
+[pool.db]
+enablelog = false
+host = "pool-db-001"
+maxconns = 200
+name = "pool_db"
+password = "Qso5wMcLAN3oF7EfaawzgWKUUKWM3Vov"
+port = "5432"
+user = "pool_user"
+
+[pool.effectivegasprice]
+breakevenfactor = 1.1
+bytegascost = 16
+enabled = false
+ethtransfergasprice = 0
+ethtransferl1gaspricefactor = 0
+finaldeviationpct = 10
+l1gaspricefactor = 0.25
+l2gaspricesuggesterfactor = 0.5
+netprofit = 1
+zerobytegascost = 4
+
+[rpc]
+batchrequestsenabled = true
+batchrequestslimit = 500
+enablel2suggestedgaspricepolling = true
+host = "0.0.0.0"
+maxrequestsperipandsecond = 5000
+port = 8123
+readtimeout = "60s"
+sequencernodeuri = ""
+writetimeout = "60s"
+
+[rpc.websockets]
+enabled = true
+port = 8133
+
+[sequencer]
+deletepooltxscheckinterval = "12h"
+deletepooltxsl1blockconfirmations = 100
+loadpooltxscheckinterval = "500ms"
+stateconsistencycheckinterval = "5s"
+txlifetimecheckinterval = "10m"
+txlifetimemax = "3h"
+
+[sequencer.finalizer]
+batchmaxdeltatimestamp = "20s"
+forcedbatchescheckinterval = "10s"
+forcedbatchesl1blockconfirmations = 0
+forcedbatchestimeout = "5s"
+haltonbatchnumber = 0
+l1infotreecheckinterval = "10s"
+l1infotreel1blockconfirmations = 0
+l2blockmaxdeltatimestamp = "4s"
+newtxswaitinterval = "100ms"
+resourceexhaustedmarginpct = 10
+sequentialbatchsanitycheck = false
+sequentialprocessl2block = true
+
+[sequencer.streamserver]
+chainid = 271828
+enabled = true
+filename = "/tmp/datastream.bin"
+port = 6900
+version = 1
+
+[sequencesender]
+l1blocktimestampmargin = "5s"
+l2coinbase = "0x5b06837A43bdC3dD9F114558DAf4B26ed49842Ed"
+lastbatchvirtualizationtimemaxwaitperiod = "10s"
+maxtxsizeforl1 = 131072
+senderaddress = "0x5b06837A43bdC3dD9F114558DAf4B26ed49842Ed"
+waitperiodsendsequence = "15s"
+
+[sequencesender.privatekey]
+password = "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+path = "/etc/zkevm/sequencer.keystore"
+
+[sequencesender.streamclient]
+server = "zkevm-node-sequencer-001:6900"
+
+[state]
+[state.batch.constraints]
+maxarithmetics = 236585
+maxbatchbytessize = 120000
+maxbinaries = 473170
+maxcumulativegasused = 1125899906842624
+maxkeccakhashes = 2145
+maxmemaligns = 236585
+maxposeidonhashes = 252357
+maxposeidonpaddings = 135191
+maxsha256hashes = 1596
+maxsteps = 7570538
+maxtxsperbatch = 300
+
+[state.db]
+enablelog = false
+host = "state-db-001"
+maxconns = 200
+name = "state_db"
+password = "rHTX7EpajF8zYDPatN32rH3B2pn89dmq"
+port = "5432"
+user = "state_user"
+
+[synchronizer]
+l1synchronizationmode = "sequential"
+syncchunksize = 100
+syncinterval = "1s"
+trustedsequencerurl = ""
+[synchronizer.l1parallelsynchronization]
+fallbacktosequentialmodeonsynchronized = false
+maxclients = 10
+maxpendingnoprocessedblocks = 25
+requestlastblockmaxretries = 3
+requestlastblockperiod = "5s"
+requestlastblocktimeout = "5s"
+rollupinforetriesspacing = "5s"
+statisticsperiod = "5m"
+timeoutmainloop = "5m"
+
+[synchronizer.l1parallelsynchronization.performancewarning]
+aceptableinacctivitytime = "5s"
+applyafternumrollupreceived = 10
