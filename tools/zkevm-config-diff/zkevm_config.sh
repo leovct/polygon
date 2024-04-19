@@ -171,12 +171,13 @@ find_missing_keys_in_current_config_file() {
 
   filename="$(basename "$current_config_file" | cut -d'.' -f 1)"
   missing_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$current_config_keys" '$d - $c')
-  echo "$missing_keys" > "diff/$filename-missing-keys.json"
-
   if [ "$(echo "$missing_keys" | jq length)" -gt 0 ]; then
-    echo "diff/$filename-missing-keys.json"
     if [ "$CI" = "true" ]; then
       echo "::warning::$current_config_file lacks some properties present in $default_config_file."
+      echo "$missing_keys"
+    else
+      echo "$missing_keys" > "diff/$filename-missing-keys.json"
+      echo "diff/$filename-missing-keys.json"
     fi
   else
     echo "No missing keys in $current_config_file."
@@ -192,12 +193,13 @@ find_unnecessary_keys_in_current_config_file() {
 
   filename="$(basename "$current_config_file" | cut -d'.' -f 1)"
   unnecessary_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$current_config_keys" '$c - $d')
-  echo "$unnecessary_keys" > "diff/$filename-unnecessary-keys.json"
-
   if [ "$(echo "$unnecessary_keys" | jq length)" -gt 0 ]; then
-    echo "diff/$filename-unnecessary-keys.json"
     if [ "$CI" = "true" ]; then
       echo "::error::$current_config_file defines unnecessary properties that are not in $default_config_file."
+      echo "$unnecessary_keys"
+    else
+      echo "$unnecessary_keys" > "diff/$filename-unnecessary-keys.json"
+      echo "diff/$filename-unnecessary-keys.json"
     fi
   else
     echo "No unnecessary keys in $current_config_file."
