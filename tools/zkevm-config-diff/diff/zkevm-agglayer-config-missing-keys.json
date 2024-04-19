@@ -1,4 +1,1 @@
-[
-  "ethtxmanager.gasoffset",
-  "ethtxmanager.maxretries"
-]
+["ethtxmanager.gasoffset", "ethtxmanager.maxretries"]
