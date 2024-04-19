@@ -77,6 +77,12 @@ dump_current_zkevm_configs() {
   done
 }
 
+normalize_toml_file() {
+  file="$1"
+  tomlq --toml-output --sort-keys 'walk(if type=="object" then with_entries(.key|=ascii_downcase) else . end)' "$file" > "$file.tmp"
+  mv "$file.tmp" "$file"
+}
+
 jq_query_get_leaf_keys='
   def getLeafKeys:
     path(.. | select(type != "array" and type != "object"));
@@ -91,27 +97,34 @@ jq_query_get_leaf_keys='
   [getLeafKeys | removeArrayIndices | join(".")] | unique
 '
 
-find_missing_keys_in_current_config_file() {
-  default_config_file="$1"
-  current_config_file="$2"
+get_config_keys() {
+  config_file="$1"
+  extension="${config_file##*.}"
 
-  extension="${default_config_file##*.}"
   case "$extension" in
     toml)
-      default_config_keys="$(tomlq -r "$jq_query_get_leaf_keys" "$default_config_file")"
-      current_config_keys="$(tomlq -r "$jq_query_get_leaf_keys" "$current_config_file")"
+      keys="$(tomlq -r "$jq_query_get_leaf_keys" "$config_file")"
       ;;
     json)
-      default_config_keys="$(jq -r "$jq_query_get_leaf_keys" "$default_config_file")"
-      current_config_keys="$(jq -r "$jq_query_get_leaf_keys" "$current_config_file")"
+      keys="$(jq -r "$jq_query_get_leaf_keys" "$config_file")"
       ;;
     *)
-      echo "Unsupported file format: ${default_config_file##*.}"
+      echo "Unsupported file format: $extension"
       exit 1
       ;;
   esac
 
-  filename="$(basename $current_config_file | cut -d'.' -f 1)"
+  echo "$keys"
+}
+
+find_missing_keys_in_current_config_file() {
+  default_config_file="$1"
+  current_config_file="$2"
+
+  default_config_keys="$(get_config_keys "$default_config_file")"
+  current_config_keys="$(get_config_keys "$current_config_file")"
+
+  filename="$(basename "$current_config_file" | cut -d'.' -f 1)"
   missing_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$current_config_keys" '$d - $c')
   echo "$missing_keys" > "diff/$filename-missing-keys.json"
 
@@ -129,23 +142,10 @@ find_unnecessary_keys_in_current_config_file() {
   default_config_file="$1"
   current_config_file="$2"
 
-  extension="${default_config_file##*.}"
-  case "$extension" in
-    toml)
-      default_config_keys="$(tomlq -r "$jq_query_get_leaf_keys" "$default_config_file")"
-      current_config_keys="$(tomlq -r "$jq_query_get_leaf_keys" "$current_config_file")"
-      ;;
-    json)
-      default_config_keys="$(jq -r "$jq_query_get_leaf_keys" "$default_config_file")"
-      current_config_keys="$(jq -r "$jq_query_get_leaf_keys" "$current_config_file")"
-      ;;
-    *)
-      echo "Unsupported file format: ${default_config_file##*.}"
-      exit 1
-      ;;
-  esac
+  default_config_keys="$(get_config_keys "$default_config_file")"
+  current_config_keys="$(get_config_keys "$current_config_file")"
 
-  filename="$(basename $current_config_file | cut -d'.' -f 1)"
+  filename="$(basename "$current_config_file" | cut -d'.' -f 1)"
   unnecessary_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$current_config_keys" '$c - $d')
   echo "$unnecessary_keys" > "diff/$filename-unnecessary-keys.json"
 
@@ -187,12 +187,6 @@ compare_configs_keys() {
       echo "Missing default file $file"
     fi
   done
-}
-
-normalize_toml_file() {
-  file="$1"
-  tomlq --toml-output --sort-keys 'walk(if type=="object" then with_entries(.key|=ascii_downcase) else . end)' "$file" > "$file.tmp"
-  mv "$file.tmp" "$file"
 }
 
 # Check the number of arguments
