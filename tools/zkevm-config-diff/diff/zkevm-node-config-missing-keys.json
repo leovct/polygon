@@ -25,6 +25,5 @@
   "synchronizer.l1synccheckl2blocknumberhmodulus",
   "synchronizer.l2synchronization.acceptemptyclosedbatches",
   "synchronizer.l2synchronization.checklastl2blockhashonclosebatch",
-  "synchronizer.l2synchronization.reprocessfullbatchonclose",
-  "synchronizer.syncblockprotection"
+  "synchronizer.l2synchronization.reprocessfullbatchonclose"
 ]
