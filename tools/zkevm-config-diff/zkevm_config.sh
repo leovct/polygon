@@ -1,4 +1,23 @@
 #!/bin/bash
+# This script is a simple tool to compare our current zkEVM/CDK configurations with the default ones and list any missing or unnecessary fields.
+# Here is how it should be used:
+
+# Dump the default zkevm configuration to the default/ folder.
+# The versions of the zkevm components will be fetched from params.yml.
+# $ mkdir -p default (or rm -rf ./default/* if the folder is not empty)
+# $ sh zkevm_config.sh dump default ./default
+
+# Dump the kurtosis CDK configuration to the current/ folder.
+# These configurations files will be called current configs.
+# $ mkdir -p current (or rm -rf ./current/* if the folder is not empty)
+# $ sh zkevm_config.sh dump current ./current
+
+# Compare default and current configurations.
+# $ sh zkevm_config.sh compare configs ./default ./current
+
+# Compare two specific files.
+# $ sh zkevm_config.sh compare files ./default/cdk-data-availability-config.toml ./current/cdk-data-availability-config.toml
+
 # This script will dump default and current configurations used in the CDK stack.
 
 set_zkevm_components_versions() {
@@ -224,15 +243,14 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-# Set zkevm components versions using values from params.yml.
-set_zkevm_components_versions
-echo
-
 # Determine the action and target based on the arguments
 case $1 in
   dump)
     case $2 in
       default)
+        set_zkevm_components_versions
+        echo
+
         directory="$3"
         dump_default_zkevm_configs "$directory"
         ;;

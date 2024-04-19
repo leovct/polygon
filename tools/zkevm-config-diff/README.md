@@ -21,17 +21,23 @@ rm -rf ./default/* ./current/*
 3. Dump default configurations.
 
 ```bash
-sh dump_zkevm_config.sh dump default ./default
+sh zkevm_config.sh dump default ./default
 ```
 
 4. Dump current configurations.
 
 ```bash
-sh dump_zkevm_config.sh dump current ./current
+sh zkevm_config.sh dump current ./current
 ```
 
 5. Compare configurations. You'll find diffs in `./diff`.
 
 ```bash
-sh dump_zkevm_config.sh compare configs default current
+sh zkevm_config.sh compare configs ./default ./current
+```
+
+6. Compare two specific files.
+
+```bash
+sh zkevm_config.sh compare files ./default/cdk-data-availability-config.toml ./current/cdk-data-availability-config.toml
 ```
