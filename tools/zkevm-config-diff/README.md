@@ -1,6 +1,6 @@
 # zkEVM/CDK Config Diff Tool
 
-A simple tool to compare our current zkEVM/CDK configurations with the default ones and list any missing fields.
+A simple tool to compare our current zkEVM/CDK configurations with the default ones and list any missing or unnecessary fields.
 
 ## Usage
 
