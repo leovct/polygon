@@ -1,24 +1,21 @@
 #!/bin/bash
-# This script is a simple tool to compare our current zkEVM/CDK configurations with the default ones and list any missing or unnecessary fields.
+# This script is a simple tool to compare our kurtosis-cdk configurations with the default ones and list any missing or unnecessary fields.
 # Here is how it should be used:
 
-# Dump the default zkevm configuration to the default/ folder.
+# Dump the default zkevm configuration to the default-configs/ folder.
 # The versions of the zkevm components will be fetched from params.yml.
-# $ mkdir -p default (or rm -rf ./default/* if the folder is not empty)
-# $ sh zkevm_config.sh dump default ./default
+# $ mkdir -p default-configs (or rm -rf ./default-configs/* if the folder is not empty)
+# $ sh zkevm_config.sh dump default ./default-configs
 
-# Dump the kurtosis CDK configuration to the current/ folder.
-# These configurations files will be called current configs.
-# $ mkdir -p current (or rm -rf ./current/* if the folder is not empty)
-# $ sh zkevm_config.sh dump current ./current
+# Dump the kurtosis CDK configuration to the kurtosis-cdk-configs/ folder.
+# $ mkdir -p kurtosis-cdk-configs (or rm -rf ./kurtosis-cdk-configs/* if the folder is not empty)
+# $ sh zkevm_config.sh dump kurtosis-cdk ./kurtosis-cdk-configs
 
-# Compare default and current configurations.
-# $ sh zkevm_config.sh compare configs ./default ./current
+# Compare default and kurtosis-cdk configurations.
+# $ sh zkevm_config.sh compare configs ./default-configs ./kurtosis-cdk-configs
 
 # Compare two specific files.
-# $ sh zkevm_config.sh compare files ./default/cdk-data-availability-config.toml ./current/cdk-data-availability-config.toml
-
-# This script will dump default and current configurations used in the CDK stack.
+# $ sh zkevm_config.sh compare files ./default-configs/cdk-data-availability-config.toml ./kurtosis-cdk-configs/cdk-data-availability-config.toml
 
 set_zkevm_components_versions() {
   echo "Updating zkevm component versions in the go.mod file using values from params.yml"
@@ -82,37 +79,37 @@ dump_default_zkevm_configs() {
   done
 }
 
-dump_current_zkevm_configs() {
+dump_kurtosis_cdk_configs() {
   directory="${1%/}"
   ENCLAVE="cdk-v1"
-  echo "Dumping current zkevm configurations from kurtosis $ENCLAVE enclave in $directory"
+  echo "Dumping kurtosis-cdk configurations from kurtosis $ENCLAVE enclave in $directory"
 
-  # Dump current configs from the Kurtosis enclave.
-  echo "Dumping current zkevm-node config"
+  # Dump kurtosis-cdk configs from the Kurtosis enclave.
+  echo "Dumping kurtosis-cdk zkevm-node config"
   kurtosis service exec "$ENCLAVE" zkevm-node-rpc-001 "cat /etc/zkevm/node-config.toml" | tail -n +2 > "$directory/zkevm-node-config.toml"
 
-  echo "Dumping current zkevm-agglayer config"
+  echo "Dumping kurtosis-cdk zkevm-agglayer config"
   kurtosis service exec "$ENCLAVE" zkevm-agglayer-001 "cat /etc/zkevm/agglayer-config.toml" | tail -n +2 > "$directory/zkevm-agglayer-config.toml"
 
-  echo "Dumping current cdk-data-availability config"
+  echo "Dumping kurtosis-cdk cdk-data-availability config"
   kurtosis service exec "$ENCLAVE" zkevm-dac-001 "cat /etc/zkevm/dac-config.toml" | tail -n +2 > "$directory/cdk-data-availability-config.toml"
 
-  echo "Dumping current zkevm-bridge-service config"
+  echo "Dumping kurtosis-cdk zkevm-bridge-service config"
   kurtosis service exec "$ENCLAVE" zkevm-bridge-service-001 "cat /etc/zkevm/bridge-config.toml" | tail -n +2 > "$directory/zkevm-bridge-service-config.toml"
 
-  echo "Dumping current event db init script"
+  echo "Dumping kurtosis-cdk event db init script"
   kurtosis service exec "$ENCLAVE" event-db-001 "cat /docker-entrypoint-initdb.d/event-db-init.sql" | tail -n +2 > "$directory/event-db-init.sql"
 
-  echo "Dumping current prover db init script"
+  echo "Dumping kurtosis-cdk prover db init script"
   kurtosis service exec "$ENCLAVE" prover-db-001 "cat /docker-entrypoint-initdb.d/prover-db-init.sql" | tail -n +2 > "$directory/prover-db-init.sql"
 
-  echo "Dumping current zkevm-prover config"
+  echo "Dumping kurtosis-cdk zkevm-prover config"
   kurtosis service exec "$ENCLAVE" zkevm-prover-001 "cat /etc/zkevm/prover-config.json" | tail -n +2 > "$directory/zkevm-prover-config.json"
 
-  echo "Dumping current zkevm-executor config"
+  echo "Dumping kurtosis-cdk zkevm-executor config"
   kurtosis service exec "$ENCLAVE" zkevm-executor-pless-001 "cat /etc/zkevm/executor-config.json" | tail -n +2 > "$directory/zkevm-executor-config.json"
 
-  echo "Dumping current zkevm-bridge-ui config"
+  echo "Dumping kurtosis-cdk zkevm-bridge-ui config"
   kurtosis service exec "$ENCLAVE" zkevm-bridge-ui-001 "cat /etc/zkevm/.env" | tail -n +2 | sort > "$directory/zkevm-bridge-ui.env"
 
   # Normalize TOML files.
@@ -162,69 +159,71 @@ get_config_keys() {
   echo "$keys"
 }
 
-find_missing_keys_in_current_config_file() {
+find_missing_keys_in_kurtosis_cdk_config_file() {
   default_config_file="$1"
-  current_config_file="$2"
+  kurtosis_cdk_config_file="$2"
 
   default_config_keys="$(get_config_keys "$default_config_file")"
-  current_config_keys="$(get_config_keys "$current_config_file")"
+  kurtosis_cdk_config_keys="$(get_config_keys "$kurtosis_cdk_config_file")"
 
-  filename="$(basename "$current_config_file" | cut -d'.' -f 1)"
-  missing_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$current_config_keys" '$d - $c')
-  echo "$missing_keys" > "diff/$filename-missing-keys.json"
-
+  filename="$(basename "$kurtosis_cdk_config_file" | cut -d'.' -f 1)"
+  missing_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$kurtosis_cdk_config_keys" '$d - $c')
   if [ "$(echo "$missing_keys" | jq length)" -gt 0 ]; then
-    echo "diff/$filename-missing-keys.json"
     if [ "$CI" = "true" ]; then
-      echo "::warning::$current_config_file lacks some properties present in $default_config_file."
+      echo "::warning::$kurtosis_cdk_config_file lacks some properties present in $default_config_file."
+      echo "$missing_keys"
+    else
+      echo "$missing_keys" > "diff/$filename-missing-keys.json"
+      echo "diff/$filename-missing-keys.json"
     fi
   else
-    echo "No missing keys in $current_config_file."
+    echo "No missing keys in $kurtosis_cdk_config_file."
   fi
 }
 
-find_unnecessary_keys_in_current_config_file() {
+find_unnecessary_keys_in_kurtosis_cdk_config_file() {
   default_config_file="$1"
-  current_config_file="$2"
+  kurtosis_cdk_config_file="$2"
 
   default_config_keys="$(get_config_keys "$default_config_file")"
-  current_config_keys="$(get_config_keys "$current_config_file")"
+  kurtosis_cdk_config_keys="$(get_config_keys "$kurtosis_cdk_config_file")"
 
-  filename="$(basename "$current_config_file" | cut -d'.' -f 1)"
-  unnecessary_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$current_config_keys" '$c - $d')
-  echo "$unnecessary_keys" > "diff/$filename-unnecessary-keys.json"
-
+  filename="$(basename "$kurtosis_cdk_config_file" | cut -d'.' -f 1)"
+  unnecessary_keys=$(jq -n --argjson d "$default_config_keys" --argjson c "$kurtosis_cdk_config_keys" '$c - $d')
   if [ "$(echo "$unnecessary_keys" | jq length)" -gt 0 ]; then
-    echo "diff/$filename-unnecessary-keys.json"
     if [ "$CI" = "true" ]; then
-      echo "::error::$current_config_file defines unnecessary properties that are not in $default_config_file."
+      echo "::error::$kurtosis_cdk_config_file defines unnecessary properties that are not in $default_config_file."
+      echo "$unnecessary_keys"
+    else
+      echo "$unnecessary_keys" > "diff/$filename-unnecessary-keys.json"
+      echo "diff/$filename-unnecessary-keys.json"
     fi
   else
-    echo "No unnecessary keys in $current_config_file."
+    echo "No unnecessary keys in $kurtosis_cdk_config_file."
   fi
 }
 
 compare_files_keys() {
   default_file="$1"
-  current_file="$2"
+  kurtosis_cdk_file="$2"
 
-  echo "Comparing $default_file and $current_file:"
+  echo "Comparing $default_file and $kurtosis_cdk_file:"
   mkdir -p diff/
-  find_missing_keys_in_current_config_file "$default_file" "$current_file"
-  find_unnecessary_keys_in_current_config_file "$default_file" "$current_file"
+  find_missing_keys_in_kurtosis_cdk_config_file "$default_file" "$kurtosis_cdk_file"
+  find_unnecessary_keys_in_kurtosis_cdk_config_file "$default_file" "$kurtosis_cdk_file"
 }
 
 compare_configs_keys() {
   default_directory="${1%/}"
-  current_directory="${2%/}"
+  kurtosis_cdk_directory="${2%/}"
 
-  echo "Comparing configs in $default_directory/ and $current_directory/"
+  echo "Comparing configs in $default_directory/ and $kurtosis_cdk_directory/"
   mkdir -p diff/
   find "$default_directory" -type f \( -name "*.toml" -o -name "*.json" \) | while read -r f; do
     file="$(basename "$f")"
     echo
     if [ -f "$default_directory/$file" ]; then
-      compare_files_keys "$default_directory/$file" "$current_directory/$file"
+      compare_files_keys "$default_directory/$file" "$kurtosis_cdk_directory/$file"
     else
       if [ "$CI" = "true" ]; then
         echo "::warning file={$file}::Missing default file"
@@ -237,9 +236,10 @@ compare_configs_keys() {
 # Check the number of arguments
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <action> <target>"
-  echo "> Dump default configs: $0 dump default"
-  echo "> Dump current configs: $0 dump current"
-  echo "> Compare default and current configs: $0 compare"
+  echo "> Dump default configs: $0 dump default <directory>"
+  echo "> Dump kurtosis_cdk configs: $0 dump kurtosis-cdk <directory>"
+  echo "> Compare default and kurtosis-cdk configs: $0 compare configs <directory1> <directory2>"
+  echo "> Compare files: $0 compare files <file1> <file2>"
   exit 1
 fi
 
@@ -254,12 +254,12 @@ case $1 in
         directory="$3"
         dump_default_zkevm_configs "$directory"
         ;;
-      current)
+      kurtosis-cdk)
         directory="$3"
-        dump_current_zkevm_configs "$directory"
+        dump_kurtosis_cdk_configs "$directory"
         ;;
       *)
-        echo "Invalid target. Please choose 'current' or 'default'."
+        echo "Invalid target. Please choose 'default' or 'kurtosis-cdk'."
         exit 1
         ;;
     esac

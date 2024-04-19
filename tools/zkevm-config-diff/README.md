@@ -1,43 +1,43 @@
 # zkEVM/CDK Config Diff Tool
 
-A simple tool to compare our current zkEVM/CDK configurations with the default ones and list any missing or unnecessary fields.
+A simple tool to compare our kurtosis-cdk configurations with the default ones and list any missing or unnecessary fields.
 
 ## Usage
 
 1. Deploy the CDK stack using [kurtosis-cdk](https://github.com/0xPolygon/kurtosis-cdk).
 
-2. Create folders to hold default and current configuration files.
+2. Create folders to hold zkevm default and kurtosis-cdk configuration files.
 
 ```bash
-mkdir -p default current
+mkdir -p default-configs kurtosis-cdk-configs
 ```
 
 Or clean those folders if they are not empty.
 
 ```bash
-rm -rf ./default/* ./current/*
+rm -rf ./default-configs/* ./kurtosis-cdk-configs/*
 ```
 
 3. Dump default configurations.
 
 ```bash
-sh zkevm_config.sh dump default ./default
+sh zkevm_config.sh dump default ./default-configs
 ```
 
-4. Dump current configurations.
+4. Dump kurtosis-cdk configurations.
 
 ```bash
-sh zkevm_config.sh dump current ./current
+sh zkevm_config.sh dump kurtosis-cdk ./kurtosis-cdk-configs
 ```
 
 5. Compare configurations. You'll find diffs in `./diff`.
 
 ```bash
-sh zkevm_config.sh compare configs ./default ./current
+sh zkevm_config.sh compare configs ./default-configs ./kurtosis-cdk-configs
 ```
 
 6. Compare two specific files.
 
 ```bash
-sh zkevm_config.sh compare files ./default/cdk-data-availability-config.toml ./current/cdk-data-availability-config.toml
+sh zkevm_config.sh compare files ./default-configs/cdk-data-availability-config.toml ./kurtosis-cdk-configs/cdk-data-availability-config.toml
 ```
