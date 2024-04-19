@@ -1,1 +1,4 @@
-["ethtxmanager.gasoffset", "ethtxmanager.kmsconnectiontimeout"]
+[
+  "ethtxmanager.gasoffset",
+  "ethtxmanager.kmsconnectiontimeout"
+]
