@@ -1,0 +1,35 @@
+[db]
+enablelog = false
+host = "dac-db-001"
+maxconns = 200
+name = "dac_db"
+password = "PzycR2uB6PQv8ahj465ExvdyRLkknRNW"
+port = "5432"
+user = "dac_user"
+
+[l1]
+blockbatchsize = "64"
+datacommitteeaddress = "0x5A6896A98c4B7C7E8f16d177C719a1d856b9154c"
+genesisblock = "0"
+polygonvalidiumaddress = "0x1Fe038B54aeBf558638CA51C91bC8cCa06609e91"
+retryperiod = "5s"
+rpcurl = "http://el-1-geth-lighthouse:8545"
+timeout = "1m"
+tracksequencer = false
+wsurl = "ws://el-1-geth-lighthouse:8546"
+
+[log]
+environment = "development"
+level = "info"
+outputs = ["stderr"]
+
+[privatekey]
+password = "pSnv6Dh5s9ahuzGzH9RoCDrKAMddaX3m"
+path = "/etc/zkevm/dac.keystore"
+
+[rpc]
+host = "0.0.0.0"
+maxrequestsperipandsecond = 500
+port = 8484
+readtimeout = "60s"
+writetimeout = "60s"
